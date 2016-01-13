@@ -1,0 +1,48 @@
+<div id="table-of-contents">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents">
+<ul>
+<li><a href="#sec-1">Code</a>
+<ul>
+<li><a href="#sec-1-1">Build lisp into a .exe</a></li>
+<li><a href="#sec-1-2">Sleep commands in OSX</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Code</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">Build lisp into a .exe</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+File size is massive, 50 mb
+</p>
+<div class="org-src-container">
+
+<pre class="src src-common-lisp" id="Create-the-build-hello.exe">(defun main () (print "hello"))
+(sb-ext:save-lisp-and-die "hello.exe" :toplevel #'main :executable t)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">Sleep commands in OSX</h3>
+<div class="outline-text-3" id="text-1-2">
+<div class="org-src-container">
+
+<pre class="src src-sh" id="Get-the-current-sleep-status">sudo systemsetup -getcomputersleep;
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh" id="Turn-of-the-Sleep-Idle-countdown">sudo systemsetup -setcomputersleep Never  # or use '60' for an hour
+</pre>
+</div>
+</div>
+</div>
+</div>
