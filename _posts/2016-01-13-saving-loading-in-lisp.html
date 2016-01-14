@@ -37,10 +37,10 @@ I'm using the as the second parameter in a <code>mapcar</code>, so I can iterate
 </pre>
 </div>
 
+
 <p>
 This turned out nice. The map file is an actual visible map.
 </p>
-
 
 <p>
 #+NAME Map example
@@ -57,9 +57,27 @@ This turned out nice. The map file is an actual visible map.
 <p>
 Would be nice to work out how to get <a href="http://www.emacswiki.org/emacs/ArtistMode">artist-mode</a> to draw different characters.
 </p>
-</div>
-</div>
 
+
+<p>
+For the configuration/state stuff i'll just put straight up lists. There is a <code>eval</code> in emacs lisp that can just read it directly in.
+</p>
+
+<p>
+#+NAME Parse lisp data/code from a file
+</p>
+<div class="org-src-container">
+
+<pre class="src src-emacs-lisp">(defun rl/load-state (filepath)
+  "Return the contents of FILEPATH as a lisp object."
+  (let ((content (with-temp-buffer
+		   (insert-file-contents filepath)
+		   (buffer-string))))
+    (read content)))
+</pre>
+</div>
+</div>
+</div>
 
 
 <div id="outline-container-sec-1-2" class="outline-3">
