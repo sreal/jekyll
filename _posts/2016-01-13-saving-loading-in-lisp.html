@@ -84,8 +84,18 @@ For the configuration/state stuff i'll just put straight up lists. There is a <c
 <h3 id="sec-1-2">Reading to a file.</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
-Not sure how to do this yet. I expect <a href="https://www.gnu.org/software/emacs/manual/html_node/elisp/Writing-to-Files.html">gnu emacs documentation</a> will spell it out.
+Writing and object looks simple enough.
+Just use the write-region with a format and path name.
 </p>
+
+<p>
+#+NAME Write lisp object to file
+</p>
+<div class="org-src-container">
+
+<pre class="src src-emacs-lisp">(write-region (format "%s" state) nil filepath)
+</pre>
+</div>
 </div>
 </div>
 </div>
