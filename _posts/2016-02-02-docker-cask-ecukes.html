@@ -1,0 +1,86 @@
+---
+layout: default
+title: Docker, Cask, Ecukes: An Example
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Docker, Cask, Ecukes: An Example</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">Install cask to a vm because it's an ares to install in windows.</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Ultimately, you end up with a box with emacs &amp; cask installed.
+It is able to run cask tasks.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">On the windows machine</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Start the vm that can run docker natively.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-powershell">docker-machine start 'docker-machine-vm'
+docker-machine env 'docker-machine-vm' | Invoke-Expression
+docker-machine ssh 'docker-machine-vm'
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3">Inside the docker-machine-vm</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+Spin up a debian box
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bash"># check that there is ashared folder between windows and the docker-machine-vm
+ls /c/Users/
+# spin up a debian box, with a mounted folder , named debian for fun
+docker run -it debian /bin/bash
+docker run -it -v /boot2dockerfolder:/root/containerfolder debian /bin/bash
+docker run -it -v /c/Users/simone/projects:/root/docker-cask-project debian /bin/bash
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4">Inside the docker debian box</h3>
+<div class="outline-text-3" id="text-1-4">
+<div class="org-src-container">
+
+<pre class="src src-bash">apt-get update -y;
+apt-get install python curl git emacs -y;
+curl -fsSL https://raw.githubusercontent.com/cask/cask/master/go | python;
+export PATH="/root/.cask/bin:$PATH"
+</pre>
+</div>
+
+<p>
+Then start following the ecukes <a href="https://github.com/ecukes/ecukes">ecukes installation setup</a>.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bash">echo '(source melpa)
+(package "super-duper" "0.0.1" "Super Duper.")
+(development
+ (depends-on "ecukes"))' &gt; Cask;
+cask;  # install deps
+cask exec ecukes new;  # gen ecukes project
+cask exec ecukes --scripts --reporter landing;  # run test runner
+</pre>
+</div>
+</div>
+</div>
+</div>
