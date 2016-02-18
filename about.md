@@ -4,8 +4,12 @@ title: About
 permalink: /about/
 ---
 
-This is the base Jekyll theme. You can find out more info about customizing your Jekyll theme, as well as basic Jekyll usage documentation at [jekyllrb.com](http://jekyllrb.com/)
+### Hi, I'm Simon Eames.
 
-You can find the source code for the Jekyll new theme at: [github.com/jglovier/jekyll-new](https://github.com/jglovier/jekyll-new)
+I really enjoy building stuff and getting others to build interesting things. A lot of the time it's with computers.
 
-You can find the source code for Jekyll at [github.com/jekyll/jekyll](https://github.com/jekyll/jekyll)
+This journal is so I don't need to remember how to do things. I can be lazy like that.
+
+If any of it helps you, that's great and I'd enjoy hearing about it too :)
+
+--sre
