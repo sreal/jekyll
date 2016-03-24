@@ -1,0 +1,74 @@
+---
+layout: default
+title: setting up the bottles of beer
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Setting up the bottles of beer</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Run some sql on multiple dbs using a consistent numeric nameing structure
+</p>
+
+<p>
+The code ripped from all over the place joins..
+</p>
+
+<ul class="org-ul">
+<li>Get the numbers 1 to 20 using a with
+</li>
+<li>Use a cursor to iterate
+</li>
+<li>quotename to confirm the database name
+</li>
+<li>sq<sub>sqlexec</sub> to run it, because the use requires an actual string.
+</li>
+</ul>
+
+
+
+<div class="org-src-container">
+
+<pre class="src src-sql">DECLARE @index nvarchar(2);
+DECLARE @sql nvarchar(4000);
+DECLARE @start int;
+DECLARE @end int;
+DECLARE @dbName sysname;
+
+SET @start = 20;
+SET @end = 20;
+
+
+DECLARE cur CURSOR STATIC LOCAL FOR
+    WITH numbers AS (
+	SELECT @start AS number
+	UNION ALL
+	SELECT number + 1
+	FROM numbers
+	WHERE number &lt; @end
+    )
+    SELECT REPLACE(STR(Number, 2), SPACE(1), '0')
+    FROM numbers
+OPEN cur
+
+WHILE 1 = 1
+BEGIN
+    FETCH cur INTO @index
+    IF @@fetch_status &lt;&gt; 0
+	BREAK
+
+    PRINT @index + ' bottles of beer on the wall.';
+
+    SET @dbName = 'database-number-' + @index
+    SET @sql = N'
+USE ' + quotename(@dbName) + ';
+SELECT db_name();
+';
+    EXECUTE sp_executesql @sql;
+END
+
+DEALLOCATE cur
+</pre>
+</div>
+</div>
+</div>
