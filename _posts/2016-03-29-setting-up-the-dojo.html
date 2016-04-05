@@ -1,0 +1,87 @@
+---
+layout: default
+title: Setting up a dojo
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Using a generic package for project setup, like a code dojo</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Trying to reduce the difficulty to do a code dojo using elisp. by using a common project.
+</p>
+
+<p>
+This should be generic enough to work for most projects in windows.
+</p>
+
+<p>
+This is before having source countrol. You will ruin .git or .svn if the generic package you download has it.
+</p>
+</div>
+
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">Downloading and renaming the standard project</h3>
+<div class="outline-text-3" id="text-1-1">
+</div><div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1">Common function for rename files and content</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<div class="org-src-container">
+
+<pre class="src src-powershell">Function Replace-File-And-Content {
+    param(
+	[Parameter(Mandatory = $true)][string] $match,
+	[Parameter(Mandatory = $true)][string] $replacement
+    )
+    Get-ChildItem -Recurse "*$match*" |
+	Sort-Object -Descending -Property { $_.FullName } |
+	Rename-Item -NewName { $_.name -replace $match, $replacement } -Force
+
+    Get-ChildItem $(get-location) -Recurse -File | % {
+	((Get-Content $_.fullname) -creplace $match, $replacement) | Set-Content $_.fullname
+    }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2">Download, unzip, rename</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+This needs 7Zip on the path and will
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-powershell"># Invoke-WebRequest https://bitbucket.org/sreal/sim-frost/get/0.0.1.tar.gz -OutFile 0.0.1.tar.gz;
+# cp ~/Downloads/0.0.1.tar.gz -Force  # Or use a common local version.
+7z x -r -aoa 0.0.1.tar.gz; rm 0.0.1.tar.gz;
+7z x -r -aoa 0.0.1.tar; rm 0.0.1.tar;
+mv sreal-sim-frost-* dojo-name
+cd dojo-name
+Replace-File-And-Content "sim-frost" "dojo-name"
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">if you're using the Docker, Emacs, &amp; Ecukes</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Installing the packages is also needed by running this in the debian docker machine.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-powershell">cask install
+# and this should now work..
+cask exec ecukes --reporter magnars;
+</pre>
+</div>
+</div>
+</div>
+</div>

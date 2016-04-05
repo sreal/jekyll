@@ -31,8 +31,22 @@ docker-machine ssh 'docker-machine-vm'
 </pre>
 </div>
 </div>
-</div>
 
+<div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1">But it's my first time</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+Running docker-machine for the first time requires creating the vm for <code>docker</code> to run on, ie. <code>docker-machine-vm</code>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-powershell">docker-machine create --driver virtualbox 'docker-machine-vm'
+</pre>
+</div>
+</div>
+</div>
+</div>
 
 <div id="outline-container-sec-1-3" class="outline-3">
 <h3 id="sec-1-3">Inside the docker-machine-vm</h3>
@@ -45,10 +59,11 @@ Spin up a debian box
 
 <pre class="src src-bash"># check that there is ashared folder between windows and the docker-machine-vm
 ls /c/Users/
-# spin up a debian box, with a mounted folder , named debian for fun
+# spin up a debian box called debian, with a mounted folder
 docker run -it debian /bin/bash
 docker run -it -v /boot2dockerfolder:/root/containerfolder debian /bin/bash
 docker run -it -v /c/Users/simone/projects:/root/docker-cask-project debian /bin/bash
+docker run -it -v /c/Users/simon/projects/dojos/:/root/dojos debian /bin/bash
 </pre>
 </div>
 </div>
@@ -73,11 +88,12 @@ Then start following the ecukes <a href="https://github.com/ecukes/ecukes">ecuke
 <div class="org-src-container">
 
 <pre class="src src-bash">echo '(source melpa)
-(package "super-duper" "0.0.1" "Super Duper.")
+(package "transitive-dependancies" "0.0.1" "Super Duper.")
 (development
  (depends-on "ecukes"))' &gt; Cask;
 cask;  # install deps
 cask exec ecukes new;  # gen ecukes project
+echo '(provide '\''transitive-dependancies)' &gt; transitive-dependancies.el
 cask exec ecukes --scripts --reporter landing;  # run test runner
 </pre>
 </div>
