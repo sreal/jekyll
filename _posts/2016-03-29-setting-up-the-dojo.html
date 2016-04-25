@@ -64,6 +64,25 @@ cd dojo-name
 Replace-File-And-Content "sim-frost" "dojo-name"
 </pre>
 </div>
+
+<p>
+Or just wrap it in a pretty bow.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-powershell">Function Setup-Elisp-Project {
+    param(
+	[Parameter (Mandatory = $true)][string] $dojoName
+    )
+    cp ~/Downloads/0.0.1.tar.gz -Force  # Or use a common local version.
+    7z x -r -aoa 0.0.1.tar.gz; rm 0.0.1.tar.gz;
+    7z x -r -aoa 0.0.1.tar; rm 0.0.1.tar;
+    mv sreal-sim-frost-* $dojoName
+    cd $dojoName
+    Replace-File-And-Content "sim-frost" "$dojoName"
+}
+</pre>
+</div>
 </div>
 </div>
 </div>
