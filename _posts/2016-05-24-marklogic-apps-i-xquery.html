@@ -1,0 +1,600 @@
+---
+layout: default
+title: Developing Marklogic Applications I - The XQuery Language
+---
+
+<p>
+Notes from Marklogic Training:  <a href="http://www.marklogic.com/training-courses/developing-marklogic-applications-i-xquery/">Developing Marklogic Applications I - XQuery</a>
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Developing Marklogic Applications I - XQuery</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">Day 1: Learning XQuery Language</h3>
+<div class="outline-text-3" id="text-1-1">
+</div><div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1">Understanding MarkLogic and XQuery</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+MarkLogic is good at supporting lots of data types/formats (xml, json, binaries, geospatial&#x2026;)
+</p>
+
+<p>
+Data can be enriched in the database.
+EG. Reverse geocoding coordinates and storing in db.
+Can occur on loading the data or transitionally after inital data is loaded.
+Additional data enables faceted search, like amazon search constraints.
+</p>
+
+<p>
+MarkLogic can use (semantic)triples to enchich stored data.
+Triples are avaliable on the freely open web.
+</p>
+
+<blockquote>
+<p>
+Triple :: Subject - Predicate -  Object(value). Eg. US:captial:Washington
+</p>
+</blockquote>
+
+<p>
+MarkLogic's value proposition is it's ability to integrate data from many data sources and silos.
+</p>
+
+<blockquote>
+<p>
+MarkLogic :: an ACID, transactional database.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2">Getting Started with XQuery</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+Course Materials were.are avaliable on the VM and <a href="ftp://ftp.marklogic.com/outgoing/training/ml8-d1x.zip">ftp://ftp.marklogic.com/outgoing/training/ml8-d1x.zip</a>
+</p>
+</div>
+
+<div id="outline-container-sec-1-1-2-1" class="outline-5">
+<h5 id="sec-1-1-2-1">Describe XQuery, XPath, XSLT and their relationship</h5>
+<div class="outline-text-5" id="text-1-1-2-1">
+<ul class="org-ul">
+<li>XQuery
+<ul class="org-ul">
+<li>Server side
+</li>
+<li>Application server can eval the code
+</li>
+<li>Application service is a webserver also
+</li>
+<li>is a functional programming language
+</li>
+</ul>
+</li>
+</ul>
+<p>
+One of the avaliable languages in ML
+XQuery Core logic is FLWOR expresssion.
+Output xquery files of .xqy or .xq
+XQuery is a W3C specification langauges but ML addes addiitonal languages.
+</p>
+
+<ul class="org-ul">
+<li>XPath
+<ul class="org-ul">
+<li>Abiliatry to navigate and extract data
+</li>
+<li>Visualises XML sas a tree structure
+</li>
+</ul>
+</li>
+
+<li>XSLT
+<ul class="org-ul">
+<li>Designed for transfomations
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2-2" class="outline-5">
+<h5 id="sec-1-1-2-2">Load XML documents into a MarkLogic Server database</h5>
+<div class="outline-text-5" id="text-1-1-2-2">
+</div><ul class="org-ul"><li><a id="sec-1-1-2-2-1" name="sec-1-1-2-2-1"></a>Xquery dataloading methods<br  /><div class="outline-text-6" id="text-1-1-2-2-1">
+<blockquote>
+<dl class="org-dl">
+<dt> xdmp </dt><dd>xml datamanagement platform
+</dd>
+</dl>
+</blockquote>
+
+<div class="org-src-container">
+
+<pre class="src src-ml-xquery">xdmp:document-load()  ;; low-level
+info:load()  ;; higher-level
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-ml-xquery">xdmp:document-insert()
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-ml-xquery">;;   WebDAV is slow
+;; Record Loader / MLCP is lightweight &amp; faster
+</pre>
+</div>
+</div>
+</li></ul>
+</div>
+
+<div id="outline-container-sec-1-1-2-3" class="outline-5">
+<h5 id="sec-1-1-2-3">Install an XQuery editor</h5>
+<div class="outline-text-5" id="text-1-1-2-3">
+<p>
+Lots of options avaliable.
+Some <a href="http://developer.marklogic.com/code">Tools</a> are providedby MarkLogic.
+</p>
+
+<ul class="org-ul">
+<li>Notepadd++,
+</li>
+<li>Oxygen,
+</li>
+<li>Eclipse + XQDT
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2-4" class="outline-5">
+<h5 id="sec-1-1-2-4">Create an application using XQuery</h5>
+<div class="outline-text-5" id="text-1-1-2-4">
+</div><ul class="org-ul"><li><a id="sec-1-1-2-4-1" name="sec-1-1-2-4-1"></a>Anatomy of an XQuery file<br  /><div class="outline-text-6" id="text-1-1-2-4-1">
+<p>
+Each file has a prolog &amp; query body.
+</p>
+
+<ol class="org-ol">
+<li>Prolog
+<ol class="org-ol">
+<li>Version declaration
+</li>
+<li>Namespace declaration
+</li>
+<li>Module import statements
+</li>
+<li>Variable &amp; function declaration
+</li>
+</ol>
+</li>
+<li>Query Body
+</li>
+</ol>
+</div>
+</li>
+
+<li><a id="sec-1-1-2-4-2" name="sec-1-1-2-4-2"></a>XQuery Syntax<br  /><div class="outline-text-6" id="text-1-1-2-4-2">
+<ul class="org-ul">
+<li>Semicolons in prolog
+</li>
+<li>Markup and presentation can be mixed in the query body.
+<ul class="org-ul">
+<li>App server evals anything in <code>{}</code> as xquery code
+</li>
+</ul>
+</li>
+<li id="Variable"><code>$someVariable</code>
+</li>
+<li id="Assignment"><code>declare variable $name := asdf</code>
+</li>
+<li id="Comments"><code>(: This is a comment. :)</code>
+</li>
+<li id="Sequence"><code>(1,2,3)</code> (Sequences can be empty)
+</li>
+<li>Semicolons in the query bode are transaction separator
+</li>
+</ul>
+</div>
+</li></ul>
+</div>
+
+<div id="outline-container-sec-1-1-2-5" class="outline-5">
+<h5 id="sec-1-1-2-5">Unit 2: Getting started with XQuery</h5>
+<div class="outline-text-5" id="text-1-1-2-5">
+<ul class="org-ul">
+<li>Install Marklogic
+<ol class="org-ol">
+<li>run msi.
+</li>
+<li>Start <code>MarkLogic</code> service
+</li>
+<li>Setup server install at <code>localhost:8001</code>
+<ol class="org-ol">
+<li>Skip the cluster setup
+</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">xdmp:set-responsecontent-type("text/html; charset=utf-8")
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">declare version "1.0-ml";
+declare variable $count := 4;
+xmdp:set-response-content-type("text/html; charset-utf-8"),
+'&lt;!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3c.org/TR/xhtml1/DTD/xhtml1-strict.dtd"&gt;'
+&lt;h3&gt;{("There are ", $count, " tickets left.")}&lt;/h3&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery:">(: Import the marklogic admin module from the web. :)
+import module namespace admin = "http://marklogic.com/xdmp/admin" at "/MarkLogic/admin.xqy";
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-3" class="outline-4">
+<h4 id="sec-1-1-3">Writing XPath Expressions</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<div class="org-src-container">
+
+<pre class="src src-xquery">xmdp:document-insert(
+  "/library.xml", &lt;bookstore&gt;
+  &lt;book category="COOKING"&gt;
+  &lt;title en="lang"&gt;Everday Italian&lt;/title&gt;
+  &lt;author&gt;Giada De Laurentiis&lt;/author&gt;
+  &lt;price&gt;20.00&lt;/price&gt;
+  &lt;/book&gt;
+&lt;/bookstore&gt;
+)
+</pre>
+</div>
+
+<blockquote>
+<p>
+MarkLogic will recognise the ~lang="en"~ attribute in XML.
+This allows multi-language content.
+MarkLogic can use this settings and change things like stemming rules while searching.
+If not defined it uses the default for the database.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">fn:doc("/library.xml")
+doc("/libary.xml")  (: `fn` namespace is optional because it is the default namespace. :)
+fn:doc()  (: This returns all documents from the database. :)
+</pre>
+</div>
+
+<p>
+XPath allows navigating xml. XPath are steps of expressions.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">(: xpath can be dropped into expression :)
+xquery version "1.0-ml";
+/bookstore/book/title/string()
+</pre>
+</div>
+
+<p>
+Not defining a namespace puts the document into the <code>empty namespace</code>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">(: update through overriding :)
+xmdp:document-insert(
+  "/library.xml",
+  &lt;bookstore xmlns="http://www.marklogic/bookstore"&gt;
+    &lt;book category="COOKING"&gt;
+    &lt;title en="lang"&gt;Everday Italian&lt;/title&gt;
+    &lt;author&gt;Giada De Laurentiis&lt;/author&gt;
+    &lt;price&gt;20.00&lt;/price&gt;
+    &lt;/book&gt;
+  &lt;/bookstore&gt;
+)
+</pre>
+</div>
+
+<p>
+Namespace is called a <code>q name</code> in xquery
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">(: xpath can be dropped into expression :)
+declare namespace bks := "http://www.marklogic/bookstore"
+/bks:bookstore/bks:book/bks:title/string()
+
+declare default namespace bks := "http://www.marklogic/bookstore"
+/bks:bookstore/book/title/string()
+</pre>
+</div>
+
+
+<p>
+Results from xpath come bace in <code>document order</code>. ie. not sorted.
+Results from search does not.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-xpath">/bks:bookstore/bks:book[bks:price &lt; 30]/bks:title/string()
+/bks:bookstore/bks:book[bks:price le 30]/bks:title/string()
+# predicates are ANDed: first match, note the 1-based index
+/bks:bookstore/bks:book[bks:price le 30][1]/bks:title/string()
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-xpath"># `//` :: is axis of any descendant node
+# `following-sibling` :: is axis at the same level in the higherarchy
+//bks:title[following-sibling::bks:price &lt; 30]/text()
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">/bks:bookstore/bks:book/@category
+/bks:bookstore/bks:book[@category='COOKING']
+(: attributes must be serialize :)
+fn:string(/bks:bookstore/bks:book[@category='COOKING'])
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-4" class="outline-4">
+<h4 id="sec-1-1-4">Creating FLOWR Expressions</h4>
+<div class="outline-text-4" id="text-1-1-4">
+<dl class="org-dl">
+<dt> FOR </dt><dd>create a sequence of tuples
+</dd>
+<dt> LET </dt><dd>binds a sequencee to a variable
+</dd>
+<dt> WHERE </dt><dd>hilters the tuples on a boolean expression
+</dd>
+<dt> ORDER BY </dt><dd>sorts the tuple
+</dd>
+<dt> RETURN </dt><dd>gets the evaliated once for every tuple
+</dd>
+</dl>
+</div>
+
+<div id="outline-container-sec-1-1-4-1" class="outline-5">
+<h5 id="sec-1-1-4-1">Requirements fo a FLOWR statement</h5>
+<div class="outline-text-5" id="text-1-1-4-1">
+<ol class="org-ol">
+<li>1 FOR or 1 LET clause, and
+</li>
+<li>1 return clause
+</li>
+<li>WHERE and ORDER BY are optional
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-4-2" class="outline-5">
+<h5 id="sec-1-1-4-2">FLOWR by example</h5>
+<div class="outline-text-5" id="text-1-1-4-2">
+<div class="org-src-container">
+
+<pre class="src src-xquery">for $i in 1 to 8
+let $squared := $i * $i
+where $squared &gt;= 25
+order by $i descending
+return $i
+</pre>
+</div>
+
+<blockquote>
+<p>
+In xquery, everything is a sequence of items.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">let $i := (1,2,3)
+return $i
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">for $i := (1,2,3)
+return $i
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-1-5" class="outline-4">
+<h4 id="sec-1-1-5">Writing Conditional Expressions</h4>
+<div class="outline-text-4" id="text-1-1-5">
+<p>
+If will always have all 3 IF, THEN &amp; ELSE blocks.
+They can be nested.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">for $t in (5, 22, 35)
+  if ($t &lt; 10)
+  then "It's cold."
+  else
+    if ($t &lt; 30)
+    then "It's nice."
+    else "It's warm."
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-6" class="outline-4">
+<h4 id="sec-1-1-6">Using XQuery Functions and Operators</h4>
+<div class="outline-text-4" id="text-1-1-6">
+<p>
+Documentation is online:
+</p>
+<ul class="org-ul">
+<li><a href="http://docs.marklogic.com">http://docs.marklogic.com</a>
+</li>
+<li><a href="http://www.w3.org/TR/xpath-functions">http://www.w3.org/TR/xpath-functions</a>
+</li>
+<li><a href="http://www.zqueryfunctions.com/xq">http://www.zqueryfunctions.com/xq</a>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1-6-1" class="outline-5">
+<h5 id="sec-1-1-6-1">Function</h5>
+<div class="outline-text-5" id="text-1-1-6-1">
+<ul class="org-ul">
+<li>namespace reference
+</li>
+<li id="xquery version "1.0-ml"">marklogic dialog of xquery
+<ul class="org-ul">
+<li>Out of the box:
+<dl class="org-dl">
+<dt> cts </dt><dd>Core text search,
+</dd>
+<dt> xs </dt><dd>xml schema
+</dd>
+<dt> xdmp </dt><dd>databas &amp; app servce
+</dd>
+<dt> fn </dt><dd>default namespace
+</dd>
+</dl>
+</li>
+</ul>
+</li>
+</ul>
+
+<blockquote>
+<p>
+<code>text()</code> &amp;&amp; <code>string()</code> are node tests.
+<code>text()</code> does <b>not include</b> nested children.
+<code>string()</code> does <b>include</b> nested children.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">xquery version "1.0-ml";
+let $var = &lt;rootnode&gt;ABC &lt;childnode id="99"&gt;123&lt;/childnode&gt;XYZ&lt;/rootnode&gt;
+return $var/text()   (: ABC XYZ :)
+return $var/string() (:ABC 123XYZ :)
+</pre>
+</div>
+
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">let $xml :=
+  document {
+&lt;customer&gt;
+  &lt;phone&gt;1112223333&lt;/phone&gt;
+&lt;/customer&gt;
+}
+let $phone := fn:string($xml/cust/phone/text())
+fn:replace($phone,"(\d{3})(\d{3})(\d{4}", "($1) $2-$3"
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-1-6-2" class="outline-5">
+<h5 id="sec-1-1-6-2">Other 'helpful' string/generic functions</h5>
+<div class="outline-text-5" id="text-1-1-6-2">
+<ul class="org-ul">
+<li>string
+<ul class="org-ul">
+<li><code>fn:substring</code>
+</li>
+<li><code>fn:string-join</code>
+</li>
+<li><code>fn:replace</code>
+</li>
+<li><code>fn:tokenize</code>
+</li>
+</ul>
+</li>
+<li>generic
+<ul class="org-ul">
+<li><code>fn:contains</code>
+</li>
+<li><code>fn:string</code>
+</li>
+<li><code>fn:data</code>
+</li>
+<li><code>fn:distinct-values</code>
+</li>
+</ul>
+</li>
+<li>date
+<dl class="org-dl">
+<dt> xs:date </dt><dd>the date type ('yyyy-MM-dd')
+</dd>
+<dt> xs:current-date </dt><dd>today in typed date format
+</dd>
+<dt> xs:days-from-duration </dt><dd>difference between dates in days
+</dd>
+</dl>
+</li>
+<li>http
+<ul class="org-ul">
+<li>xmdp:get-request-field("form-id")
+</li>
+</ul>
+</li>
+<li>math
+<ul class="org-ul">
+<li>fn:floor
+</li>
+<li>fm:integer
+</li>
+</ul>
+</li>
+</ul>
+
+<blockquote>
+<p>
+The <code>fn:div</code> is the division operator in marklogic.
+<code>/</code> would be super fun when dealing with xml.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+</div>
+</div>
