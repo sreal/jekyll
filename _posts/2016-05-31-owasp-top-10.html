@@ -592,8 +592,6 @@ Simple text based attack
 </div>
 </div>
 
-
-
 <div id="outline-container-sec-3-1-4" class="outline-4">
 <h4 id="sec-3-1-4">Technical Impact (dependand on asset)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="red">red</span></span></h4>
 <div class="outline-text-4" id="text-3-1-4">
@@ -824,7 +822,435 @@ Code as if request validation doesn't exist. It is a last line of defense.
 </li>
 <li>Expect attack obfuscation to occur
 </li>
-<li></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Broken Authentication and Session Management</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1">The Matrix</h3>
+<div class="outline-text-3" id="text-4-1">
+</div><div id="outline-container-sec-4-1-1" class="outline-4">
+<h4 id="sec-4-1-1">Threat Agents</h4>
+<div class="outline-text-4" id="text-4-1-1">
+<p>
+Anonymous external attackers trying to steal accounts, Insiders wanting to hide their actions
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4-1-2" class="outline-4">
+<h4 id="sec-4-1-2">Attack Vectors&#xa0;&#xa0;&#xa0;<span class="tag"><span class="orange">orange</span></span></h4>
+<div class="outline-text-4" id="text-4-1-2">
+<p>
+Leaks/flaws in authentication/session management functions to impersonate users
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4-1-3" class="outline-4">
+<h4 id="sec-4-1-3">Security Weaknesses</h4>
+<div class="outline-text-4" id="text-4-1-3">
+</div><div id="outline-container-sec-4-1-3-1" class="outline-5">
+<h5 id="sec-4-1-3-1">Prevalene&#xa0;&#xa0;&#xa0;<span class="tag"><span class="orange">orange</span></span></h5>
+<div class="outline-text-5" id="text-4-1-3-1">
+<ul class="org-ul">
+<li>from custom auth and session management schemes
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4-1-3-2" class="outline-5">
+<h5 id="sec-4-1-3-2">Detectability&#xa0;&#xa0;&#xa0;<span class="tag"><span class="orange">orange</span></span></h5>
+<div class="outline-text-5" id="text-4-1-3-2">
+<ul class="org-ul">
+<li>Hard because of uniquieness of each scheme
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4-1-4" class="outline-4">
+<h4 id="sec-4-1-4">Technical Impact (dependand on asset)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="red">red</span></span></h4>
+<div class="outline-text-4" id="text-4-1-4">
+<ul class="org-ul">
+<li>Allow <b><b>all</b></b> account to be attacked
+</li>
+<li>Full priveleages of attacked user
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4-1-5" class="outline-4">
+<h4 id="sec-4-1-5">Security Controls</h4>
+</div>
+
+<div id="outline-container-sec-4-1-6" class="outline-4">
+<h4 id="sec-4-1-6">Business Impact (dependent on nature of data)</h4>
+<div class="outline-text-4" id="text-4-1-6">
+<dl class="org-dl">
+<dt> Consider value of </dt><dd><ul class="org-ul">
+<li>affected data
+</li>
+<li>application functions
+</li>
+</ul>
+</dd>
+
+<dt> Include in consideration impact of </dt><dd><ul class="org-ul">
+<li>public exposure of vunerability
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2">Notes:</h3>
+<div class="outline-text-3" id="text-4-2">
+<blockquote>
+<p>
+Never have sensitive information in the url.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3">Security in depth</h3>
+<div class="outline-text-3" id="text-4-3">
+</div><div id="outline-container-sec-4-3-1" class="outline-4">
+<h4 id="sec-4-3-1">Session Persistence</h4>
+<div class="outline-text-4" id="text-4-3-1">
+</div><div id="outline-container-sec-4-3-1-1" class="outline-5">
+<h5 id="sec-4-3-1-1">Url Session Persistence</h5>
+<div class="outline-text-5" id="text-4-3-1-1">
+<p>
+<b><b>This is unsecure</b></b>
+</p>
+
+<p>
+HTTP is a stateless protocol, putting the session in the url is a hack to get around this.
+</p>
+
+<dl class="org-dl">
+<dt> Problem is the session would be stored via </dt><dd><ul class="org-ul">
+<li>sharing on social media
+</li>
+<li>Logging
+</li>
+<li>Browser history
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-sec-4-3-1-2" class="outline-5">
+<h5 id="sec-4-3-1-2">Session Persistence in a cookie</h5>
+<div class="outline-text-5" id="text-4-3-1-2">
+<p>
+Works by sending the cookie with the request. The cookie is not shared via url
+</p>
+
+<p>
+Problem is if cookies are not enabled in the browser.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4-3-1-3" class="outline-5">
+<h5 id="sec-4-3-1-3">ASP.NET Types</h5>
+<div class="outline-text-5" id="text-4-3-1-3">
+<ol class="org-ol">
+<li>UseUri
+</li>
+<li>UseCookies (default)
+</li>
+<li>UseDeviceProfile - Cookies with fallback.
+</li>
+<li>AutoDetect
+</li>
+</ol>
+
+<blockquote>
+<p>
+It may be worth not allowing uses without cookies enabled.
+</p>
+</blockquote>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4-3-2" class="outline-4">
+<h4 id="sec-4-3-2">Broken Authentication</h4>
+<div class="outline-text-4" id="text-4-3-2">
+<p>
+Rolling your own authentication is hard. The recommendation is to use pre-rolled.
+Eg. ASP.NET's <code>MembershipProvider</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-4-3-3" class="outline-4">
+<h4 id="sec-4-3-3">Session and forms timout</h4>
+<div class="outline-text-4" id="text-4-3-3">
+<blockquote>
+<p>
+Timeout is a balance between the convenience between
+</p>
+<ol class="org-ol">
+<li>user remaining logged in and
+</li>
+<li>session becoming hijacked.
+</li>
+</ol>
+</blockquote>
+
+<dl class="org-dl">
+<dt> ASP Default </dt><dd><ul class="org-ul">
+<li>Session : 20 minutes
+</li>
+<li id="Forms">30 minutes
+</li>
+</ul>
+</dd>
+</dl>
+
+<blockquote>
+<p>
+By default, A new ASP.NET Forms application will increase the timeout to 2 days
+</p>
+</blockquote>
+
+<dl class="org-dl">
+<dt> Types </dt><dd><ul class="org-ul">
+<li>Sliding - <code>&lt;forms sliding="false" /&gt;</code> - Ends XX time after inactivy.
+</li>
+<li>Fixed - <code>default</code> - Explict duration.
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-sec-4-3-4" class="outline-4">
+<h4 id="sec-4-3-4">Other Needed Patterns.</h4>
+<div class="outline-text-4" id="text-4-3-4">
+<ol class="org-ol">
+<li>Cryptographically secure password credential storage.
+</li>
+<li>Robust minimum password criteria.
+</li>
+<li>Never send password by email.
+</li>
+<li>Protect session IDs in cookies.
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4">Summary</h3>
+<div class="outline-text-3" id="text-4-4">
+<ul class="org-ul">
+<li>Keep session IDs out of Url, use cookies
+</li>
+<li>Use ASP.NET membership provider
+</li>
+<li>Customise session &amp; forms timeout
+</li>
+<li>Disable sliding forms authentication if possible
+</li>
+<li>Broken auth is a broad risk and is highly related to other top 10.
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">Insecure Direct Object References</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1">The Matrix</h3>
+<div class="outline-text-3" id="text-5-1">
+</div><div id="outline-container-sec-5-1-1" class="outline-4">
+<h4 id="sec-5-1-1">Threat Agents</h4>
+<div class="outline-text-4" id="text-5-1-1">
+<p>
+Users with partial access
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-1-2" class="outline-4">
+<h4 id="sec-5-1-2">Attack Vectors&#xa0;&#xa0;&#xa0;<span class="tag"><span class="easy">easy</span></span></h4>
+<div class="outline-text-4" id="text-5-1-2">
+<p>
+Authorised user changes a parameter value, and get access to another object the user isn't aithourized for.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-5-1-3" class="outline-4">
+<h4 id="sec-5-1-3">Security Weaknesses</h4>
+<div class="outline-text-4" id="text-5-1-3">
+</div><div id="outline-container-sec-5-1-3-1" class="outline-5">
+<h5 id="sec-5-1-3-1">Prevalene&#xa0;&#xa0;&#xa0;<span class="tag"><span class="orange">orange</span></span></h5>
+<div class="outline-text-5" id="text-5-1-3-1">
+<ul class="org-ul">
+<li>when the user is used  page, application don't always validate the user.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5-1-3-2" class="outline-5">
+<h5 id="sec-5-1-3-2">Detectability&#xa0;&#xa0;&#xa0;<span class="tag"><span class="red">red</span></span></h5>
+<div class="outline-text-5" id="text-5-1-3-2">
+<ul class="org-ul">
+<li>Testers can easily manipulate values to detect such flaws
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5-1-4" class="outline-4">
+<h4 id="sec-5-1-4">Technical Impact (dependand on asset)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="red">red</span></span></h4>
+<div class="outline-text-4" id="text-5-1-4">
+<ul class="org-ul">
+<li>Compromise all data referenced by the parameter
+</li>
+<li>Commonly all data of that type
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-5-1-5" class="outline-4">
+<h4 id="sec-5-1-5">Security Controls</h4>
+</div>
+
+<div id="outline-container-sec-5-1-6" class="outline-4">
+<h4 id="sec-5-1-6">Business Impact (dependent on nature of data)</h4>
+<div class="outline-text-4" id="text-5-1-6">
+<dl class="org-dl">
+<dt> Consider value of </dt><dd><ul class="org-ul">
+<li>exposed data
+</li>
+</ul>
+</dd>
+
+<dt> Include in consideration impact of </dt><dd><ul class="org-ul">
+<li>public exposure of vunerability
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2">Notes</h3>
+<div class="outline-text-3" id="text-5-2">
+<blockquote>
+<p>
+It's about gaining access to other user accounts.
+</p>
+</blockquote>
+
+<dl class="org-dl">
+<dt> Direct Object Reference </dt><dd><ul class="org-ul">
+<li>Observable key use to identify an individual database record.
+</li>
+</ul>
+</dd>
+<dt> Risk </dt><dd><ul class="org-ul">
+<li>Manipulation of a direct object reference
+</li>
+<li>Direct reference are often
+<ul class="org-ul">
+<li>Patterns (incrementing
+</li>
+<li>Natural Keys/Logicdata (username)
+</li>
+<li>Discoverable data (social security numbers)
+</li>
+</ul>
+</li>
+<li>Direct object references can then be brute forced/scripted for access.
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3">Security in Depth</h3>
+<div class="outline-text-3" id="text-5-3">
+</div><div id="outline-container-sec-5-3-1" class="outline-4">
+<h4 id="sec-5-3-1">Access Controls</h4>
+<div class="outline-text-4" id="text-5-3-1">
+<p>
+Correct access control makes sure users can only access the appropriate records.
+</p>
+
+<blockquote>
+<p>
+Heart of Indirect Object Reference Access is a lack Access controls.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-sec-5-3-2" class="outline-4">
+<h4 id="sec-5-3-2">Indirect Object Reference Map</h4>
+<div class="outline-text-4" id="text-5-3-2">
+<p>
+An abstration between what is publicly obwservable and the individual database record.
+</p>
+
+<ul class="org-ul">
+<li>Map internal records to <b>temporary</b>, <b>user specific</b>, <b>random</b> record.
+</li>
+<li>Server maintains a map between the the temp record and the internal value
+</li>
+
+<li id="Important priciples"><ul class="org-ul">
+<li>Temporary
+</li>
+<li>User specific
+</li>
+<li>Indirect reference is random
+</li>
+</ul>
+</li>
+
+<li id="Considerations when building"><ul class="org-ul">
+<li>Multiple front ends?
+</li>
+<li>Potential overhead?
+</li>
+</ul>
+</li>
 </ul>
 </div>
 </div>
