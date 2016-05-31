@@ -1,0 +1,513 @@
+---
+layout: default
+title: Developing Marklogic Applications I - Security
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Developing Marklogic Applications I - Day 4</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This is contunuation continuation of my notes from the MarkLogic training course <a href="http://www.marklogic.com/training-courses/developing-marklogic-applications-i-xquery/">Developing Marklogic Applications I - XQuery</a>
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">Day 4: Secuirty and Advanced Search</h3>
+<div class="outline-text-3" id="text-1-1">
+</div><div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1">Security</h4>
+<div class="outline-text-4" id="text-1-1-1">
+</div><div id="outline-container-sec-1-1-1-1" class="outline-5">
+<h5 id="sec-1-1-1-1">Security Database</h5>
+<div class="outline-text-5" id="text-1-1-1-1">
+<dl class="org-dl">
+<dt> Contains </dt><dd><ul class="org-ul">
+<li>users
+</li>
+<li>roles
+</li>
+<li>privelages
+</li>
+</ul>
+</dd>
+<dt> (no term) </dt><dd>Share across applications
+</dd>
+<dt> (no term) </dt><dd>Projects reference teh security db.
+</dd>
+<dt> (no term) </dt><dd>Authenticatino occurs agains the security database
+</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-1-2" class="outline-5">
+<h5 id="sec-1-1-1-2">Allowed Access Methods</h5>
+<div class="outline-text-5" id="text-1-1-1-2">
+<p>
+For HTTP &amp; WebDAV
+</p>
+<ul class="org-ul">
+<li>Basic
+</li>
+<li>Digest
+</li>
+<li>Digest-basic
+</li>
+<li>Application Level (most common)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-1-3" class="outline-5">
+<h5 id="sec-1-1-1-3">App server authenication</h5>
+<div class="outline-text-5" id="text-1-1-1-3">
+<ul class="org-ul">
+<li><code>Configure</code> - <code>Group</code> - <code>Default</code> - <code>App Servers</code> - <code>App Server Name</code>
+</li>
+<li>Default user is the non-authenticated user
+</li>
+<li>Common to use a Default role for the non-authed user
+</li>
+</ul>
+
+<blockquote>
+<p>
+When searching you are search document you have <code>read</code> permissions for.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-1-4" class="outline-5">
+<h5 id="sec-1-1-1-4">Role based auth</h5>
+<div class="outline-text-5" id="text-1-1-1-4">
+<ul class="org-ul">
+<li>Roles are hierachical.
+</li>
+<li id="Contains"><ul class="org-ul">
+<li>Content user can query
+</li>
+<li>Code users can run
+</li>
+<li>Locations users can modify (crud)
+</li>
+</ul>
+</li>
+<li id="Users"><ul class="org-ul">
+<li>Primary identifier for auth
+</li>
+<li>Users has many roles (1: N roles)
+</li>
+<li><code>Configure</code> - <code>Security</code> - <code>Users</code>
+</li>
+</ul>
+</li>
+<li id="Document Permissions"><ul class="org-ul">
+<li>Authenticates roles for particular documents
+</li>
+<li>Explicitly set via <code>xdmp</code> function
+</li>
+<li id="4 types of permission"><ul class="org-ul">
+<li>Read
+</li>
+<li>Update
+</li>
+<li>Insert
+</li>
+<li>Execute (module database)
+</li>
+</ul>
+</li>
+<li>Execute Privileges
+<ul class="org-ul">
+<li>Lock downs spoecific functions
+</li>
+<li>Assigned on a per user basis
+</li>
+<li><code>Security</code> - <code>Roles</code> - <code>Configure [Tab]</code>
+</li>
+<li id="Amp">is a temporary elevation of a users roles.
+</li>
+</ul>
+</li>
+<li>URI priveges
+<ul class="org-ul">
+<li>Allow create within a specific space
+</li>
+<li>wild card in an any-uri privilege
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">xdmp:document-set-permissions(
+  "/songs/The-Doobie-Brothers+Black_Water.xml",
+  xdmp:permission("top-songs-user-role", "read))
+</pre>
+</div>
+</div>
+
+<ul class="org-ul"><li><a id="sec-1-1-1-4-1" name="sec-1-1-1-4-1"></a>Custom Authentication Creation Steps<br  /><div class="outline-text-6" id="text-1-1-1-4-1">
+<ol class="org-ol">
+<li>Turn on
+</li>
+<li>Default User
+</li>
+<li>Use Functions to:
+<ul class="org-ul">
+<li>Start/End User Session
+</li>
+<li>Get Current User Roles
+</li>
+</ul>
+</li>
+</ol>
+
+<p>
+The lab use a pure marklogic authentication layer
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">import module namespace sec="http://marklogic.com/xdmp/security" at "/MarkLogic/security.xqy"
+let $role-id := xdmp:dpcument-get-permissions(fn:base-uri(fn:doc()[1]))/sec:role-id/text()
+sec:get-role-name(($role-id))
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">xquery version "1.0-ml";
+import module namespace sec="http://marklogic.com/xdmp/security" at "/MarkLogic/security.xqy"
+
+for $p in xdmp:eval(
+  'xdmp:document-get-permissions(fn: base-uri(fn:doc()[1]))',
+   (),
+  &lt;options xmlns="xdmp:eval"&gt;
+    &lt;database&gt;{xdmp:database("top-songs")}&lt;/database&gt;
+  &lt;/options&gt;
+)
+return sec:get-role-name($p/sec:role-id/text())
+</pre>
+</div>
+</div>
+</li></ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2">Advanced Srach</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+Advances Types:
+</p>
+<ul class="org-ul">
+<li>OR
+</li>
+<li>Phrase
+</li>
+<li>NOT
+</li>
+<li>Fields can group properties to search
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1-2-1" class="outline-5">
+<h5 id="sec-1-1-2-1">Fields</h5>
+<div class="outline-text-5" id="text-1-1-2-1">
+<ul class="org-ul">
+<li>Query potions of database based on elemetns
+</li>
+<li><code>Configure</code> - <code>Databases</code> - <code>&lt;dbname&gt;</code> - <code>Files</code> - <code>Create</code>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-3" class="outline-4">
+<h4 id="sec-1-1-3">REST API</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<dl class="org-dl">
+<dt> There are 3 REST apis </dt><dd><ul class="org-ul">
+<li>client api (buildings apps, crud, search),
+</li>
+<li>management rest api (deployment, administrative tasks)
+</li>
+<li>Packaging API (configuration mangement, snapshots0
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+
+<div id="outline-container-sec-1-1-3-1" class="outline-5">
+<h5 id="sec-1-1-3-1">Endpoints</h5>
+<div class="outline-text-5" id="text-1-1-3-1">
+<ul class="org-ul">
+<li>/v1/rest-apis : create a rest instance
+</li>
+<li>/v1/documents
+</li>
+<li>/v1/search
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-3-2" class="outline-5">
+<h5 id="sec-1-1-3-2">Extensibility</h5>
+<div class="outline-text-5" id="text-1-1-3-2">
+<dl class="org-dl">
+<dt> Out of the Box </dt><dd><ul class="org-ul">
+<li>search,
+</li>
+<li>crud,
+</li>
+<li>xml,
+</li>
+<li>json,
+</li>
+<li>binary,
+</li>
+<li>transactison,
+</li>
+<li>admin,
+</li>
+<li>configuration
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-3-3" class="outline-5">
+<h5 id="sec-1-1-3-3">Creating an REST instance</h5>
+<div class="outline-text-5" id="text-1-1-3-3">
+<div class="org-src-container">
+
+<pre class="src src-Creating">&lt;rest-api xmlns="http://marklogic.com/rest-api"&gt;
+  &lt;name&gt;top-songs-appserver&lt;/name&gt;
+  &lt;group&gt;Default&lt;/group&gt;
+  &lt;database&gt;top-songs-content&lt;/database&gt;
+  &lt;modules-database&gt;top-songs-modules&lt;/modules-database&gt;
+  &lt;port&gt;7010&lt;/port&gt;
+&lt;/rest-api&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">curl --anyauth --user admin:admin -X POST -d@"./myconfig.xml" -i -H "Content-type:application/xml" http://localhost:8002/v1/rest-apis
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-4" class="outline-4">
+<h4 id="sec-1-1-4">Semantics</h4>
+<div class="outline-text-4" id="text-1-1-4">
+</div><div id="outline-container-sec-1-1-4-1" class="outline-5">
+<h5 id="sec-1-1-4-1">Terminology</h5>
+<div class="outline-text-5" id="text-1-1-4-1">
+<dl class="org-dl">
+<dt> RDF </dt><dd><ul class="org-ul">
+<li>Resource Description Framework
+</li>
+</ul>
+</dd>
+<dt> RDF Triple </dt><dd><ul class="org-ul">
+<li>Represents a fact
+</li>
+<li>&lt;subject&gt; - &lt;predicate&gt; - &lt;object&gt;
+<dl class="org-dl">
+<dt> Subject </dt><dd><ul class="org-ul">
+<li>A representation of a resource
+</li>
+</ul>
+</dd>
+<dt> Predicate </dt><dd><ul class="org-ul">
+<li>A representation of a property or characteristes of the subject or the relationship between the ssubject and the objects
+</li>
+<li>Called, arc or edge
+</li>
+</ul>
+</dd>
+<dt> Object </dt><dd><ul class="org-ul">
+<li>preperty value
+</li>
+<li>Maybe typed
+</li>
+<li>Maybe subject of other triples.
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</dd>
+<dt> Graph </dt><dd><ul class="org-ul">
+<li>Set of RDF triple statements or patterns
+</li>
+</ul>
+</dd>
+<dt> IRI </dt><dd><ul class="org-ul">
+<li>International Resource Identifier
+</li>
+<li>Uniquely identifies resources in an RDF triple
+</li>
+<li>May contain Unicode characters (unlike URIs which are ASCII)
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-4-2" class="outline-5">
+<h5 id="sec-1-1-4-2">Trile data</h5>
+<div class="outline-text-5" id="text-1-1-4-2">
+<ul class="org-ul">
+<li>Importing standarizes the triple formal, just need to define the import format in ML.
+</li>
+<li><code>Triple index</code> must be turned on for sparkle query.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-4-3" class="outline-5">
+<h5 id="sec-1-1-4-3">Sparql</h5>
+<div class="outline-text-5" id="text-1-1-4-3">
+<ul class="org-ul">
+<li>SPARQL is the query language for Triple data
+</li>
+<li>SPARQL Protocol And RDF Query Languale
+</li>
+<li>Use SARQL in Marklogic via:
+<ul class="org-ul">
+<li>REST
+</li>
+<li>XQuery API
+</li>
+<li>Query Console Tools
+</li>
+<li></li>
+</ul>
+</li>
+</ul>
+</div>
+
+<ul class="org-ul"><li><a id="sec-1-1-4-3-1" name="sec-1-1-4-3-1"></a>Intro to SPARQL<br  /><div class="outline-text-6" id="text-1-1-4-3-1">
+<div class="org-src-container">
+
+<pre class="src src-sparql">SELECT ?p
+WHERE {&lt;http://dbpedia.org/resource/David_Bowie&gt; ?p ?o}
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sparql">PREFIX db: &lt;http://dbpedia.org/resource/&gt;
+PREFIX onto: &lt;http://dbpedia.org/ontology/&gt;
+PREFIX dc: &lt;http://purl.org/dc/eleemetns/1.1/&gt;
+SELECT *
+WHERE {
+  ?s db:birthPlace db:Athens .
+  ?s db:birthPlace db:Greece .
+  ?s dc:description ?o
+}
+</pre>
+</div>
+
+<blockquote>
+<p>
+Namespaces
+foaf : friend of a friend : <a href="http://mlxns.com/foaf/0.1">http://mlxns.com/foaf/0.1</a>
+dc : dublin core : <a href="http://purl.org/dc/elements/1.1">http://purl.org/dc/elements/1.1</a> (about people)
+</p>
+</blockquote>
+
+<div class="org-src-container">
+
+<pre class="src src-SPARQL">SELECT *
+WHERE {
+?s db:birthPlace db:Athens ;
+   db:birthPlace db:Greece ;
+   dc:descriptionPlace ?o
+}
+</pre>
+</div>
+</div>
+
+<ul class="org-ul"><li><a id="sec-1-1-4-3-1-1" name="sec-1-1-4-3-1-1"></a>Other keyworks<br  /><div class="outline-text-7" id="text-1-1-4-3-1-1">
+<ul class="org-ul">
+<li>UNION - join
+</li>
+<li>OPTIONAL - return a value if avaliable
+</li>
+<li>FILTER
+</li>
+<li>DISTINCT
+</li>
+<li>LIMIT
+</li>
+</ul>
+</div>
+</li></ul>
+</li></ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-1-5" class="outline-4">
+<h4 id="sec-1-1-5">Log Files</h4>
+<div class="outline-text-4" id="text-1-1-5">
+<ul class="org-ul">
+<li>By default in found in marklogic directory
+</li>
+<li id="3 types"><ul class="org-ul">
+<li>Access
+</li>
+<li>Audit (Empty by default
+</li>
+<li>Error
+</li>
+</ul>
+</li>
+<li>1 Log per App Service
+</li>
+<li>Rotate daily
+</li>
+<li>Hold for a week
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">xdmp:log($message, $level);
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">xquery version "1.0-ml";
+try {
+  1 div 0
+} catch ($) {
+  xdmp:log($e/error:code/text())
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>

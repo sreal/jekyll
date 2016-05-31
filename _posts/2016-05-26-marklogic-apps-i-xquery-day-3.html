@@ -1,0 +1,370 @@
+---
+layout: default
+title: Developing Marklogic Applications I - Search Concepts
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Developing Marklogic Applications I - Serach Concepts</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This is continuation of my notes from the MarkLogic training course <a href="http://www.marklogic.com/training-courses/developing-marklogic-applications-i-xquery/">Developing Marklogic Applications I - XQuery</a>
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">Day 3: Search Concepts</h3>
+<div class="outline-text-3" id="text-1-1">
+</div><div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1">Search</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<blockquote>
+<p>
+Everything in the Information Studio can be scripted via the <code>admin</code> module
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+By Default, <code>cts:search</code> is <code>filtered</code>
+</p>
+</blockquote>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">cts:search(
+  fn:collection(),
+  cts:near-query((cts:word-query("cats"), cts:word-query("cats")), 2),
+  "filtered"
+)
+</pre>
+</div>
+
+<blockquote>
+<p>
+By Default, Reindexing occurs as soon as a configuration value is changes.
+IE automatic reindexing.
+</p>
+</blockquote>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">xdmp:plan(cts:search(fn:collection("books"), cts:word-query("dog")))//qry:final-plan
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2">GeoSpacial Search</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+Basis of geospacial is latitude and longditude.
+The basic Marklogic type is <code>cts:point</code>
+</p>
+</div>
+
+<div id="outline-container-sec-1-1-2-1" class="outline-5">
+<h5 id="sec-1-1-2-1">Queries</h5>
+<div class="outline-text-5" id="text-1-1-2-1">
+<ul class="org-ul">
+<li><code>cts:circle($radiusInMiles, cts:point(-33.8830, 151.2216)</code>
+</li>
+<li><code>cts:polygon($pointsSequence)</code>
+</li>
+<li><code>cts:box($lowerCorner, $upperCorner)</code>
+</li>
+<li><code>cts:element-pair-geospatial-query()</code>
+</li>
+<li><code>cts:element-geospatial-query()</code>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2-2" class="outline-5">
+<h5 id="sec-1-1-2-2">Index Types</h5>
+<div class="outline-text-5" id="text-1-1-2-2">
+<ul class="org-ul">
+<li>Element - <code>&lt;element&gt; lat, long &lt;/element&gt;</code>
+</li>
+<li>Element Child - <code>&lt;element&gt; &lt;child&gt;lat, long&lt;/child&gt; &lt;/element&gt;</code>
+</li>
+<li>Element Pair - <code>&lt;element&gt; &lt;lat&gt;lat&lt;/lat&gt;&lt;long&gt;long&lt;/long&gt;&lt;/element&gt;</code>
+</li>
+<li>Attribute - <code>&lt;element lat="lat" long="long" /&gt;</code>
+</li>
+</ul>
+
+<blockquote>
+<p>
+Information Studio Workspaces are xml.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2-3" class="outline-5">
+<h5 id="sec-1-1-2-3">Examples</h5>
+<div class="outline-text-5" id="text-1-1-2-3">
+<div class="org-src-container">
+
+<pre class="src src-xquery">cts:search(
+  fn:collection(),
+  cts:element-pair-geospacial-query(
+    xs:QName("place"), xs:QName("lat"), xs:QName("lon"),
+    cts:circle( 200, cts:point(25.0, -80) )))
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">xdmp:http-get("some-url", options);
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-3" class="outline-4">
+<h4 id="sec-1-1-3">Snippets, Highlighting, Sorting and Pagination</h4>
+<div class="outline-text-4" id="text-1-1-3">
+</div><div id="outline-container-sec-1-1-3-1" class="outline-5">
+<h5 id="sec-1-1-3-1">Snippets</h5>
+<div class="outline-text-5" id="text-1-1-3-1">
+<p>
+Search returns a snippeted results set.
+Results provide a search snippet that gives the context of the search results.
+</p>
+
+<p>
+Included snippet elements
+</p>
+<ul class="org-ul">
+<li>search:result
+</li>
+<li>snippet:sni
+</li>
+</ul>
+
+<p>
+Can provide a option on the serch request to apply transform
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">&lt;options xmls="http://marklogic.com/appservices/search"&gt;
+  &lt;transform-results apply="snippet"&gt;
+    &lt;preferred-elements&gt;
+      &lt;element ns="http://marklogic.com/mlu/top-songs" name="descr" /&gt;
+    &lt;/preferred-elemetns&gt;
+  &lt;/transform-results&gt;
+&lt;/options&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-3-2" class="outline-5">
+<h5 id="sec-1-1-3-2">Highlighting</h5>
+<div class="outline-text-5" id="text-1-1-3-2">
+<p>
+Results set includesd a highligh that can then have a class wrapping the string.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-3-3" class="outline-5">
+<h5 id="sec-1-1-3-3">Sort options</h5>
+<div class="outline-text-5" id="text-1-1-3-3">
+<p>
+Sort options require range indexes
+</p>
+
+<p>
+<code>option</code> node defined how the search results are sorted.
+</p>
+</div>
+
+<ul class="org-ul"><li><a id="sec-1-1-3-3-1" name="sec-1-1-3-3-1"></a>Optiizing Sort<br  /><div class="outline-text-6" id="text-1-1-3-3-1">
+<ul class="org-ul">
+<li>Ranged indexs can use range indexes.
+</li>
+<li>Ranged indexes cab improve performance.
+</li>
+<li>Adding <code>&lt;debug&gt;</code> to the options will show if range indexes are being used.
+</li>
+</ul>
+</div>
+</li></ul>
+</div>
+
+<div id="outline-container-sec-1-1-3-4" class="outline-5">
+<h5 id="sec-1-1-3-4">PAgniation</h5>
+<div class="outline-text-5" id="text-1-1-3-4">
+<ul class="org-ul">
+<li>Default to 10 results
+</li>
+<li>Modified in the results set.
+</li>
+<li>search:response inclused <code>total</code>, <code>start</code>, and <code>page-length</code>
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">search:search("beatles", (), 11)
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-1-4" class="outline-4">
+<h4 id="sec-1-1-4">Faceted Navigation</h4>
+<div class="outline-text-4" id="text-1-1-4">
+<ul class="org-ul">
+<li>Facets are grouped search results. by adding contraints to the query
+</li>
+<li>Facets can be Bucketed contraints (eg Decade 2010-2020). These have upper and lower bounds.
+</li>
+<li>Facets require ranged index
+</li>
+<li>String range indexes have a <code>collation</code>. A collation is a uri to the string rules (eg diacritices, case sensitive
+</li>
+<li>Facets are returned in the search results.
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1-4-1" class="outline-5">
+<h5 id="sec-1-1-4-1">Creation of facets</h5>
+<div class="outline-text-5" id="text-1-1-4-1">
+<ol class="org-ol">
+<li>Create a contraint (with collation if needed)
+<ul class="org-ul">
+<li>This may include buckets for bucket contraints.
+</li>
+</ul>
+</li>
+<li>Configure the Facet options.
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-5" class="outline-4">
+<h4 id="sec-1-1-5">Updating Content and Transactions</h4>
+<div class="outline-text-4" id="text-1-1-5">
+</div><div id="outline-container-sec-1-1-5-1" class="outline-5">
+<h5 id="sec-1-1-5-1">MVCC Multi Version Concurrency Controll</h5>
+<div class="outline-text-5" id="text-1-1-5-1">
+</div><ul class="org-ul"><li><a id="sec-1-1-5-1-1" name="sec-1-1-5-1-1"></a>Inserts and Updates<br  /><div class="outline-text-6" id="text-1-1-5-1-1">
+<p>
+On Commit,
+Document is given a created transaction stamp on the document.
+</p>
+<ol class="org-ol">
+<li>Doc and indexes are inserted into Forest in In-Memory Stand, and
+</li>
+<li>An Entry has been made in Forest level Journal on disk
+</li>
+</ol>
+
+<p>
+Once the stand reaches a point (doc count, mem count, /other configuratable ceiling) the docuemtns is pushed from the In-Memory Stand into the On-Disk Stand
+</p>
+
+<p>
+Updates are the same except:
+</p>
+<ol class="org-ol">
+<li>The document uri exists.
+</li>
+<li>The old document received a <code>delete</code> timestamp equal to the new docs create.
+</li>
+<li>Updates aquire a write lock on the document.
+</li>
+</ol>
+
+<blockquote>
+<p>
+MarkLogic is an append database
+</p>
+</blockquote>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">xdmp:document-insert("uri", xml):
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">xdmp:node-replace(fn:doc("song1.xml")/top-song/title, &lt;title&gt;Trouble for Nothing&lt;/title)
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">xdmp:node-insert-child(fn:doc("title")/book, &lt;chapter no="2"&gt;...&lt;/chapter&gt;)
+xdmp:node-insert-after(fn:doc("title")/book/title, &lt;author&gt;Herman Melvill&lt;/author&gt;)
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">xdmp:node-insert-child(fn:doc("moby_dick.xml")/book/author, attribute dob {"1819-08-01"})
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">xdmp:node-insert-child(fn:doc("moby_dick.xml")/book/author/@dob, attribute dob {"unknown"})
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="sec-1-1-5-1-2" name="sec-1-1-5-1-2"></a>Queries<br  /><div class="outline-text-6" id="text-1-1-5-1-2">
+<p>
+Run on a timestamp, so the data from that time is returned.
+this means queries never need to lock documents, becuase its a snapshot.
+</p>
+</div>
+</li>
+
+<li><a id="sec-1-1-5-1-3" name="sec-1-1-5-1-3"></a>Merge / Update transactions<br  /><div class="outline-text-6" id="text-1-1-5-1-3">
+<p>
+Merge, merges stands together.
+Merge purges old deleted documents from the system.
+Only includes the current data.
+</p>
+</div>
+</li>
+
+<li><a id="sec-1-1-5-1-4" name="sec-1-1-5-1-4"></a>Delete<br  /><div class="outline-text-6" id="text-1-1-5-1-4">
+<p>
+Delete marks the document with a delete timestamp.
+Delete is a document update.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">xdmp:node-delete(fn:doc("moby_dick.xml")//chapter[2])
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">xdmp:node-delete(fn:doc("moby_dick.xml")/book/author/@dob)
+</pre>
+</div>
+</div>
+</li></ul>
+</div>
+</div>
+</div>
+</div>

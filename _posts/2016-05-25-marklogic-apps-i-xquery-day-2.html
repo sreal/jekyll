@@ -1,0 +1,1029 @@
+---
+layout: default
+title: Developing Marklogic Applications I - The XQuery Language
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Developing Marklogic Applications I - XQuery</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+This is contunuation continuation of my notes from the MarkLogic training course <a href="http://www.marklogic.com/training-courses/developing-marklogic-applications-i-xquery/">Developing Marklogic Applications I - XQuery</a>
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">Day 2: Deeper into MarkLogic and XQuery APIs</h3>
+<div class="outline-text-3" id="text-1-1">
+</div><div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1">Using XQuery Functions and Operators</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+Different ways to structure code.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2">Function</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<ul class="org-ul">
+<li>Mechanize to modulaire code
+</li>
+<li>Recursove actions
+</li>
+<li>Stong data type
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">declare function local:daysleft() {
+  let $daysleft := xs:date("2018-06-14") - fn:current-date()
+  let $daysleft := days-from-duration(xs:duration($daysleft))
+  return if ($daysleft &gt; 0)
+    then $daysleft
+    else 0
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-html">&lt;p&gt;&lt;span class='daysleft'&gt;{local:daysleft()}&lt;/span&gt;&lt;p&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">declare local:countwins($team as xs:string+) as xs:integer {
+let $seq := //winner[. = $team]
+return fm:count($seq)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-3" class="outline-4">
+<h4 id="sec-1-1-3">Library Modules</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<p>
+Modules are more flexible than local functions.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1-3-1" class="outline-5">
+<h5 id="sec-1-1-3-1">Main vs Library</h5>
+<div class="outline-text-5" id="text-1-1-3-1">
+<dl class="org-dl">
+<dt> Main Modules </dt><dd><ul class="org-ul">
+<li>All functions scoped to the module directly,
+</li>
+<li>Executed directly
+</li>
+</ul>
+</dd>
+<dt> (no term) </dt><dd>Libary Modules::
+<ul class="org-ul">
+<li>are not directly executed,
+</li>
+<li>Imported in main module.
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-3-2" class="outline-5">
+<h5 id="sec-1-1-3-2">Organization</h5>
+<div class="outline-text-5" id="text-1-1-3-2">
+<ul class="org-ul">
+<li>folders for grouping. eg <code>/project/modules/</code>
+</li>
+<li>add <code>-lib</code> suffix to filename
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-3-3" class="outline-5">
+<h5 id="sec-1-1-3-3">Structure</h5>
+<div class="outline-text-5" id="text-1-1-3-3">
+<ol class="org-ol">
+<li>Declare namespace
+</li>
+<li>Add namespace declaration
+</li>
+<li>Define the functions
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-3-4" class="outline-5">
+<h5 id="sec-1-1-3-4">Usage</h5>
+<div class="outline-text-5" id="text-1-1-3-4">
+<p>
+In the main module prolog,
+</p>
+
+<ul class="org-ul">
+<li><code>import</code> namespace define in module
+</li>
+<li>include relative location
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-3-5" class="outline-5">
+<h5 id="sec-1-1-3-5">Example</h5>
+<div class="outline-text-5" id="text-1-1-3-5">
+<div class="org-src-container">
+
+<pre class="src src-xquery">xquery version "1.0-ml";
+module namespace co = "http://marklogic.com/mlu/world-leaders/common";
+declare namespace wl = "http://marklogic.com/mlu/world-leaders";
+declare function in-office() as xs:string
+{
+    let $incount := fn:count(/wl:leader/wl:positions/wl:position[1]/wl:enddate/text()[. = "present"])
+    return fn:concat(" (in office: ",  $incount, ")")
+};
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">import module namespace co "http://marklogic.com/mlu/world-leaders/common" at "./modules/common-lib.xqy"
+&lt;div&gt;{co:on-office(})&lt;/div&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-4" class="outline-4">
+<h4 id="sec-1-1-4">Setting Up a Database and Application</h4>
+<div class="outline-text-4" id="text-1-1-4">
+</div><div id="outline-container-sec-1-1-4-1" class="outline-5">
+<h5 id="sec-1-1-4-1">MarkLogic Components</h5>
+<div class="outline-text-5" id="text-1-1-4-1">
+<ul class="org-ul">
+<li>Database
+</li>
+<li>Forest (uint of replication)
+</li>
+<li>Stand (In memory / On Disk)
+</li>
+<li>Universal Index
+</li>
+<li>Applciation Server (HTTP / XDBC / ODBC / WebDAV)
+</li>
+<li>Hosts | Grouped
+</li>
+<li>List Cache | Compressed Tree Cache | Expanded Tree Cache
+</li>
+
+<li>Node/Host/Machines Types
+<dl class="org-dl">
+<dt> E Node </dt><dd>evalutor node - eg. app server instance
+</dd>
+<dt> D Node </dt><dd>datamanager node  - eg. database manager
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-4-2" class="outline-5">
+<h5 id="sec-1-1-4-2">Single Node Architecture</h5>
+<div class="outline-text-5" id="text-1-1-4-2">
+<p>
+Have 4 levels
+</p>
+
+<ol class="org-ol">
+<li>Application server
+<ul class="org-ul">
+<li>Handles request / responses
+</li>
+<li>Defined on a port
+</li>
+<li>Evaluates code
+</li>
+<li id="Access via"><ul class="org-ul">
+<li>xREST &#x2013;&gt; HTTP
+</li>
+<li>WebDAV &#x2013;&gt; OMDC
+</li>
+<li>XDBC
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>Database
+<ul class="org-ul">
+<li>Transaction controller
+</li>
+<li>Logical Configuration
+</li>
+</ul>
+</li>
+<li>Memory Caches
+<ul class="org-ul">
+<li>List Cache (db, in forest)
+</li>
+<li>Compressed Tree Cache (db, in forest)
+</li>
+<li>Expanded Tree Cache (app server)
+</li>
+<li>Triple Data and Triple Value Caches (db)
+</li>
+</ul>
+</li>
+<li>Forests
+<ul class="org-ul">
+<li>Pysical storage
+</li>
+<li>Attached to db
+</li>
+<li>Stands
+<ul class="org-ul">
+<li>Memory
+</li>
+<li>Disk
+</li>
+<li>Documents
+</li>
+<li>Indexes (eg caches)
+</li>
+<li>Compression
+</li>
+</ul>
+</li>
+<li>Journal
+</li>
+</ul>
+</li>
+</ol>
+
+<blockquote>
+<p>
+MarkLogic Forest by default are in: <code>%ProgramFiles%/data/forests</code>
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Commiting data to a forest
+</p>
+<ol class="org-ol">
+<li>Transaction commited
+<ol class="org-ol">
+<li>Data commited to in-memory stand
+</li>
+<li>Journal Entry Created
+</li>
+</ol>
+</li>
+<li>Record then written to on-disc stand
+</li>
+</ol>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-4-3" class="outline-5">
+<h5 id="sec-1-1-4-3">Clustered Architecture</h5>
+<div class="outline-text-5" id="text-1-1-4-3">
+<ul class="org-ul">
+<li>Minimum 3 node required for failover. 1 e-node, 2 d-nodes
+</li>
+</ul>
+
+<blockquote>
+<p>
+<code>Group</code> one or many machines in a cluster.
+</p>
+</blockquote>
+
+<p>
+Cache sizes are manager at the group level. EG, A larger Expanded Tree cache for e nodes.
+</p>
+
+<p>
+Default Databases (common, shared) database can be shared across projects.
+These include:
+</p>
+<ul class="org-ul">
+<li>Security (must be replicated)
+</li>
+<li>Schemas
+</li>
+<li>Trigger
+</li>
+<li>Modules
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-4-4" class="outline-5">
+<h5 id="sec-1-1-4-4">Rebalancing</h5>
+<div class="outline-text-5" id="text-1-1-4-4">
+<ul class="org-ul">
+<li>Marklogic 7+ does rebalancing between when forests are added.
+</li>
+<li>Set <code>assignemnt policy</code>, rebalancer will move data between different forests.
+</li>
+<li>Manage data based on it's lifecycle with Tiered Storage.
+<ul class="org-ul">
+<li>Eg.move data to different storage over time. eg. load to SSD-&gt;SAN-&gt;NAS
+</li>
+</ul>
+</li>
+</ul>
+
+<blockquote>
+<dl class="org-dl">
+<dt> Tiered Storeage </dt><dd>Use partitions (groups of forests) with <code>partition key</code> definitions to mmove data to different places
+</dd>
+<dt> Partition key </dt><dd>is just some piece of information. Eg. a date in a document.
+</dd>
+</dl>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-4-5" class="outline-5">
+<h5 id="sec-1-1-4-5">Security 101</h5>
+<div class="outline-text-5" id="text-1-1-4-5">
+<p>
+Authentication occurs agains the security database.
+</p>
+<ul class="org-ul">
+<li>Roles/Users in Security database.
+</li>
+<li>Documents contain their own permission metadata
+</li>
+</ul>
+
+<p>
+Role Base
+</p>
+<ul class="org-ul">
+<li>Authentication
+<ul class="org-ul">
+<li>Performed on the Application Server
+</li>
+<li>LDAP/Kerberos external authentication protocol
+</li>
+</ul>
+</li>
+<li>Database Level
+</li>
+<li>Code Level
+<ul class="org-ul">
+<li>execute permission says whic user/role can run code.
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-4-6" class="outline-5">
+<h5 id="sec-1-1-4-6">Architechture Summary</h5>
+<div class="outline-text-5" id="text-1-1-4-6">
+<ol class="org-ol">
+<li>Interface
+<ul class="org-ul">
+<li>Java, Rest, Xquery, Odbc
+</li>
+</ul>
+</li>
+<li>Evaluation Layer
+<ol class="org-ol">
+<li>Evaluator
+<ul class="org-ul">
+<li>Xslt, Xpath, Xquery, Sql
+</li>
+</ul>
+</li>
+<li>Cache
+</li>
+<li>Broadcaster, Aggregator
+</li>
+</ol>
+</li>
+<li>Datalayer
+<ol class="org-ol">
+<li>Transaction Controller
+</li>
+<li>Cache, Transaction Ournal
+</li>
+<li>Indexes
+<ul class="org-ul">
+<li>Value,Structure, Text, Scalar, Metadata, Security, Geospacial, Reverse
+</li>
+</ul>
+</li>
+<li>Compressed Storage
+<ul class="org-ul">
+<li>Xml, Json, Binary, Text
+</li>
+</ul>
+</li>
+</ol>
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-5" class="outline-4">
+<h4 id="sec-1-1-5">Loading Data</h4>
+<div class="outline-text-4" id="text-1-1-5">
+</div><div id="outline-container-sec-1-1-5-1" class="outline-5">
+<h5 id="sec-1-1-5-1">Document Types</h5>
+<div class="outline-text-5" id="text-1-1-5-1">
+<ul class="org-ul">
+<li>XML/JSON
+</li>
+<li>Text
+</li>
+<li>Binary
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-5-2" class="outline-5">
+<h5 id="sec-1-1-5-2">Dcoument Metadata</h5>
+<div class="outline-text-5" id="text-1-1-5-2">
+<ol class="org-ol">
+<li>Collections. Documents can be stored in collections.
+</li>
+<li>Permissions. Default required admin
+</li>
+<li>Properties. Common with binary documents
+</li>
+<li>Quality. Affexts the relevance ranking
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-5-3" class="outline-5">
+<h5 id="sec-1-1-5-3">Loading data methods</h5>
+<div class="outline-text-5" id="text-1-1-5-3">
+<ul class="org-ul">
+<li>MLCP (MarkLogic Content Pump)
+</li>
+<li>REST API (curl)
+</li>
+<li>Java API
+</li>
+<li>XQuery/Javascript APIs
+<ul class="org-ul">
+<li>xmdp:document-insert(&lt;xml&gt;)
+</li>
+<li>xmdp:document-load(file-on-disk, &lt;options&gt;&lt;uri/&gt;&lt;collections/&gt;&lt;permissions/&gt;&lt;repair/&gt;&lt;/optinos&gt;)
+</li>
+<li>xdmp:filesystem-directory (bulk loading helper)
+</li>
+</ul>
+</li>
+<li>Others
+<ul class="org-ul">
+<li><a href="load">load</a>() (higher level, information studio)
+</li>
+<li>XCC
+</li>
+<li>WebDAV
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-5-4" class="outline-5">
+<h5 id="sec-1-1-5-4">MarkLogic Content Pump</h5>
+</div>
+
+<div id="outline-container-sec-1-1-5-5" class="outline-5">
+<h5 id="sec-1-1-5-5">3 Functions not just import.</h5>
+<div class="outline-text-5" id="text-1-1-5-5">
+<ol class="org-ol">
+<li>Loading data
+</li>
+<li>Exporting content
+</li>
+<li>Copying databases
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-5-6" class="outline-5">
+<h5 id="sec-1-1-5-6">2 Modes</h5>
+<div class="outline-text-5" id="text-1-1-5-6">
+<ol class="org-ol">
+<li>Local
+</li>
+<li>Distributes (parrelize across cluster)
+</li>
+</ol>
+
+<div class="org-src-container">
+
+<pre class="src src-bat"># There are other params in docs, can tranform some data as well
+mlcp.bat import -host localhost ^
+  -port 8012 ^
+  -username admin -password admin ^
+  -input_file_path C:/mlcp-import/content ^
+  -mode local ^
+  -input_file_pattern "twitter.*\xml " ^
+  -output_uri_replace "C:/mlcp-import/content, 'socialmedia'"
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-6" class="outline-4">
+<h4 id="sec-1-1-6">Developing Search</h4>
+<div class="outline-text-4" id="text-1-1-6">
+</div><div id="outline-container-sec-1-1-6-1" class="outline-5">
+<h5 id="sec-1-1-6-1">The searching Algorith</h5>
+<div class="outline-text-5" id="text-1-1-6-1">
+<ul class="org-ul">
+<li>XPath expression returns <code>Document order</code>, which is arbitrary, versus
+</li>
+<li>search results with return in <code>Relevance order</code>
+</li>
+<li>Impacting Relevancy Ranked Results
+</li>
+</ul>
+</div>
+
+<ul class="org-ul"><li><a id="sec-1-1-6-1-1" name="sec-1-1-6-1-1"></a>Relevance Order Algorim<br  /><div class="outline-text-6" id="text-1-1-6-1-1">
+<pre class="example">
+Score = Log ( TermFrequency ) * InverseDocumentFrequency
+</pre>
+
+<ul class="org-ul">
+<li>Term Frequency is normalized to total words to yield term density.
+</li>
+<li id="InverseDocumentFrequency"><ul class="org-ul">
+<li>1/DocumentFrequency
+</li>
+<li>How uncommon the term is in the database (higher is rarer)
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</li></ul>
+</div>
+
+<div id="outline-container-sec-1-1-6-2" class="outline-5">
+<h5 id="sec-1-1-6-2">Impacting Relevance</h5>
+<div class="outline-text-5" id="text-1-1-6-2">
+<ul class="org-ul">
+<li>(Document) Quality is:
+<ul class="org-ul">
+<li>factor to increase a documetns relevancyt score relative to other matching docs
+</li>
+<li>Set on ingesttion
+</li>
+<li>Default is 0
+</li>
+<li>log(tf) * idf + (QueryWeight * DocQuality)
+</li>
+</ul>
+</li>
+<li>Query Weight
+<ul class="org-ul">
+<li>Run time component that can be set at run time.
+</li>
+<li>Default is 1
+</li>
+</ul>
+</li>
+<li>Word Query
+<ul class="org-ul">
+<li>Database configuration
+</li>
+<li>Weight different properties, eg title over description
+</li>
+</ul>
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">cts:score()  (: number: high is higher relevance:)
+cts:confidence()  (: 0.0 &lt;--&gt; 1.0: how relevance compared to other documents :)
+cts:fitness()  (: 0.0 &lt;--&gt; 1.0: how well the returned document saristifed the query issued (ignoring other docs)  :)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-6-3" class="outline-5">
+<h5 id="sec-1-1-6-3">Out of the Box Searching Features</h5>
+<div class="outline-text-5" id="text-1-1-6-3">
+<ul class="org-ul">
+<li>Search Phrasing
+</li>
+<li>Stemming
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-6-4" class="outline-5">
+<h5 id="sec-1-1-6-4">Filter vs Unfiltered Search</h5>
+<div class="outline-text-5" id="text-1-1-6-4">
+<ul class="org-ul">
+<li>Filtered is 2 steps
+<ul class="org-ul">
+<li>2 Step Process
+<ol class="org-ol">
+<li>Get candidates based on index candidates
+</li>
+<li>Confirm/unconfirm the content of the document for match
+</li>
+</ol>
+</li>
+<li>XQuery (cts,search api) default
+</li>
+<li>Focus on accuracyj;
+</li>
+</ul>
+</li>
+<li>Unfilter
+<ul class="org-ul">
+<li>1 step process, just looks at candidates from the index.
+</li>
+<li>Java/REST API
+</li>
+</ul>
+</li>
+</ul>
+
+<blockquote>
+<p>
+Unfiltered searched can be fast &amp; accurate when indexed properly.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-6-5" class="outline-5">
+<h5 id="sec-1-1-6-5">Constraints</h5>
+<div class="outline-text-5" id="text-1-1-6-5">
+</div><ul class="org-ul"><li><a id="sec-1-1-6-5-1" name="sec-1-1-6-5-1"></a>Types<br  /><div class="outline-text-6" id="text-1-1-6-5-1">
+<ul class="org-ul">
+<li>Values
+</li>
+<li>Collection
+</li>
+<li>Range
+</li>
+<li>Properties
+</li>
+<li>Geospacial
+</li>
+</ul>
+</div>
+</li></ul>
+</div>
+
+<div id="outline-container-sec-1-1-6-6" class="outline-5">
+<h5 id="sec-1-1-6-6">Search Methods</h5>
+<div class="outline-text-5" id="text-1-1-6-6">
+<ol class="org-ol">
+<li>Language APIs
+</li>
+<li>REST API
+</li>
+<li>Searh API (search)
+</li>
+<li>Built-in APIs (cts namespace)
+</li>
+</ol>
+</div>
+
+<ul class="org-ul"><li><a id="sec-1-1-6-6-1" name="sec-1-1-6-6-1"></a>Search API Response<br  /><div class="outline-text-6" id="text-1-1-6-6-1">
+<ul class="org-ul">
+<li>returns snippeted results list
+</li>
+<li>automatically paginated
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">import module namespace search = "http://marklogic.com/appservices/search" at "/MarkLogic/appservices/serach/search.xqy"
+
+let $options :=
+  &lt;options xmlns="http://marklogic.com/appservices/search"&gt;
+    &lt;transform-results apply="raw" /&gt;
+  &lt;/options&gt;
+search:search("q", $options)
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="sec-1-1-6-6-2" name="sec-1-1-6-6-2"></a>CTS Search<br  /><div class="outline-text-6" id="text-1-1-6-6-2">
+<ul class="org-ul">
+<li>Constructors (element-value, word-query&#x2026;)
+</li>
+<li>Composability (and-query, or-query&#x2026;)
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-xquery">cts:word-query()
+cts-element-word-query()
+cts-or-query()
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="sec-1-1-6-6-3" name="sec-1-1-6-6-3"></a>Query Serialization<br  /><div class="outline-text-6" id="text-1-1-6-6-3">
+<ul class="org-ul">
+<li>Search can be modeled as a document
+</li>
+<li>Can be stored/search
+</li>
+<li>Can reverse query (check document against stored queries on injest)
+<ul class="org-ul">
+<li>eg. save a query that triggers and alert whena new document matches it.
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</li></ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-7" class="outline-4">
+<h4 id="sec-1-1-7">Indexing</h4>
+<div class="outline-text-4" id="text-1-1-7">
+<p>
+Turn on the index to support the index users want.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-8" class="outline-4">
+<h4 id="sec-1-1-8">Index Conecpts</h4>
+<div class="outline-text-4" id="text-1-1-8">
+</div><div id="outline-container-sec-1-1-8-1" class="outline-5">
+<h5 id="sec-1-1-8-1">Term list index</h5>
+<div class="outline-text-5" id="text-1-1-8-1">
+<p>
+Map values &#x2013;&gt; Documents
+</p>
+
+<ul class="org-ul">
+<li>Filtering
+</li>
+<li>Inverted Index
+</li>
+<li>Stemming
+</li>
+<li>Phase Index
+<ul class="org-ul">
+<li>AND query - term list intersections
+</li>
+<li>NOT Queries - list term subtractions
+</li>
+<li>OR queries - term list unions
+</li>
+</ul>
+</li>
+<li>Proximity Index
+</li>
+<li>Structure (speeds up xpath)
+<ul class="org-ul">
+<li>Parent child
+</li>
+<li>Element value
+</li>
+</ul>
+</li>
+</ul>
+
+<p>
+Under the hood it's all hashes of the term list key.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-9" class="outline-4">
+<h4 id="sec-1-1-9">Range Indexes</h4>
+<div class="outline-text-4" id="text-1-1-9">
+<p>
+Value (type) base indexes.
+Map Values &lt;&#x2013;&gt; Docuemnts.
+Live in memory on startup.
+</p>
+
+<ul class="org-ul">
+<li>Values, not textual types
+</li>
+<li>Faster Range Queries
+</li>
+<li>Fast Sorting
+</li>
+<li>Fast Value Extractions
+</li>
+<li>Faceting
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1-9-1" class="outline-5">
+<h5 id="sec-1-1-9-1">Range vs Term List</h5>
+<div class="outline-text-5" id="text-1-1-9-1">
+<p>
+Term list is tokenize, and split on punctuation
+eg "1.0" is index with "0", "1", "10"
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-9-2" class="outline-5">
+<h5 id="sec-1-1-9-2">String Range Indexes</h5>
+<div class="outline-text-5" id="text-1-1-9-2">
+<p>
+Have collation. eg. "The Beatles" can be collated to be equal to "the  beatles".
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-9-3" class="outline-5">
+<h5 id="sec-1-1-9-3">Path Range Indexs</h5>
+<div class="outline-text-5" id="text-1-1-9-3">
+<p>
+More control over what the range index should contain.
+Only create indexes on parts of the path.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-10" class="outline-4">
+<h4 id="sec-1-1-10">Word query</h4>
+<div class="outline-text-4" id="text-1-1-10">
+<p>
+Technically a index configuration. Allows setting up word weighting.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-11" class="outline-4">
+<h4 id="sec-1-1-11">Field</h4>
+<div class="outline-text-4" id="text-1-1-11">
+<ul class="org-ul">
+<li>Collapse peices of documents into a single field for searching.
+</li>
+<li>Setting global database options can be set on individual fields. (ie don't have to set in on the whole database)
+</li>
+<li id="Example"><ul class="org-ul">
+<li>Performer
+</li>
+<li>&lt;artist&gt;|&lt;signer&gt;|&lt;group&gt;|&lt;band&gt;
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-12" class="outline-4">
+<h4 id="sec-1-1-12">Tuning function</h4>
+<div class="outline-text-4" id="text-1-1-12">
+<div class="org-src-container">
+
+<pre class="src src-xquery">fn:count()
+xdmp:estimate()  (: based on index only :)
+(: if estimate is the same as fn:count, the indexs are good and the query can remain unfiltered :)
+xdmp:query-meters()  (: performance stats, includes cache details :)
+xdmp:map()  (: shows the query plan :)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-13" class="outline-4">
+<h4 id="sec-1-1-13">Summary</h4>
+<div class="outline-text-4" id="text-1-1-13">
+<ul class="org-ul">
+<li>Approaches to query resolution
+<ol class="org-ol">
+<li>lok at query
+</li>
+<li>Decide what indexes can help
+</li>
+<li>Use indexes to narrow down the result set
+</li>
+<li>Filter the reesults set to confirm the match
+</li>
+</ol>
+</li>
+<li>Tradeoffs
+<ul class="org-ul">
+<li>More indexes
+<ul class="org-ul">
+<li>longer ingestion
+</li>
+<li>more size recuired
+</li>
+</ul>
+</li>
+<li>Less indexs
+<ul class="org-ul">
+<li>more filter
+</li>
+<li>slower search
+</li>
+</ul>
+</li>
+<li>Range indexes cost RAM
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">Day 3: Working In MarkLogic</h3>
+<div class="outline-text-3" id="text-1-2">
+</div><div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1">Working with Indexes</h4>
+</div>
+
+<div id="outline-container-sec-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2">Implementing Geospaial Search</h4>
+</div>
+
+<div id="outline-container-sec-1-2-3" class="outline-4">
+<h4 id="sec-1-2-3">Snippets, Highlighting, Sorting and Pagination</h4>
+</div>
+
+<div id="outline-container-sec-1-2-4" class="outline-4">
+<h4 id="sec-1-2-4">Creating Faceted Navigation</h4>
+</div>
+
+<div id="outline-container-sec-1-2-5" class="outline-4">
+<h4 id="sec-1-2-5">Updating Content and Understanding Transactions</h4>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3">Day 4: External Access</h3>
+<div class="outline-text-3" id="text-1-3">
+</div><div id="outline-container-sec-1-3-1" class="outline-4">
+<h4 id="sec-1-3-1">Setting up Application Security</h4>
+</div>
+
+<div id="outline-container-sec-1-3-2" class="outline-4">
+<h4 id="sec-1-3-2">Creating an Advanced Search Interface</h4>
+</div>
+
+<div id="outline-container-sec-1-3-3" class="outline-4">
+<h4 id="sec-1-3-3">Using the REST API</h4>
+</div>
+
+<div id="outline-container-sec-1-3-4" class="outline-4">
+<h4 id="sec-1-3-4">Working with Semantic Data</h4>
+</div>
+
+<div id="outline-container-sec-1-3-5" class="outline-4">
+<h4 id="sec-1-3-5">A: Accessing Log Files</h4>
+</div>
+
+<div id="outline-container-sec-1-3-6" class="outline-4">
+<h4 id="sec-1-3-6">B: Information Studio</h4>
+</div>
+
+<div id="outline-container-sec-1-3-7" class="outline-4">
+<h4 id="sec-1-3-7">C: Application Builder</h4>
+</div>
+</div>
+</div>

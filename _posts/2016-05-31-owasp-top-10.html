@@ -1,0 +1,832 @@
+---
+layout: default
+title: owasp-top-10
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Notes: The OWASP Top 10 Web Application</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+These are my notes from OWASP
+The Open Web application Security Project
+</p>
+
+<p>
+About how to implement the top 10 in asp.NET
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">Overview</h3>
+<div class="outline-text-3" id="text-1-1">
+<blockquote>
+<p>
+No-one is safe. 90% of sites have security flaws.
+</p>
+</blockquote>
+</div>
+
+<div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1">Be pragmatic</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<blockquote>
+<p>
+Making a site unhackable is unfeasible
+</p>
+</blockquote>
+
+<p>
+Organizations should balance between,
+</p>
+<ol class="org-ol">
+<li>cost to protect,
+</li>
+<li>value of assets,
+</li>
+<li>likelyhood of exploit.,
+</li>
+<li>impact of exploit
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2">The categories of attackers</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<blockquote>
+<p>
+Different risk profits mean different required investments to protect.
+</p>
+</blockquote>
+
+<ol class="org-ol">
+<li>Hacktivists
+<ul class="org-ul">
+<li>social interests
+</li>
+</ul>
+</li>
+<li>Online criminals
+<ul class="org-ul">
+<li>cash
+</li>
+</ul>
+</li>
+<li>Nation states
+<ul class="org-ul">
+<li>cyber warefare
+</li>
+</ul>
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-3" class="outline-4">
+<h4 id="sec-1-1-3">OWASP</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<p>
+The Open Web application Security Project
+</p>
+<ul class="org-ul">
+<li>Non-profits
+</li>
+<li>Top 10 lists are language agnostice
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-4" class="outline-4">
+<h4 id="sec-1-1-4">The OWASP Top 10</h4>
+<div class="outline-text-4" id="text-1-1-4">
+<ol class="org-ol">
+<li>Injection
+</li>
+<li>Cross-Site SCriptiong
+</li>
+<li>BRoken Auth andSession management
+</li>
+<li>Insecure Direct Object References
+</li>
+<li>Cross-site request forgery
+</li>
+<li>Security MIscinfiguration
+</li>
+<li>Insecure Crypto Storage
+</li>
+<li>Failute to Resctrict URL Access
+</li>
+<li>Insufficient Transport Layer Protection
+</li>
+<li>Unvalidated Redirects and Forwards.
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-5" class="outline-4">
+<h4 id="sec-1-1-5">The Security Matrix</h4>
+<div class="outline-text-4" id="text-1-1-5">
+<ol class="org-ol">
+<li>Threat Agents
+</li>
+<li>Attack Vectors
+</li>
+<li>Security Weaknesses
+</li>
+<li>Security Controls
+</li>
+<li>Technical Impact (dependand on asset)
+</li>
+<li>Business Implate (dependent on nature of data)
+</li>
+</ol>
+</div>
+
+<div id="outline-container-sec-1-1-5-1" class="outline-5">
+<h5 id="sec-1-1-5-1">OWASP grading system Traffic light rating system</h5>
+<div class="outline-text-5" id="text-1-1-5-1">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<tbody>
+<tr>
+<td class="left">Color</td>
+<td class="left">Threat Agent</td>
+<td class="left">Attack Vector</td>
+<td class="left">Weakness Prevelance</td>
+<td class="left">Weakness Detectability</td>
+<td class="left">Technical Impact</td>
+<td class="left">Business Impact</td>
+</tr>
+
+<tr>
+<td class="left">Purple</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">Very Widespead</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">Red</td>
+<td class="left">&#xa0;</td>
+<td class="left">Easy</td>
+<td class="left">Widespead</td>
+<td class="left">Easy</td>
+<td class="left">Severe</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">Orange</td>
+<td class="left">&#xa0;</td>
+<td class="left">Average</td>
+<td class="left">Common</td>
+<td class="left">Average</td>
+<td class="left">Moderate</td>
+<td class="left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="left">Green</td>
+<td class="left">&#xa0;</td>
+<td class="left">Difficult</td>
+<td class="left">Uncommon</td>
+<td class="left">Difficult</td>
+<td class="left">Minor</td>
+<td class="left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-6" class="outline-4">
+<h4 id="sec-1-1-6">Security depth</h4>
+<div class="outline-text-4" id="text-1-1-6">
+<blockquote>
+<p>
+Security is layered
+</p>
+</blockquote>
+
+<p>
+Top 10 is the starting point not the end&#x2026;
+</p>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Injection</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">The Matrix</h3>
+<div class="outline-text-3" id="text-2-1">
+</div><div id="outline-container-sec-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1">Threat Agents</h4>
+<div class="outline-text-4" id="text-2-1-1">
+<p>
+Anyone who send untrusted data to the system.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-2" class="outline-4">
+<h4 id="sec-2-1-2">Attack Vectors&#xa0;&#xa0;&#xa0;<span class="tag"><span class="red">red</span></span></h4>
+<div class="outline-text-4" id="text-2-1-2">
+<p>
+Simple text based attack
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-3" class="outline-4">
+<h4 id="sec-2-1-3">Security Weaknesses</h4>
+<div class="outline-text-4" id="text-2-1-3">
+</div><div id="outline-container-sec-2-1-3-1" class="outline-5">
+<h5 id="sec-2-1-3-1">Prevalene&#xa0;&#xa0;&#xa0;<span class="tag"><span class="orange">orange</span></span></h5>
+<div class="outline-text-5" id="text-2-1-3-1">
+<ul class="org-ul">
+<li>Very prevlant, esp. in legacy code.
+</li>
+<li>Include SQL, LDAP, XPath queries, OS commands.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-3-2" class="outline-5">
+<h5 id="sec-2-1-3-2">Detectability&#xa0;&#xa0;&#xa0;<span class="tag"><span class="orange">orange</span></span></h5>
+<div class="outline-text-5" id="text-2-1-3-2">
+<ul class="org-ul">
+<li>Easy in code,
+</li>
+<li>Hard in testing
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-4" class="outline-4">
+<h4 id="sec-2-1-4">Technical Impact (dependand on asset)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="red">red</span></span></h4>
+<div class="outline-text-4" id="text-2-1-4">
+<ul class="org-ul">
+<li>Data loss/corruption
+</li>
+<li>Lack of accountability
+</li>
+<li>Denial of access
+</li>
+<li>Host take over
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-5" class="outline-4">
+<h4 id="sec-2-1-5">Security Controls</h4>
+</div>
+
+<div id="outline-container-sec-2-1-6" class="outline-4">
+<h4 id="sec-2-1-6">Business Impact (dependent on nature of data)</h4>
+<div class="outline-text-4" id="text-2-1-6">
+<dl class="org-dl">
+<dt> With regards to </dt><dd><ul class="org-ul">
+<li>theft,
+</li>
+<li>modification
+</li>
+<li>deleteion
+</li>
+</ul>
+</dd>
+
+<dt> Consider value of </dt><dd><ul class="org-ul">
+<li>affected data
+</li>
+<li>the platform running the interpreter
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2">Notes:</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>Can gets additional data from the system. ie. table names by querying <code>sysobject</code> &amp; <code>xtype=char(85)</code>
+</li>
+<li>Blind sql injection - executing with ouput bubbling up into the web interface.
+</li>
+<li id="Untrusted data"><ul class="org-ul">
+<li><b>integrity</b> is not verifiable
+</li>
+<li><b>intent</b> may be malicous
+</li>
+<li>possible payloads:
+<ul class="org-ul">
+<li>sql injection
+</li>
+<li>cross site scripting
+</li>
+<li>binaries containing malware
+</li>
+</ul>
+</li>
+<li>Sources:
+<ul class="org-ul">
+<li>url/query string
+</li>
+<li>form values
+</li>
+<li>cookies
+</li>
+<li>request headers
+</li>
+<li>external service (external webservice)
+</li>
+<li>own database (eg. user submitted data)
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3">Security in Depth</h3>
+<div class="outline-text-3" id="text-2-3">
+<blockquote>
+<p>
+Security in depth: Protection in layers.
+</p>
+</blockquote>
+
+<p>
+Protect from db back to web tier.
+</p>
+</div>
+
+<div id="outline-container-sec-2-3-1" class="outline-4">
+<h4 id="sec-2-3-1">The principle of least privilege</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<blockquote>
+<p>
+<b><b>Principle of least Privilege</b></b> :: every modules in a system must be able to access only the information and resources that are nessesary for it's legitimate purpose.
+</p>
+</blockquote>
+
+<p>
+Update sql user permissions to be only what is needed.
+</p>
+
+<ul class="org-ul">
+<li><code>dbowner</code> is too permissive.
+</li>
+<li>Give access to only tables needed.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3-2" class="outline-4">
+<h4 id="sec-2-3-2">SQL Paramertization</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<p>
+Stop breaking out of <b>data context</b> (ie input param) into the <b>query context</b>. ie. can only change data, not the query
+</p>
+
+<ul class="org-ul">
+<li>Remove inline string concatanization.
+</li>
+<li>Use <code>new SqlCommand().Parameters.Add()</code> method instead.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3-3" class="outline-4">
+<h4 id="sec-2-3-3">Stored Procedures</h4>
+<div class="outline-text-4" id="text-2-3-3">
+<ul class="org-ul">
+<li>Always parameterized value by default.
+</li>
+<li>Still possible to run injection if just running an <code>exec!</code> in the storedProc. eg. building a like.
+<ul class="org-ul">
+<li>use <code>sp_executesql</code> not <code>exec</code>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3-4" class="outline-4">
+<h4 id="sec-2-3-4">Whitelist</h4>
+<div class="outline-text-4" id="text-2-3-4">
+<ul class="org-ul">
+<li>alway validate data
+</li>
+<li>explicit filter out anything not truster
+</li>
+</ul>
+
+<blockquote>
+<p>
+Whitelist is a more futrure proof alternative than a blacklist
+</p>
+</blockquote>
+</div>
+
+<div id="outline-container-sec-2-3-4-1" class="outline-5">
+<h5 id="sec-2-3-4-1">Approaches</h5>
+<div class="outline-text-5" id="text-2-3-4-1">
+<ol class="org-ol">
+<li>Type conversion
+eg. <code>int.TryParse</code> the string value coming in.
+</li>
+<li>Regular Expression
+</li>
+<li>List of known good values.
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3-5" class="outline-4">
+<h4 id="sec-2-3-5">ORM</h4>
+<div class="outline-text-4" id="text-2-3-5">
+<ul class="org-ul">
+<li>Automates parameterization.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3-6" class="outline-4">
+<h4 id="sec-2-3-6">Automation Tools</h4>
+<div class="outline-text-4" id="text-2-3-6">
+<blockquote>
+<p>
+Automation reduces the bar to entry. IE makes injection easier.
+</p>
+</blockquote>
+
+<ul class="org-ul">
+<li><a href="http://havij-advanced-sql-injection.software.informer.com/">http://havij-advanced-sql-injection.software.informer.com/</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4">Summary</h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li>Apply priciple of least privilege
+</li>
+<li>parameterise untrusted data
+</li>
+<li>stored proces offer protection via parameterization
+</li>
+<li>always validate untrusted data against a whitelist
+</li>
+<li>ORM parameterize nativly
+</li>
+<li>Remember automated tools are easy to use
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Cross Site Scripting (XSS)</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1">The Matrix</h3>
+<div class="outline-text-3" id="text-3-1">
+</div><div id="outline-container-sec-3-1-1" class="outline-4">
+<h4 id="sec-3-1-1">Threat Agents</h4>
+<div class="outline-text-4" id="text-3-1-1">
+<p>
+Anyone who send untrusted data to the system.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-1-2" class="outline-4">
+<h4 id="sec-3-1-2">Attack Vectors&#xa0;&#xa0;&#xa0;<span class="tag"><span class="orange">orange</span></span></h4>
+<div class="outline-text-4" id="text-3-1-2">
+<p>
+Simple text based attack
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-3-1-3" class="outline-4">
+<h4 id="sec-3-1-3">Security Weaknesses</h4>
+<div class="outline-text-4" id="text-3-1-3">
+</div><div id="outline-container-sec-3-1-3-1" class="outline-5">
+<h5 id="sec-3-1-3-1">Prevalene&#xa0;&#xa0;&#xa0;<span class="tag"><span class="purple">purple</span></span></h5>
+<div class="outline-text-5" id="text-3-1-3-1">
+<ul class="org-ul">
+<li>most common on web
+</li>
+<li id="3 Types"><ul class="org-ul">
+<li>Stored
+</li>
+<li>Refleced
+</li>
+<li>DOM based
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3-1-3-2" class="outline-5">
+<h5 id="sec-3-1-3-2">Detectability&#xa0;&#xa0;&#xa0;<span class="tag"><span class="easy">easy</span></span></h5>
+<div class="outline-text-5" id="text-3-1-3-2">
+<ul class="org-ul">
+<li>Easy via code
+</li>
+<li>Easy via testing
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-sec-3-1-4" class="outline-4">
+<h4 id="sec-3-1-4">Technical Impact (dependand on asset)&#xa0;&#xa0;&#xa0;<span class="tag"><span class="red">red</span></span></h4>
+<div class="outline-text-4" id="text-3-1-4">
+<dl class="org-dl">
+<dt> Execute scripts in victems browser </dt><dd><ul class="org-ul">
+<li>hijack session
+</li>
+<li>deface web sites
+</li>
+<li>insert hostile content
+</li>
+<li>redirect users
+</li>
+<li>hijack via malware
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-sec-3-1-5" class="outline-4">
+<h4 id="sec-3-1-5">Security Controls</h4>
+</div>
+
+<div id="outline-container-sec-3-1-6" class="outline-4">
+<h4 id="sec-3-1-6">Business Impact (dependent on nature of data)</h4>
+<div class="outline-text-4" id="text-3-1-6">
+<dl class="org-dl">
+<dt> Consider value of </dt><dd><ul class="org-ul">
+<li>affected system
+</li>
+<li>all data it processes
+</li>
+</ul>
+</dd>
+
+<dt> Include in consideration impact of </dt><dd><ul class="org-ul">
+<li>public exposure of exploit
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2">Notes:</h3>
+<div class="outline-text-3" id="text-3-2">
+<blockquote>
+<p>
+XSS attacks are possilbe from the payload breakout from the data context to a output encoded context.
+</p>
+</blockquote>
+
+<ul class="org-ul">
+<li>Data that manipulates the markup context. IE. Data has broken out of data context onto the markup context.
+</li>
+<li>Power of xss is to send the dom element elsewhere. Eg. cookies.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3">Security in depth</h3>
+<div class="outline-text-3" id="text-3-3">
+</div><div id="outline-container-sec-3-3-1" class="outline-4">
+<h4 id="sec-3-3-1">Output encoding</h4>
+<div class="outline-text-4" id="text-3-3-1">
+<blockquote>
+<p>
+XSS mitigation is making sure untrusted data is rendered the same whay it was entered.
+</p>
+</blockquote>
+
+<ul class="org-ul">
+<li>Use output encoding, (eg. <code>html encoding</code>) for display the characters.
+</li>
+<li id="Contexts that require output encoding"><ul class="org-ul">
+<li>CSS
+</li>
+<li>HTML, HTML attribute, HTML form url
+</li>
+<li>Javascript
+</li>
+<li>LDAP distungished name, LDAP filter
+</li>
+<li>URL, URL path
+</li>
+<li>XML, XML attribute
+</li>
+</ul>
+</li>
+<li>Frameworks encoding actions
+<ul class="org-ul">
+<li>WebForms: Different controls will encode differently.
+</li>
+<li>ASP.MVC: Razor encodes everything by default.
+</li>
+</ul>
+</li>
+</ul>
+
+<blockquote>
+<p>
+Persistent XSS is stored in the datbase.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Each encoding context required different encoding sequences.
+</p>
+</blockquote>
+
+<blockquote>
+<p>
+Using a proven library is the right approach. <b><b>Do not roll your own</b></b>
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3-2" class="outline-4">
+<h4 id="sec-3-3-2">Whitelist against string</h4>
+<div class="outline-text-4" id="text-3-3-2">
+<ul class="org-ul">
+<li>regex is a viable option against string data
+</li>
+<li>Be careful not to miss valid chars. eg. ~@"<sup>\p</sup>{L} \.&#x00ad;\+$"~  ~ misses quotes.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3-3" class="outline-4">
+<h4 id="sec-3-3-3">Default secure validation</h4>
+<div class="outline-text-4" id="text-3-3-3">
+<p>
+Requestion validation is on by default in ASP.NET so attacks will be caught before request hits usercode.
+</p>
+
+<p>
+Returns <code>A potentially dangerous...</code> error is returned.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-xml">&lt;configuration&gt;
+  &lt;system.web&gt;
+&lt;!-- explictly enable request validation,
+`validateRequest` attribute will be missing and `true` by default --&gt;
+    &lt;pages validateRequest="true"&gt; ... &lt;/pages&gt;
+  &lt;/system.web&gt;
+&lt;/configuration&gt;
+</pre>
+</div>
+
+<dl class="org-dl">
+<dt> <code>validateRequest</code> can be disabled </dt><dd><ul class="org-ul">
+<li>Pre-ASP.NET 4.5 - done on the page level. eg. for a WYSIWYG editor.
+</li>
+<li>ASP.NET 4.5 - done at control level, or code behind.
+</li>
+<li>ASP.MVC - The decorator <code>AllowHtml</code> can be set on a Model value.
+</li>
+</ul>
+</dd>
+</dl>
+
+<div class="org-src-container">
+
+<pre class="src src-xml">&lt;%@ Page Title="disabled request validation" ValidateRequest="false" Language="C#..." /&gt;
+</pre>
+</div>
+
+<blockquote>
+<p>
+Code as if request validation doesn't exist. It is a last line of defense.
+</p>
+</blockquote>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3-4" class="outline-4">
+<h4 id="sec-3-3-4">Browser defense</h4>
+<div class="outline-text-4" id="text-3-3-4">
+<ol class="org-ol">
+<li>Some browers blocked thing on their own.
+</li>
+<li>Custom headers provide a method to control browser behaviour.
+</li>
+<li>Cannot rely on brower implementations
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3-5" class="outline-4">
+<h4 id="sec-3-3-5">Obuscating the Attack</h4>
+<div class="outline-text-4" id="text-3-3-5">
+<ul class="org-ul">
+<li>Encode the entire url.
+</li>
+<li>Use a url shortener.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-3-3-6" class="outline-4">
+<h4 id="sec-3-3-6">Summary</h4>
+<div class="outline-text-4" id="text-3-3-6">
+<ul class="org-ul">
+<li>Output encoding is base of XSS protection
+</li>
+<li>Default Encoding is performed differently be different frameworks
+</li>
+<li>Whitelist are important
+</li>
+<li>Request validation isa safetly net
+</li>
+<li>Code as if XSS is in the database
+</li>
+<li>brower defenses are inconsistent
+</li>
+<li>Expect attack obfuscation to occur
+</li>
+<li></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
