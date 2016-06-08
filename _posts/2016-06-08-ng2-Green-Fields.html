@@ -1,0 +1,163 @@
+---
+layout: default
+title: ng2 Green Fields
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">ng2 Green Fields</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+I'm trying angular2 for a project at work. These are the install notes.
+I'll do an additional post about the developer setup
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">TEST :: Using angular-cli for building the project.</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+This is the recommended angular opinionated method of using angular 2.
+</p>
+
+<p>
+But this is currently in beta so wrap it with npm so:
+</p>
+<ul class="org-ul">
+<li>alternative methods don't affect how the devs call start/test commands
+</li>
+</ul>
+
+<p>
+<a href="http://blog.angular-university.io/how-to-run-angular-2-in-production-today/">http://blog.angular-university.io/how-to-run-angular-2-in-production-today/</a>
+</p>
+</div>
+
+<div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1">Project creation.</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+I'm basicall fresh to ng2 but know ng 1.
+Things to know straight up:
+</p>
+
+<ol class="org-ol">
+<li>We are a windows shop.
+</li>
+<li>I'm new to Angular2 but have work with ng1 for the past 3/4 years.
+</li>
+<li>This is a green fields project.
+</li>
+<li>Issue can be nested.
+</li>
+<li>I'm setting this up in a docker container. That will probably change once testing begins.
+</li>
+</ol>
+</div>
+
+
+<div id="outline-container-sec-1-1-1-1" class="outline-5">
+<h5 id="sec-1-1-1-1">Task 2. Build a site.</h5>
+<div class="outline-text-5" id="text-1-1-1-1">
+<dl class="org-dl">
+<dt> [Command] Serve </dt><dd><code>/ng2/bca-site# ng serve --port 8080 --live-reload-port 35729</code> # These port have been set up
+</dd>
+
+<dt> Create a project </dt><dd><code>ng new ng2-site</code>
+</dd>
+<dt> Issue :: You cannot use the new command inside an angular-cli project </dt><dd><dl class="org-dl">
+<dt> Solution </dt><dd>Can't have a <code>package.json</code> in the directory this is called in.
+</dd>
+</dl>
+</dd>
+
+<dt> Issue </dt><dd>Fails on windows when trying to serve with <code>ng serve</code>
+<dl class="org-dl">
+<dt> Possible solution </dt><dd>[no-bin-links] Run with <code>npm install</code> with <b><code>--no-bin-links</code></b>
+<dl class="org-dl">
+<dt> Issue </dt><dd><code>ng serve</code> failes still
+<dl class="org-dl">
+<dt> Possible solution </dt><dd>[npm-reinstall] Remove the <code>node_modules</code> directory. and reinstall packages with <code>npm install --no-bin-links</code>.
+<dl class="org-dl">
+<dt> Issue </dt><dd><code>npm install</code> give  <code>Maximum call stack size exceeded</code>
+<dl class="org-dl">
+<dt> Possible solution </dt><dd>Fresh packes <code>npm cache clear; npm install --no-bin-links</code>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+<dt> Issue </dt><dd><code>ng serve</code> fails with <code>Error: EPROTO: protocol error, symlink '/root/ng2/bca-site/src' -&gt; '/root/ng2/bca-site/tmp/funnel-input_base_path-5cUJ5fhG.tmp/0</code>
+<dl class="org-dl">
+<dt> Possible sollution </dt><dd>[AdminConsole] Run in <b>admin console</b>. <a href="https://github.com/angular/angular-cli/issues/886">https://github.com/angular/angular-cli/issues/886</a>
+<dl class="org-dl">
+<dt> Issue </dt><dd><code>ng serve</code> gives <code>cannot run in wd</code>
+<dl class="org-dl">
+<dt> Possible solution </dt><dd>[unsafe-perms] Run <code>npm install</code> with <b><code>--unsafe-perm</code></b> <a href="https://stackoverflow.com/questions/18136746/npm-install-failed-with-cannot-run-in-wd">https://stackoverflow.com/questions/18136746/npm-install-failed-with-cannot-run-in-wd</a>
+<dl class="org-dl">
+<dt> Issue </dt><dd><code>npm ERR! Linux 4.1.19-boot2docker</code> give <code>Maximum call stack size exceeded</code>
+<dl class="org-dl">
+<dt> PossibleSolution </dt><dd>[ManualPackages] Install Last package by hand with <code>npm install typings@0.8.1</code>
+<dl class="org-dl">
+<dt> Issue </dt><dd><code>typings: not found</code>
+<ul class="org-ul">
+<li>Failed solutions
+<dl class="org-dl">
+<dt> PossibleSolution </dt><dd><code>alias typings=/root/ng2/bca-site/node_modules/typings/bin/typings</code>
+</dd>
+<dt> PossibleSolution </dt><dd>install typing with bin-links
+</dd>
+</dl>
+</li>
+<li id="PossibleSolution">[GlobalTypings] Install typings globally <code>npm install typings@0.8.1 -g</code>
+</li>
+</ul>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+<p>
+<b><b>Success new site - Command Summary</b></b>
+</p>
+
+<ol class="org-ol">
+<li>!AdminConsole!
+</li>
+<li><code>npm install -g angular-cli typings@0.8.1</code>
+</li>
+<li><code>ng new site &lt;site-name&gt;; cd &lt;site-name&gt;</code>
+</li>
+<li><code>npm install --no-bin-links --unsafe-perms</code>
+</li>
+</ol>
+
+<p>
+<b><b>Your developer setup - Command Summary</b></b>
+</p>
+
+<ol class="org-ol">
+<li><code>npm install --no-bin-links --unsafe-perms</code>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+</div>

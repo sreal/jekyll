@@ -1,0 +1,356 @@
+---
+layout: default
+title: React and Redux
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">React and Redux</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Looking at different frameworkds for a few new projects at work and It's about time to catch up on the current generation
+These are my over view notes from React base on a quick look at pluralsight .
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Basics of React</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">Why use React?</h3>
+<div class="outline-text-3" id="text-2-1">
+<ul class="org-ul">
+<li>fast, uses virtual dom
+</li>
+<li>Composibility, props (similar to html attributes
+</li>
+<li>Plugable (just a view layer)
+</li>
+<li>Isomorphic Friendly (doesn't need the dom to render)
+</li>
+<li>Simple
+</li>
+<li>Battle Proven (facebook, reddit, yahoo)
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2">React creates Controller Views,</h3>
+<div class="outline-text-3" id="text-2-2">
+<ul class="org-ul">
+<li>controller views: handle data conscerns and compose other dump cpomponents together
+</li>
+<li>Controller views ahas child views underneath.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3">React uses JSX</h3>
+<div class="outline-text-3" id="text-2-3">
+<ul class="org-ul">
+<li>'HTML' in javascript
+<ul class="org-ul">
+<li>JSX can not use JS reserved words (EG. className, not class)
+</li>
+</ul>
+</li>
+<li>Minor differences
+</li>
+<li>compiles down to javascript.
+</li>
+<li>Optional since it can be rendered down.
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-2-3-1" class="outline-4">
+<h4 id="sec-2-3-1">Example of jsx&lt;&#x2013;&gt;s equivalence</h4>
+<div class="outline-text-4" id="text-2-3-1">
+<div class="org-src-container">
+
+<pre class="src src-jss">&lt;h1 color="red"&gt;heading here&lt;/h1&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-js">React.createElement("h1", {color: "red"}, "heading here")
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-3-2" class="outline-4">
+<h4 id="sec-2-3-2">Separation of concens</h4>
+<div class="outline-text-4" id="text-2-3-2">
+<ul class="org-ul">
+<li>Putting html in js?
+</li>
+<li>Others (angular, knockout, ember) puts JS into html
+</li>
+<li>React puts html into JS.
+</li>
+<li>HTML5 &amp; JS must be keep in-sync
+<ul class="org-ul">
+<li>Out of sync issue occur
+</li>
+</ul>
+</li>
+<li>Debugging is easier, since putting html into JSX causes error to include the error line.
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4">Virtual DOM</h3>
+<div class="outline-text-3" id="text-2-4">
+<ul class="org-ul">
+<li>Drawing DOM is expensive.
+</li>
+<li>Virtual DOM compares current state to new state.
+</li>
+<li>Update can then update in the most efficient way.
+</li>
+<li>Without virutal DOM the whol ething must be updated.
+</li>
+<li>For even faster rendering react provides:
+<ul class="org-ul">
+<li><code>shouldComponentUpdate</code>
+</li>
+<li><code>PureRenderMixin</code> and immutability allows reference comparisons.
+</li>
+</ul>
+</li>
+<li>Virtual DOM provides Synthetic Events:
+<ul class="org-ul">
+<li>abstracts away browser quirks
+</li>
+<li>Allows optimizing to event attaching.
+</li>
+</ul>
+</li>
+<li>Isomorphic Support (render without DOM)
+</li>
+<li>Can be used in natively (React Native)
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5">Summary</h3>
+<div class="outline-text-3" id="text-2-5">
+</div><div id="outline-container-sec-2-5-1" class="outline-4">
+<h4 id="sec-2-5-1">Fast, Pluggable, Battle, proven</h4>
+</div>
+<div id="outline-container-sec-2-5-2" class="outline-4">
+<h4 id="sec-2-5-2">JSX</h4>
+<div class="outline-text-4" id="text-2-5-2">
+</div><div id="outline-container-sec-2-5-2-1" class="outline-5">
+<h5 id="sec-2-5-2-1">'HTML' that compiles to JS</h5>
+</div>
+<div id="outline-container-sec-2-5-2-2" class="outline-5">
+<h5 id="sec-2-5-2-2">Strict compile time checking</h5>
+</div>
+</div>
+<div id="outline-container-sec-2-5-3" class="outline-4">
+<h4 id="sec-2-5-3">Virtual DOM</h4>
+<div class="outline-text-4" id="text-2-5-3">
+</div><div id="outline-container-sec-2-5-3-1" class="outline-5">
+<h5 id="sec-2-5-3-1">Performant</h5>
+</div>
+<div id="outline-container-sec-2-5-3-2" class="outline-5">
+<h5 id="sec-2-5-3-2">Simple Mental Model</h5>
+</div>
+<div id="outline-container-sec-2-5-3-3" class="outline-5">
+<h5 id="sec-2-5-3-3">Synthetic Events</h5>
+</div>
+<div id="outline-container-sec-2-5-3-4" class="outline-5">
+<h5 id="sec-2-5-3-4">Enables Isomorphic rendering and React Native</h5>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">React Components and Patterns</h2>
+<div class="outline-text-2" id="text-3">
+<ul class="org-ul">
+<li>Componenets are just React classes
+<ul class="org-ul">
+<li>Contains a <code>render</code> function
+</li>
+</ul>
+</li>
+<li>Main.js uses <code>React.render(&lt;component /&gt;, document.getElementById(elementToRenderOn))</code>
+</li>
+<li>Routing is just changing what to render on win events
+</li>
+<li>Naming Conventions change.
+</li>
+<li></li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Lifecycle</h2>
+<div class="outline-text-2" id="text-4">
+<dl class="org-dl">
+<dt> Procs </dt><dd><ul class="org-ul">
+<li>Looks like HTML attr
+</li>
+<li>Immutable
+</li>
+</ul>
+</dd>
+<dt> State </dt><dd><ul class="org-ul">
+<li>Mutable
+</li>
+<li>Should only use on controller view, eg.top level, pass data down via procs
+</li>
+</ul>
+</dd>
+<dt> Lifecycle functions </dt><dd><ul class="org-ul">
+<li><code>getInitalState</code> : set inital state of component
+</li>
+<li><code>getDefaultProps</code> : set properties if not set by view
+</li>
+<li><code>componentWillMount</code>
+<ul class="org-ul">
+<li>before rendere,
+</li>
+<li>set inital state
+</li>
+</ul>
+</li>
+<li><code>componentDidMount</code>
+<ul class="org-ul">
+<li>after render
+</li>
+<li>access DOM, integration with 3rd part, set timers, ajax work
+</li>
+</ul>
+</li>
+<li><code>componentWillReceiveProps</code>
+<ul class="org-ul">
+<li>when properties have changes
+</li>
+<li>set state before a render
+</li>
+</ul>
+</li>
+<li><code>shouldComponentUpdate</code>
+<ul class="org-ul">
+<li>before renders &amp; when new props are eing received
+</li>
+<li>Perf, return false for unnecessary re-renders
+</li>
+</ul>
+</li>
+<li><code>componentWillUpdate</code>
+<ul class="org-ul">
+<li>just before rendering when new props/state are being received
+</li>
+<li>prepare for an update
+</li>
+</ul>
+</li>
+<li><code>componentDidUpdate</code>
+<ul class="org-ul">
+<li>after updates are flushed to the DOM
+</li>
+<li>Work with the DOM after an update
+</li>
+</ul>
+</li>
+<li><code>componentWillUnmount</code>
+<ul class="org-ul">
+<li>just before unmounting from the DOM
+</li>
+<li>cleanup, &amp; destroy
+</li>
+</ul>
+</li>
+</ul>
+</dd>
+<dt> Dynamic Children </dt><dd><ul class="org-ul">
+<li>require a key for each child
+</li>
+<li>used by react to reorder/destroy
+</li>
+<li><code>&lt;tr key={author.id}&gt;</code>
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+
+<div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1">Summary</h3>
+<div class="outline-text-3" id="text-4-1">
+<dl class="org-dl">
+<dt> Props </dt><dd>Pass data to child components
+</dd>
+<dt> State </dt><dd>Data in Controller View
+</dd>
+<dt> Lifecycle </dt><dd>Handle bootstrapping and third party integrations
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">Composition</h2>
+<div class="outline-text-2" id="text-5">
+<ul class="org-ul">
+<li>Controller View
+<ul class="org-ul">
+<li>Top level React Component
+</li>
+<li>'owns' child component
+</li>
+<li>sets props on children (handles data flow)
+</li>
+<li>interacts with stores
+</li>
+<li>Nesting controler views view is possilble but not recommended.
+</li>
+<li>Difference between smart and dumb components
+</li>
+</ul>
+</li>
+<li>Prop types
+<ul class="org-ul">
+<li>List of validation rules that are needed.
+</li>
+<li>PropTypes are only run in Development mode
+</li>
+</ul>
+</li>
+<li>Mixins
+<ul class="org-ul">
+<li>Shares code between concerns (eg components)
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6">Continue with this&#x2026;</h2>
+<div class="outline-text-2" id="text-6">
+<p>
+<a href="https://app.pluralsight.com/player?course=react-redux-react-router-es6&author=cory-house&name=react-redux-react-router-es6-m1&clip=1&mode=live">https://app.pluralsight.com/player?course=react-redux-react-router-es6&author=cory-house&name=react-redux-react-router-es6-m1&clip=1&mode=live</a>
+</p>
+</div>
+</div>
