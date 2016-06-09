@@ -1,0 +1,133 @@
+---
+layout: default
+title: Getting Routed
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Getting Routed</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+<b><b>How to add a route to a angular-cli project</b></b>
+</p>
+
+<p>
+This stuff is probablty good for standard angular-2 apps as well
+</p>
+
+<p>
+This creates a public route called <i>public</i>
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">Generate a route</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Create a route that's going to be publicall accessible (hence 'public').
+<b>The <code>+</code> that gets appended by the generator means it will lazy load the route</b>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-powershell">ng generate route public --default=true --inline-template=true
+ng g route Private
+ng g route NoPath
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">Add the paths to the main component</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+Anything not /private will be public
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-typescript">@Routes([
+  new Route({ path: '/', component: PublicComponent }),
+  new Route({ path: '/private', component: PrivateComponent }),
+  new Route({ path: '*', component: NoPathComponent })
+])
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3">Update the template to display</h3>
+<div class="outline-text-3" id="text-1-3">
+<div class="org-src-container">
+
+<pre class="src src-html">&lt;a [routerLink]="['/']"&gt;home&lt;/a&gt;
+&lt;a [routerLink]="['/private']"&gt;private&lt;/a&gt;
+&lt;router-outlet&gt;&lt;/router-outlet&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4">Add the provide to access the router information</h3>
+<div class="outline-text-3" id="text-1-4">
+<div class="org-src-container">
+
+<pre class="src src-typescript">@Component({
+  // ...
+  providers: [ROUTER_PROVIDERS]
+  // ...
+})
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5">Reference the directives used by the component</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+Angular packages the common router directives (routerOutlet, routerLink) in ROUTER<sub>DIRECTIVES</sub>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-typescript">@Component({
+  //...
+  directives: [ROUTER_DIRECTIVES, PrivateComponent, PublicComponent, NoPathComponent]
+  // ...
+})
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6">Import all the used modules</h3>
+<div class="outline-text-3" id="text-1-6">
+<div class="org-src-container">
+
+<pre class="src src-app.components.tsn">import { ROUTER_DIRECTIVES, ROUTER_PROVIDERS, Routes, Route } from '@angular/router';
+import { PublicComponent } from './+public';
+import { PrivateComponent } from './+private';
+import { NoPathComponent } from './+no-path';
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7">Gotchas</h3>
+<div class="outline-text-3" id="text-1-7">
+</div><div id="outline-container-sec-1-7-1" class="outline-4">
+<h4 id="sec-1-7-1">Check for the import name by looking in the <code>node_module\**\*.d.ts</code> file exports. eg. <code>@Routes</code> not <code>@RouteConfig</code></h4>
+</div>
+<div id="outline-container-sec-1-7-2" class="outline-4">
+<h4 id="sec-1-7-2">I needed to add a <code>routerLink</code> to the page before the router-outlet display the component.</h4>
+</div>
+<div id="outline-container-sec-1-7-3" class="outline-4">
+<h4 id="sec-1-7-3">Use the typescript Object (EG. <code>new Route()</code>) because you get editor goodness &amp; type checking for free</h4>
+</div>
+</div>
+</div>
