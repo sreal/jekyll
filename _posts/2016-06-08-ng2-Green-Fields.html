@@ -8,9 +8,21 @@ title: ng2 Green Fields
 <div class="outline-text-2" id="text-1">
 <p>
 I'm trying angular2 for a project at work. These are the install notes.
-I'll do an additional post about the developer setup
+</p>
+
+<p>
+This is put it all in a docker container.
+</p>
+
+<p>
+This is ultimatley a bad idea because the file watch didn't really work for me from the container through to my windows host.
+</p>
+
+<p>
+If you know a better way I'd love to hear it since I really hate having to installing node on my presonal laptop just to do some work dev.
 </p>
 </div>
+
 
 <div id="outline-container-sec-1-1" class="outline-3">
 <h3 id="sec-1-1">TEST :: Using angular-cli for building the project.</h3>
@@ -54,9 +66,8 @@ Things to know straight up:
 </ol>
 </div>
 
-
 <div id="outline-container-sec-1-1-1-1" class="outline-5">
-<h5 id="sec-1-1-1-1">Task 2. Build a site.</h5>
+<h5 id="sec-1-1-1-1">Task 1. Build a site.</h5>
 <div class="outline-text-5" id="text-1-1-1-1">
 <dl class="org-dl">
 <dt> [Command] Serve </dt><dd><code>/ng2/bca-site# ng serve --port 8080 --live-reload-port 35729</code> # These port have been set up
@@ -156,6 +167,59 @@ Things to know straight up:
 <li><code>npm install --no-bin-links --unsafe-perms</code>
 </li>
 </ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2">Testing</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+Below is a complete setup to get testing running using the default angular-cli project.
+It include creation of a docker container.
+</p>
+</div>
+
+<div id="outline-container-sec-1-1-2-1" class="outline-5">
+<h5 id="sec-1-1-2-1">Complete angular-cli project docker machine setup</h5>
+<div class="outline-text-5" id="text-1-1-2-1">
+<p>
+The machine must be created as administrator because the <code>build</code> &amp; <code>serve</code> commands must be run in admin and the docker-machine-vm will only be accessible to the admin user.
+</p>
+
+<p>
+Do not forward <code>9876</code> because these are run on windows for avoid installing chrome inside the container.
+</p>
+<div class="org-src-container">
+
+<pre class="src src-powershell">docker-machine create --driver "virtualbox" "default"  #
+docker-machine env --shell powershell | Invoke-Expression;
+VBoxManage controlvm "default" natpf1 "tcp-port4200-4200,tcp,,4200,,4200";
+VBoxManage controlvm "default" natpf1 "tcp-port35729-35729,tcp,,35729,,35729";
+docker-machine ssh
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">docker run -it -p 4200:4200 -p 35729:35729 --name nodebox -v /c/Users/simon/projects/ng2:/root/ng2 node /bin/bash
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-sh">npm install -g angular-cli typings@0.8.1 protractor;
+cd /root/ng2/bca-site;
+npm install --no-bin-links --unsafe-perms;
+ng serve --port 4200 --live-reload-port 35729;
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-powershell">ng test --build=false;
+</pre>
+</div>
 </div>
 </div>
 </div>

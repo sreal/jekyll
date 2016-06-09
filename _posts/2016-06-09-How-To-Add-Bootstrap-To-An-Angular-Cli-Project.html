@@ -1,0 +1,148 @@
+---
+layout: default
+title: How To Add Bootstrap To An Angular-Cli Project
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">How To Include Bootstrap To Angular2-Cli Project</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+We need to include the actual bootstrap package.
+</p>
+
+<p>
+<a href="https://github.com/valor-software/ng2-bootstrap">ng2-bootstrap</a> give us some html elements to work with, but you still need to pull in the bootstrap CSS.
+</p>
+
+<p>
+These steps pull it in using the full npm package. It also explicitly references the files. If you know a better way to bundle this I'd love to hear it.
+</p>
+</div>
+
+<div id="outline-container-sec-1-0-1" class="outline-4">
+<h4 id="sec-1-0-1">Install via npm</h4>
+<div class="outline-text-4" id="text-1-0-1">
+<div class="org-src-container">
+
+<pre class="src src-powershell">npm install ng2-bootstrap --save
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-0-2" class="outline-4">
+<h4 id="sec-1-0-2">Include in build.</h4>
+<div class="outline-text-4" id="text-1-0-2">
+<div class="org-src-container">
+
+<pre class="src src-js">vendorNpmFiles: [
+  // ...
+  'ng2-bootstrap/**/*.js',
+  // ...
+]
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-0-3" class="outline-4">
+<h4 id="sec-1-0-3">Map the typescript definition path</h4>
+<div class="outline-text-4" id="text-1-0-3">
+<div class="org-src-container">
+
+<pre class="src src-js">const map: any = {
+  // ...
+  'ng2-bootstrap': 'vendor/ng2-bootstrap'
+  // ...
+};
+</pre>
+</div>
+<p>
+n
+</p>
+</div>
+</div>
+<div id="outline-container-sec-1-0-4" class="outline-4">
+<h4 id="sec-1-0-4">Configure the package for use in project</h4>
+<div class="outline-text-4" id="text-1-0-4">
+<div class="org-src-container">
+
+<pre class="src src-js">const packages: any = {
+  // ...
+  'ng2-bootstrap': { 'format': 'cjs', 'defaultExtension': 'js', 'main': 'ng2-bootstrap.js' }
+  // ...
+};
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-0-5" class="outline-4">
+<h4 id="sec-1-0-5">Use in a typescript component</h4>
+<div class="outline-text-4" id="text-1-0-5">
+<div class="org-src-container">
+
+<pre class="src src-typescript">import {AlertCompoment} from 'ng2-bootstrap/ng2-bootstrap';
+// OR... import { AlertComponent } from 'ng2-bootstrap/components/alert';
+
+@Component({
+  // ...
+  directives: [AlertComponent],
+  template: '&lt;alert&gt;This is an Alert!&lt;/alert&gt;'
+  // ...
+})
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-0-6" class="outline-4">
+<h4 id="sec-1-0-6">Add the bootstrap css</h4>
+<div class="outline-text-4" id="text-1-0-6">
+</div><ul class="org-ul"><li><a id="sec-1-0-6-0-1" name="sec-1-0-6-0-1"></a>Install via npm<br  /><div class="outline-text-6" id="text-1-0-6-0-1">
+<p>
+Would be nice just to grab the css, but we will only include the stuff we really needd
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-powershell">npn install bootstrap --save
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="sec-1-0-6-0-2" name="sec-1-0-6-0-2"></a>Include in build<br  /><div class="outline-text-6" id="text-1-0-6-0-2">
+<div class="org-src-container">
+
+<pre class="src src-js">vendorNpmFiles: [
+  // ...
+  'bootstrap/dist/css/*.+(min.css|min.css.map)',
+  // ...
+]
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="sec-1-0-6-0-3" name="sec-1-0-6-0-3"></a>Add a reference to the page<br  /><div class="outline-text-6" id="text-1-0-6-0-3">
+<div class="org-src-container">
+
+<pre class="src src-html">&lt;link href="vendor/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet"&gt;
+</pre>
+</div>
+</div>
+</li></ul>
+</div>
+
+<div id="outline-container-sec-1-0-7" class="outline-4">
+<h4 id="sec-1-0-7">Gotchas</h4>
+<div class="outline-text-4" id="text-1-0-7">
+</div><div id="outline-container-sec-1-0-7-1" class="outline-5">
+<h5 id="sec-1-0-7-1">Make sure you run npm install in the right directory</h5>
+</div>
+<div id="outline-container-sec-1-0-7-2" class="outline-5">
+<h5 id="sec-1-0-7-2">Make sure your regex is solid in the angular-cli-build.js</h5>
+</div>
+</div>
+</div>
