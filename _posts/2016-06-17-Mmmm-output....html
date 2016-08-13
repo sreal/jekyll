@@ -1,0 +1,53 @@
+---
+layout: default
+title: Mmmm output...
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Mmmm output&#x2026;</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">Getting stuff out of nested components</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Components emit event other components can subscribe to.
+</p>
+
+<p>
+Data to cross boundaries is included as a param to the Event.
+</p>
+
+<p>
+The event can be declared in the Class
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">import { EventEmitter, Output, Component /*..plus others..*/ } from '@angular/core';
+// ...
+@Component({
+  // Note: The `events` is depreciated in rc-1 so *don't use it*. See https://angular.io/docs/ts/latest/api/core/index/ComponentMetadata-class.html
+  // events: ['selection']
+})
+export class NestedComponent{
+  // ...
+  @Output() onSelection: EventEmitter = new EventEmitter();
+  // ...
+  methodThatWillFireTheEvent(event) {
+    console.log(event);
+    this.onSelection.next({'selectionId': 1});
+  }
+}
+</pre>
+</div>
+
+<p>
+Then call a different function on the container
+</p>
+<div class="org-src-container">
+
+<pre class="src src-html">&lt;nested-component (onSelection)="parentMethod($event)"&gt;&lt;/nested-component&gt;
+</pre>
+</div>
+</div>
+</div>
+</div>

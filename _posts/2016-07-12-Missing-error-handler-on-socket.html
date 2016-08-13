@@ -1,0 +1,45 @@
+---
+layout: default
+title: Missing error handler on socket
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Missing error handler on socket</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+With angular 2 and karma the following means you may be using an import badly.
+Walk backwards through the changes till your test work again&#x2026;.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-typescript">moment().utc();  // ERROR
+moment.utc();    // Works
+</pre>
+</div>
+
+
+<div class="org-src-container">
+
+<pre class="src src-text">Missing error handler on `socket`.
+TypeError: (msg || "").replace is not a function
+    at C:\projects\current\emes\client-app\node_modules\karma\lib\reporter.js:45:23
+    at onBrowserError (C:\projects\current\emes\client-app\node_modules\karma\lib\reporters\base.js:58:60)
+    at null.&lt;anonymous&gt; (C:\projects\current\emes\client-app\node_modules\karma\lib\events.js:13:22)
+    at emitTwo (events.js:100:13)
+    at emit (events.js:185:7)
+    at onKarmaError (C:\projects\current\emes\client-app\node_modules\karma\lib\browser.js:95:13)
+    at Socket.&lt;anonymous&gt; (C:\projects\current\emes\client-app\node_modules\karma\lib\events.js:13:22)
+    at emitOne (events.js:95:20)
+    at Socket.emit (events.js:182:7)
+    at Socket.onevent (C:\projects\current\emes\client-app\node_modules\karma\node_modules\socket.io\lib\socket.js:335:8)
+    at Socket.onpacket (C:\projects\current\emes\client-app\node_modules\karma\node_modules\socket.io\lib\socket.js:295:12)
+    at Client.ondecoded (C:\projects\current\emes\client-app\node_modules\karma\node_modules\socket.io\lib\client.js:193:14)
+    at Decoder.Emitter.emit (C:\projects\current\emes\client-app\node_modules\karma\node_modules\socket.io\node_modules\socket.io-parser\node_modules\component-emitter\index.js:134:20)
+    at Decoder.add (C:\projects\current\emes\client-app\node_modules\karma\node_modules\socket.io\node_modules\socket.io-parser\index.js:247:12)
+    at Client.ondata (C:\projects\current\emes\client-app\node_modules\karma\node_modules\socket.io\lib\client.js:175:18)
+    at emitOne (events.js:90:13)
+</pre>
+</div>
+</div>
+</div>
