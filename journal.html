@@ -4,9 +4,7 @@
 <ul>
 <li><a href="#sec-1">Code</a>
 <ul>
-<li><a href="#sec-1-1">Build lisp into a .exe</a></li>
-<li><a href="#sec-1-2">Sleep commands in OSX</a></li>
-<li><a href="#sec-1-3">Delete all documents under a node</a></li>
+<li><a href="#sec-1-1">Broken Marklogic Forest</a></li>
 </ul>
 </li>
 </ul>
@@ -16,45 +14,33 @@
 <h2 id="sec-1">Code</h2>
 <div class="outline-text-2" id="text-1">
 </div><div id="outline-container-sec-1-1" class="outline-3">
-<h3 id="sec-1-1">Build lisp into a .exe</h3>
+<h3 id="sec-1-1">Broken Marklogic Forest</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-File size is massive, 50 mb
+<a id="Error:-XDMP-FORESTNOT" name="Error:-XDMP-FORESTNOT"></a>
 </p>
-<div class="org-src-container">
-
-<pre class="src src-common-lisp" id="Create-the-build-hello.exe">(defun main () (print "hello"))
-(sb-ext:save-lisp-and-die "hello.exe" :toplevel #'main :executable t)
-</pre>
-</div>
-</div>
-</div>
-
-<div id="outline-container-sec-1-2" class="outline-3">
-<h3 id="sec-1-2">Sleep commands in OSX</h3>
-<div class="outline-text-3" id="text-1-2">
-<div class="org-src-container">
-
-<pre class="src src-sh" id="Get-the-current-sleep-status">sudo systemsetup -getcomputersleep;
-</pre>
-</div>
-
-<div class="org-src-container">
-
-<pre class="src src-sh" id="Turn-of-the-Sleep-Idle-countdown">sudo systemsetup -setcomputersleep Never  # or use '60' for an hour
-</pre>
-</div>
-</div>
-</div>
-<div id="outline-container-sec-1-3" class="outline-3">
-<h3 id="sec-1-3">Delete all documents under a node</h3>
-<div class="outline-text-3" id="text-1-3">
-<div class="org-src-container">
-
-<pre class="src src-xquery">for $doc in cts:uri-match("/users/rohit.modi/saved/*")
-return xdmp:document-delete($doc)
-</pre>
-</div>
+<ol class="org-ol">
+<li>[MarkLogicXQueryException: XDMP-FORESTNOT: Forest isis-dev-content-vagrant-dev-vm.global.root-1 not available: XDMP-FORESTERR: Error in checkpoint of forest isis-dev-content-vagrant-dev-vm.global.root-1: SVC-FILWRT: File write error: write '/var/opt/MarkLogic/Forests/isis-dev-content-vagrant-dev-vm.global.root-1/00000255/Label': No space left on device]
+[XQueryException (inner): Forest not available]
+</li>
+<li><i>Update vagrant</i>
+</li>
+<li>Same Error
+</li>
+<li>.\Bounce MarkLogic.Deploy
+</li>
+<li>Check disk space
+<a href="http://unix.stackexchange.com/questions/3979/how-can-i-install-ncdu-on-red-hat">http://unix.stackexchange.com/questions/3979/how-can-i-install-ncdu-on-red-hat</a>
+yum install ndcu
+wget <a href="http://dev.yorhel.nl/download/ncdu-1.10.tar.gz">http://dev.yorhel.nl/download/ncdu-1.10.tar.gz</a>
+</li>
+<li>Rename the label
+<a href="https://www.mail-archive.com/general@developer.marklogic.com/msg13153.html">https://www.mail-archive.com/general@developer.marklogic.com/msg13153.html</a>
+<a href="http://developer.marklogic.com/pipermail/general/2013-March/012544.html">http://developer.marklogic.com/pipermail/general/2013-March/012544.html</a>
+</li>
+<li><i>Complete vagrant rebuild</i>
+</li>
+</ol>
 </div>
 </div>
 </div>

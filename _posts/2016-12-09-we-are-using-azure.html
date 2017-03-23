@@ -1,0 +1,103 @@
+---
+layout: default
+title: we're are using azure now?
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">We're are using azure now?</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Left a big project for a few months to be some angular 2 stuff and I'm back now.
+Looks like we started using azure store in the meantime and the projects not running.
+</p>
+</div>
+
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">Connection failes with error <code>Unable to connect to the remote server</code></h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Connection is using things in the <code>Windows.Azure.Storage</code> namespace.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">Configuration Setting is  <code>&lt;add key="StorageConnectionString" value="UseDevelopmentStorage=true" /&gt;</code></h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+That looks like the old 'I've install something that is doing magic'.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3">What are valid valid azure storage connection strings?</h3>
+<div class="outline-text-3" id="text-1-3">
+<p>
+<a href="https://www.connectionstrings.com/windows-azure/">https://www.connectionstrings.com/windows-azure/</a>
+</p>
+
+<p>
+Oh, <code>UseDevelopmentStorage</code> is a different tool to fake it.
+</p>
+
+<p>
+It should be running in the background maybe?
+Why does this project not have a readme for this? Grr
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4">Install Windows Azure Storage Emulator.</h3>
+<div class="outline-text-3" id="text-1-4">
+</div><div id="outline-container-sec-1-4-1" class="outline-4">
+<h4 id="sec-1-4-1">What is it?</h4>
+<div class="outline-text-4" id="text-1-4-1">
+<p>
+<a href="https://blogs.msdn.microsoft.com/windowsazurestorage/2012/10/30/windows-azure-storage-emulator-1-8/">https://blogs.msdn.microsoft.com/windowsazurestorage/2012/10/30/windows-azure-storage-emulator-1-8/</a>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4-2" class="outline-4">
+<h4 id="sec-1-4-2">What to install ::</h4>
+<div class="outline-text-4" id="text-1-4-2">
+<p>
+<a href="https://azure.microsoft.com/en-us/downloads/">https://azure.microsoft.com/en-us/downloads/</a>
+</p>
+
+<p>
+Wow, just look at the number of links of that page.
+Ok, VS2015 link is 400+ mg. I'm remote, on wireless, so nope.
+</p>
+
+<p>
+Let try just the emulator.
+2mg. Better. Comes with <a href="https://docs.microsoft.com/en-us/azure/storage/storage-use-emulator">install instructions</a>, hmmm.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4-3" class="outline-4">
+<h4 id="sec-1-4-3">Installed, run, it's a console app.</h4>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5">Taskbar app with <code>Storage Emulator is running</code> displayed.</h3>
+<div class="outline-text-3" id="text-1-5">
+<p>
+Connect again and it just works.
+</p>
+
+<p>
+Nice.
+</p>
+</div>
+</div>
+</div>

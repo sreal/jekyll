@@ -1,0 +1,229 @@
+---
+layout: default
+title: Lightning talk from work
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Lightning talk from work</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">How easy stuff can be&#x2026;</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+CI in 5 minutes
+</p>
+</div>
+
+<div id="outline-container-sec-1-1-0-1" class="outline-5">
+<h5 id="sec-1-1-0-1">User cases (for me)</h5>
+<div class="outline-text-5" id="text-1-1-0-1">
+<ul class="org-ul">
+<li>Installing multiple different version of packages.
+</li>
+<li>Some programs are a pain to setup in windows.
+</li>
+<li>If anything comes from it, the app is already packages.
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-0-2" class="outline-5">
+<h5 id="sec-1-1-0-2">Install</h5>
+<div class="outline-text-5" id="text-1-1-0-2">
+<p>
+<a href="https://www.docker.com/products/docker-toolbox">https://www.docker.com/products/docker-toolbox</a>
+</p>
+</div>
+
+<ul class="org-ul"><li><a id="sec-1-1-0-2-1" name="sec-1-1-0-2-1"></a>Comes with extra programs.<br  /><div class="outline-text-6" id="text-1-1-0-2-1">
+<ul class="org-ul">
+<li>Engine - docker
+</li>
+<li>Compose - Ochestrator, manage/configure multiple-container applications
+</li>
+<li>Kitematic - Docker GUI
+</li>
+<li>Machine - Encapsulates VM operations
+</li>
+</ul>
+</div>
+</li>
+
+<li><a id="sec-1-1-0-2-2" name="sec-1-1-0-2-2"></a>PATH modifications<br  /><div class="outline-text-6" id="text-1-1-0-2-2">
+<p>
+<code>docker-machine</code> now lives on your path
+</p>
+</div>
+</li></ul>
+</div>
+
+<div id="outline-container-sec-1-1-0-3" class="outline-5">
+<h5 id="sec-1-1-0-3">First run</h5>
+<div class="outline-text-5" id="text-1-1-0-3">
+<p>
+Create a vm to run actualy docker. (docker is a linux thing so a linux vm is needed)
+</p>
+
+<p>
+Machine (docker-machine) is a list of commands that run commands aimed at vm(s) on you machine.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-powershell">$vmName = 'show-and-tell-docker-machine-vm';
+docker-machine create --driver virtualbox $vmName;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-0-4" class="outline-5">
+<h5 id="sec-1-1-0-4">Get into the vm that is running docker.</h5>
+<div class="outline-text-5" id="text-1-1-0-4">
+<div class="org-src-container">
+
+<pre class="src src-powershell">$vmName = 'show-and-tell-docker-machine-vm';
+docker-machine start $vmName;
+docker-machine env $vmName -shell powershell | Invoke-Expression;
+docker-machine ssh $vmName;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-0-5" class="outline-5">
+<h5 id="sec-1-1-0-5">Inside the docker-machine vm</h5>
+<div class="outline-text-5" id="text-1-1-0-5">
+</div><ul class="org-ul"><li><a id="sec-1-1-0-5-1" name="sec-1-1-0-5-1"></a>Options<br  /><ul class="org-ul"><li><a id="sec-1-1-0-5-1-1" name="sec-1-1-0-5-1-1"></a>ubuntu/centos/debian<br  /><div class="outline-text-7" id="text-1-1-0-5-1-1">
+<p>
+Spin up a ubuntu box
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bash"># Virtual Box shares stuff by default
+ls /c/Users/simon/projects/show-and-tell-docker
+# spin up a ubuntu, with a mounted folder
+docker run -v /c/Users/simon/projects/show-and-tell-docker:/home/show-and-tell -i -t ubuntu /bin/bash
+</pre>
+</div>
+
+<dl class="org-dl">
+<dt> Params </dt><dd><ol class="org-ol">
+<li><code>run</code> - Run a command in a new container
+</li>
+<li><code>/bin/bash/</code> - Command to run,
+This happens to the the folder shared by VirtualBox with $vmName
+</li>
+<li><code>ubuntu</code> - Image, Pulls from <a href="https://hub.docker.com/explore/">https://hub.docker.com/explore/</a> if not found locally.
+</li>
+<li><code>-v</code> - Bind mount a volume, <b>share a directory between docker vm and the docker container</b>
+</li>
+<li><code>-t</code> - Allocate a pseudo-TTY, <b>make a terminal</b>
+</li>
+<li><code>-i</code> - Keep STDIN open even if not attached, <b>don't close after running</b>
+</li>
+</ol>
+</dd>
+</dl>
+
+<div class="org-src-container">
+
+<pre class="src src-bash">cat /etc/*-release
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="sec-1-1-0-5-1-2" name="sec-1-1-0-5-1-2"></a>Jenkins server<br  /><div class="outline-text-7" id="text-1-1-0-5-1-2">
+<p>
+Spin up jenkin
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-On">VBoxManage controlvm "show-and-tell-docker-machine-vm" natpf1 "tcp-port8080,tcp,,8080,,8080";
+VBoxManage controlvm "show-and-tell-docker-machine-vm" natpf1 "tcp-port50000,tcp,,50000,,50000";
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-In">docker run -p 8080:8080 -p 50000:50000 -v /c/Users/simon/projects/jenkins:/var/jenkins_home jenkins
+</pre>
+</div>
+
+<dl class="org-dl">
+<dt> Params </dt><dd><ol class="org-ol">
+<li><code>run</code> - Run a command in a new container
+</li>
+<li><code>-p</code> - Portfowarding . This time show-and-tell-docker-machine-vm &lt;-&gt; dockerContainer
+</li>
+<li><code>-v</code> - Bind mount a volume, <b>share a directory between docker vm and the docker container</b>
+</li>
+<li><code>jenkins</code> - Image, Pulls from <a href="https://hub.docker.com/explore/">https://hub.docker.com/explore/</a>
+</li>
+</ol>
+</dd>
+</dl>
+</div>
+</li></ul>
+</li></ul>
+</div>
+
+<div id="outline-container-sec-1-1-0-6" class="outline-5">
+<h5 id="sec-1-1-0-6">Summary</h5>
+<div class="outline-text-5" id="text-1-1-0-6">
+<ol class="org-ol">
+<li><code>docker-machine</code> : create, start, env connect to vm
+</li>
+<li><code>docker run -it</code> : run a command
+</li>
+<li>Base Boxes : <a href="https://hub.docker.com/explore/">https://hub.docker.com/explore/</a>
+</li>
+</ol>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-0-7" class="outline-5">
+<h5 id="sec-1-1-0-7">Want to know more?</h5>
+<div class="outline-text-5" id="text-1-1-0-7">
+<ul class="org-ul">
+<li><a href="https://training.docker.com/self-paced-training">https://training.docker.com/self-paced-training</a>
+</li>
+<li><a href="https://app.pluralsight.com/courses/docker-fundamentals">https://app.pluralsight.com/courses/docker-fundamentals</a>
+</li>
+<li><a href="https://app.pluralsight.com/library/courses/docker-deep-dive">https://app.pluralsight.com/library/courses/docker-deep-dive</a>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-1-0-8" class="outline-5">
+<h5 id="sec-1-1-0-8">Extra</h5>
+<div class="outline-text-5" id="text-1-1-0-8">
+</div><ul class="org-ul"><li><a id="sec-1-1-0-8-1" name="sec-1-1-0-8-1"></a>Security is the big issue<br  /><div class="outline-text-6" id="text-1-1-0-8-1">
+<ul class="org-ul">
+<li>Who creates the inital boxes?
+</li>
+</ul>
+</div>
+</li>
+
+<li><a id="sec-1-1-0-8-2" name="sec-1-1-0-8-2"></a>Reconnecting to a container.<br  /><div class="outline-text-6" id="text-1-1-0-8-2">
+<p>
+Just start and attach the docker container be feeding in the latest (<code>-l</code>) container id (<code>-q</code>).
+</p>
+<div class="org-src-container">
+
+<pre class="src src-bash">docker start `docker ps -l -q`
+docker attach `docker ps -l -q`
+</pre>
+</div>
+</div>
+</li></ul>
+</div>
+</div>
+</div>

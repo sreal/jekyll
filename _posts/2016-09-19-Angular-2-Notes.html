@@ -1,0 +1,162 @@
+---
+layout: default
+title: Angular 2 Notes
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Angular 2 Notes</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Found these lying around my drive while cleaning, not sure how old/what versionthey are for.
+</p>
+
+
+<ul class="org-ul">
+<li><code>Structural directives</code> change the dom, denotes with *
+</li>
+<li>binding
+<ul class="org-ul">
+<li>interpolaion : <code>{{ }}</code>
+</li>
+<li>1 way : <code>&lt;div [style.color]="color"&gt;{{story.name}}&lt;/div&gt;</code>
+</li>
+<li>event : <code>(click)="log('click')</code>
+</li>
+<li>2 way : <code>&lt;input \[(ngModel)]="story.name"&gt;</code> // banana in a box.
+</li>
+</ul>
+</li>
+<li>Services/Factories are replaced with declared classes
+</li>
+<li>DI
+<ul class="org-ul">
+<li>register in @component.providers arr
+<ul class="org-ul">
+<li>each provide is a new instance, ie top level only
+</li>
+</ul>
+</li>
+<li>inject in the COmponent class constructor
+</li>
+</ul>
+</li>
+<li>There are angular 2 chaet sheet on the developer guider
+</li>
+<li>Component has 3 pieces
+<ol class="org-ol">
+<li>imprts
+</li>
+<li>metadata <code>@Component</code>
+     -selector,template,systelsUrls,directives,providers
+</li>
+<li>export class &lt;name implements &lt;interface&gt; {
+<ul class="org-ul">
+<li>@Output, @Input, constructor, properties, actions (methods)
+</li>
+<li>ParentComponents can declare @ViewChild to acces child components.
+<ul class="org-ul">
+<li><code>@ViewChild(ChildCanFilterComponent) thisPropNameOnParent: ChildCanFilterComponent</code>
+<ul class="org-ul">
+<li>ChildCanFilter must be declared in the metadata <code>directives</code> list
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ol>
+</li>
+<li>File Naming &lt;name&gt;.&lt;type&gt;.&lt;ext&gt; - character.service.ts
+</li>
+<li>Models can be put in services and imported from there.
+</li>
+<li>Services get imported to the app.compoent in it's metadata <code>providers</code> property
+<ul class="org-ul">
+<li>~@Injectable~compies the type information
+</li>
+<li>Only required in it is being injected into, but add it for good habit
+</li>
+</ul>
+</li>
+<li>DI is hieracical in ng2, soe register stuff at the parent of all who need it.
+</li>
+<li>Registering DI twice will give 2 instances
+</li>
+<li>Component Lifecycle hooks
+<ul class="org-ul">
+<li>When stuff is created/destroyed
+</li>
+<li>trigger event with <code>implements OnInit</code> /interface syntax
+<ul class="org-ul">
+<li>method is actually <code>ngOnInit</code>
+</li>
+<li>use onInit to initalizaed data instead of the constructor
+</li>
+<li>common: ngOnChanges, ngOnInit, ngAfterViewInit, ngOnChanges, gnOnDestroy
+</li>
+</ul>
+</li>
+</ul>
+</li>
+<li>http module has to be included separatly
+</li>
+<li>Observables returns observables.
+<ul class="org-ul">
+<li>Observables implement subscribe (not then) which then handle the success/fail cases.
+</li>
+<li>Observable is in RxJs
+</li>
+<li>A few RxJs methods <code>_http.get().map().do().catch()</code>. Docs have more. reactivex.io
+</li>
+<li>Prod build only includes the RxJs othat is imported, dev is everything
+</li>
+</ul>
+</li>
+<li><code>| async</code> pipe allows sending an Observable tothe screen
+</li>
+<li>Routing
+<ul class="org-ul">
+<li>Routing to a link with <code>[routerlink]="link</code>
+</li>
+<li>Steps
+<ol class="org-ol">
+<li>ROUTE<sub>PROVIDERS</sub>
+</li>
+<li>@RouteConfig
+</li>
+<li>&lt;router-outlet&gt;
+</li>
+<li>[routerLink]
+</li>
+</ol>
+</li>
+<li>RouteConfig name must be PascalCase
+</li>
+<li>using router must include RouterDirective in @Ccomponent directovets
+</li>
+<li><code>/vechicles/...</code> indicates a child route to be defined in the component included
+</li>
+<li>RouteParams contains the ussual query string and path
+</li>
+</ul>
+</li>
+<li>General order of adding stuff
+<ol class="org-ol">
+<li>Add to metadata (providers) - @Component(ROUTE<sub>PROVIDERS</sub>)
+</li>
+<li>Add to imports -from 'angular2/router'
+</li>
+<li>Add more metadata (@RouteConfig), then more import in this case RouteConfig
+</li>
+<li>Add to class
+</li>
+</ol>
+</li>
+<li>Any directive in html, eg anything in [], must be imported. Don't forget the Angular ones like [routerLink]
+</li>
+<li>Any service in constructor must be imported
+</li>
+</ul>
+</div>
+</div>

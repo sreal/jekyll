@@ -1,0 +1,549 @@
+---
+layout: default
+title: ASP.NET Core Notes
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Notes</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1"><code>project.json</code> is not a thing</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li>The final verison of .NET Core will not support project.json (dotnet Core 1.0.3 - SDK  RC4 drops project.json support)
+<ul class="org-ul">
+<li>Instead it's going to use a simplified csproj files.
+</li>
+<li><a href="https://blogs.msdn.microsoft.com/dotnet/2016/05/23/changes-to-project-json/">https://blogs.msdn.microsoft.com/dotnet/2016/05/23/changes-to-project-json/</a>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2"><code>global.json</code> is not a project listing thing.</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li><code>global.json</code> is planned to be used for defining the sdk version only.
+</li>
+<li><a href="https://github.com/dotnet/docs/blob/master/docs/core/preview3/tools/global-json.md">https://github.com/dotnet/docs/blob/master/docs/core/preview3/tools/global-json.md</a>
+</li>
+<li>Projects are grouped into <code>.sln</code> files still.
+<ul class="org-ul">
+<li>Created with <code>dotnet new sln</code>
+</li>
+<li>Projects addeed with <code>dotnet sln SOLUTION.sln add PROJECT.csproj</code>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3">Hello World</h3>
+<div class="outline-text-3" id="text-1-3">
+<div class="org-src-container">
+
+<pre class="src src-bash">dotnet new console
+dotnet restore
+dotnet run
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4">Tools?</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+Tools are .NET Core version of 'devDependancies' and are added to the .csproj file
+</p>
+
+<pre class="example">
+&lt;ItemGroup&gt;
+  &lt;DotNetCliToolReference Include="Microsoft.DotNet.Watcher.Tools" Version="1.0.0-msbuild3-final" /&gt;
+&lt;/ItemGroup&gt;
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5">Visual Studio &amp; IIS Specifics</h3>
+<div class="outline-text-3" id="text-1-5">
+</div><div id="outline-container-sec-1-5-1" class="outline-4">
+<h4 id="sec-1-5-1">VS &amp; IIS uses extra files to bne used as the external server pointing at Kestral</h4>
+<div class="outline-text-4" id="text-1-5-1">
+<ul class="org-ul">
+<li><code>launchSettings.json</code>
+</li>
+<li><code>web.config</code>
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6">Setting the environment</h3>
+<div class="outline-text-3" id="text-1-6">
+<ul class="org-ul">
+<li>Visual studion helps you set the environment variable <code>ASPNETCORE_ENVIRONMENT</code> to change the Environment.
+</li>
+<li>Other systems set it by handler
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-bash">ASPNETCORE_ENVIRONMENT=Development dotnet run
+# or
+export ASPNETCORE_ENVIRONMENT=Development
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7">Configuration Files like appSettings.json</h3>
+<div class="outline-text-3" id="text-1-7">
+<ul class="org-ul">
+<li><code>Microsoft.Extensions.Configuration.&lt;&lt;TYPE&gt;&gt;</code>
+</li>
+<li>Setup <code>IConfigurationRoot</code> via <code>ConfigurationBuilder</code> in Startus.cs
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-8" class="outline-3">
+<h3 id="sec-1-8"><code>global.json</code> vs <code>SOLUTION.sln</code></h3>
+<div class="outline-text-3" id="text-1-8">
+</div><div id="outline-container-sec-1-8-1" class="outline-4">
+<h4 id="sec-1-8-1"><code>global.json</code></h4>
+<div class="outline-text-4" id="text-1-8-1">
+<ul class="org-ul">
+<li>For defineing the sdk version
+</li>
+<li>SDK Version can be taken from <code>dotnet --version</code>
+</li>
+</ul>
+<pre class="example">
+{
+  "sdk": {
+    "version": "1.0.0-rc4-004771"
+  }
+}
+</pre>
+</div>
+</div>
+<div id="outline-container-sec-1-8-2" class="outline-4">
+<h4 id="sec-1-8-2"><code>SOULTION.sln</code></h4>
+<div class="outline-text-4" id="text-1-8-2">
+<ul class="org-ul">
+<li>For grouping project together
+</li>
+<li>Created with <code>dotnet new sln</code>
+</li>
+<li>Managed with <code>dotnet sln add|remove|list</code>
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-8-2-1" class="outline-5">
+<h5 id="sec-1-8-2-1">To use the dependancy project</h5>
+<div class="outline-text-5" id="text-1-8-2-1">
+<ol class="org-ol">
+<li>Add Project reference <code>&lt;ItemGroup&gt; &lt;ProjectReference Include="..\helloworld-lib\helloworld-lib.csproj" /&gt; &lt;/ItemGroup&gt;</code>
+</li>
+<li>Build dependancy <code>/path/to/sln/&gt;dotnet build</code>
+</li>
+<li>Restore project using the dep. <code>/path/to/sln/&gt;dotnet restore</code>
+</li>
+<li>Run the project <code>/path/to/sln/dotnet run --project my-project/my-project.csproj</code>
+</li>
+</ol>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-9" class="outline-3">
+<h3 id="sec-1-9">NuGet and Class Libraries</h3>
+<div class="outline-text-3" id="text-1-9">
+<ul class="org-ul">
+<li><code>dotnet new classlib</code> can be converted into NuGet packages with <code>dotnet pack</code>.
+</li>
+<li>These packs an be deployed to the default NuGet Repository
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-10" class="outline-3">
+<h3 id="sec-1-10">/<sub>ViewsImports</sub>.cshtml</h3>
+<div class="outline-text-3" id="text-1-10">
+<ul class="org-ul">
+<li>Everything listed is imported into every view.
+</li>
+<li>Tag helpers should be added there.
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Notes from Pluralsight Understanding ASP.NET Core (Update)</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">TLDR</h3>
+<div class="outline-text-3" id="text-2-1">
+</div><div id="outline-container-sec-2-1-1" class="outline-4">
+<h4 id="sec-2-1-1">Exploring ASP.NET Cor in Visual Studio</h4>
+<div class="outline-text-4" id="text-2-1-1">
+</div><div id="outline-container-sec-2-1-1-1" class="outline-5">
+<h5 id="sec-2-1-1-1">ASP.NET Core is different from other versions of the framework</h5>
+</div>
+
+<div id="outline-container-sec-2-1-1-2" class="outline-5">
+<h5 id="sec-2-1-1-2">New Project structure uses `project.json`</h5>
+</div>
+
+<div id="outline-container-sec-2-1-1-3" class="outline-5">
+<h5 id="sec-2-1-1-3">Sites serve from `wwwroot` folder</h5>
+</div>
+
+<div id="outline-container-sec-2-1-1-4" class="outline-5">
+<h5 id="sec-2-1-1-4">Packages</h5>
+<div class="outline-text-5" id="text-2-1-1-4">
+<dl class="org-dl">
+<dt> NuGet </dt><dd>Server side packages
+</dd>
+<dt> NPM </dt><dd>Client side packages
+</dd>
+<dt> (no term) </dt><dd>Task Runner picks up config files
+<ul class="org-ul">
+<li>Gulp, Grunt, etc..
+</li>
+<li>'Bundler and Minifier'
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-1-5" class="outline-5">
+<h5 id="sec-2-1-1-5">Startup class is `Program.cs::Main::host.Run()`</h5>
+</div>
+
+<div id="outline-container-sec-2-1-1-6" class="outline-5">
+<h5 id="sec-2-1-1-6">Dependancy injection in `Startup.cs::ConfigureServices`</h5>
+</div>
+
+<div id="outline-container-sec-2-1-1-7" class="outline-5">
+<h5 id="sec-2-1-1-7">Pipeline :: IIS - dotnet - kestrell - App.entry - MiddleWare</h5>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-2" class="outline-4">
+<h4 id="sec-2-1-2">Understanding ASP.NET Core MVC</h4>
+<div class="outline-text-4" id="text-2-1-2">
+</div><div id="outline-container-sec-2-1-2-1" class="outline-5">
+<h5 id="sec-2-1-2-1">Setup MVC</h5>
+<div class="outline-text-5" id="text-2-1-2-1">
+<dl class="org-dl">
+<dt> Inject </dt><dd>app.AddMVC()
+</dd>
+<dt> Configure </dt><dd><ul class="org-ul">
+<li>app.UseMVC(routes)
+</li>
+<li>app.UseStaticPages()
+</li>
+<li>app.UseStatusCodePages()
+</li>
+<li>app.UseDevelopmentExceptionPages()
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-2-2" class="outline-5">
+<h5 id="sec-2-1-2-2">Environments</h5>
+<div class="outline-text-5" id="text-2-1-2-2">
+<ul class="org-ul">
+<li>Sets `ASPNETCORE<sub>ENVIRONMENT`</sub>
+</li>
+<li>Configured in `launchSettings.json`
+</li>
+<li>Can then use Configure<a id="ENVIRONMENT_NAME" name="ENVIRONMENT_NAME"></a>() as Configure()
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-2-3" class="outline-5">
+<h5 id="sec-2-1-2-3">Unified MVC</h5>
+<div class="outline-text-5" id="text-2-1-2-3">
+<ul class="org-ul">
+<li>MVC &amp; WebAPI combined into MVC
+</li>
+<li>IoC is needed for `IActionContextAccessor`
+</li>
+<li>IoC free for `IUrlHelper`
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-2-4" class="outline-5">
+<h5 id="sec-2-1-2-4">Tag Helpers</h5>
+<div class="outline-text-5" id="text-2-1-2-4">
+<ul class="org-ul">
+<li>declare/import `@appTagHelper "*, Microsoft.AspNet.Mvc.TagHelpers"` in /Views/<sub>ViewImports</sub>.cshtml
+</li>
+<li>Extra elements `&lt;environments \&gt;`
+</li>
+<li>Mostly attributes `&lt;label asp-for="PROPERTY" /&gt;`
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-2-5" class="outline-5">
+<h5 id="sec-2-1-2-5">Application Settings</h5>
+<div class="outline-text-5" id="text-2-1-2-5">
+<ul class="org-ul">
+<li>Managed as `json` files, injecting in ConfigurationSetting, and Configuration builder.
+</li>
+<li>Need to include dependancy in project.json
+<ul class="org-ul">
+<li>{ 'dependancies': 'Microsoft.Extensions.Options.ConfigurationExtensions' }
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-2-6" class="outline-5">
+<h5 id="sec-2-1-2-6">View Components</h5>
+<div class="outline-text-5" id="text-2-1-2-6">
+<ul class="org-ul">
+<li>Reusable _partial views to enable complexity
+</li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-3" class="outline-4">
+<h4 id="sec-2-1-3">Developing Applications Access Frameworks and Operating Systems</h4>
+<div class="outline-text-4" id="text-2-1-3">
+</div><div id="outline-container-sec-2-1-3-1" class="outline-5">
+<h5 id="sec-2-1-3-1">.NET CORE Framework</h5>
+<div class="outline-text-5" id="text-2-1-3-1">
+<ul class="org-ul">
+<li>Modular version of .NET Framework
+</li>
+<li>.NET has different versions for diffent platforms, .NET Core is for all platforms
+</li>
+<li id=".NET Core contains"><dl class="org-dl">
+<dt> CoreCLR </dt><dd><ul class="org-ul">
+<li>Includes runtime. (garbage collection, jit compiler, base types&#x2026;)
+</li>
+<li>NuGet Package
+</li>
+</ul>
+</dd>
+<dt> CoreFX </dt><dd><ul class="org-ul">
+<li>Includes extra common classes (File Manipulation, Lists&#x2026;)
+</li>
+<li>Does not include framework
+</li>
+<li>Each assembly is distributed in separate packages in NuGet
+</li>
+</ul>
+</dd>
+</dl>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-3-2" class="outline-5">
+<h5 id="sec-2-1-3-2">Application Type</h5>
+<div class="outline-text-5" id="text-2-1-3-2">
+<dl class="org-dl">
+<dt> Portable </dt><dd>expects .NET Core to be included in the app.
+</dd>
+<dt> Self-Contained </dt><dd>.NET Core is excluded in the app.
+</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-3-3" class="outline-5">
+<h5 id="sec-2-1-3-3">.NET PLatform Standard</h5>
+<div class="outline-text-5" id="text-2-1-3-3">
+<ul class="org-ul">
+<li>DLL assemvlies are compiled and bounce to specific sersions of .BET and will not run on other platforms
+</li>
+<li id="Portable Class Library (PCL)">targets multiple versions but is still tied to the platform
+</li>
+<li id=".NET Platform Standard">succeeds PCL, uses a version number to represent the api, shich is backward compatible
+</li>
+<li>Versions describes in `project.json` { 'framework': 'xxxx' }
+</li>
+<li>The actual framework is included in teh dependancies.
+<ul class="org-ul">
+<li>If "type":"platform" is included the 'framework' is expected to exists. IE. A Portable
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-3-4" class="outline-5">
+<h5 id="sec-2-1-3-4">Framework Choice</h5>
+<div class="outline-text-5" id="text-2-1-3-4">
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="left" />
+
+<col  class="left" />
+
+<col  class="left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="left">.NET Framework</th>
+<th scope="col" class="left">Mono</th>
+<th scope="col" class="left">.NET Core</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="left">Machine-wide</td>
+<td class="left">Machine-wide</td>
+<td class="left">Choice</td>
+</tr>
+
+<tr>
+<td class="left">Existing code</td>
+<td class="left">Existing Code</td>
+<td class="left">New Code</td>
+</tr>
+
+<tr>
+<td class="left">Many Types</td>
+<td class="left">Many Types</td>
+<td class="left">Limited Types</td>
+</tr>
+
+<tr>
+<td class="left">Windows Only</td>
+<td class="left">Cross-Platform</td>
+<td class="left">Cross PLatform</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-3-5" class="outline-5">
+<h5 id="sec-2-1-3-5">.NET CoreCLI</h5>
+<div class="outline-text-5" id="text-2-1-3-5">
+<dl class="org-dl">
+<dt> dotnet </dt><dd><ul class="org-ul">
+<li>Command line
+</li>
+<li>Hosts the CLR allowing cross platform dev
+</li>
+<li>Other helpers EG. build, pack, restore, publish
+</li>
+<li>`project.json` containes dotnet core commands
+</li>
+<li>`project.json.lock` contains compiled list of package dependancies
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-4" class="outline-4">
+<h4 id="sec-2-1-4">Deploying ASP.NET Core Applications</h4>
+<div class="outline-text-4" id="text-2-1-4">
+</div><div id="outline-container-sec-2-1-4-1" class="outline-5">
+<h5 id="sec-2-1-4-1">Deployment Options</h5>
+<div class="outline-text-5" id="text-2-1-4-1">
+<ul class="org-ul">
+<li>Run, Build, Pack, Publish
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-4-2" class="outline-5">
+<h5 id="sec-2-1-4-2">Self Hosting</h5>
+<div class="outline-text-5" id="text-2-1-4-2">
+<ul class="org-ul">
+<li>Portable Core dlls can be passed to `dotnet` and run
+</li>
+<li>Standalone apps (IE. Without 'type': 'platform') require
+<ul class="org-ul">
+<li>a runtime section in project.json
+</li>
+<li>Native Dependancies to be included/installed
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-4-3" class="outline-5">
+<h5 id="sec-2-1-4-3">Deploy IIS/Azure</h5>
+<div class="outline-text-5" id="text-2-1-4-3">
+<ul class="org-ul">
+<li>Needs AspNetCoreModule
+<ul class="org-ul">
+<li>installed
+</li>
+<li>handler added to a web.config
+</li>
+<li>Azure already has it installed
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-2-1-4-4" class="outline-5">
+<h5 id="sec-2-1-4-4">Deploy Linux</h5>
+<div class="outline-text-5" id="text-2-1-4-4">
+<ul class="org-ul">
+<li>When installing to unsupported runtimes (EG. No listed Core Runtime Identifier, RID)
+<ul class="org-ul">
+<li>build with Full .NET Framework, user mono to run and install required external dependancies
+</li>
+</ul>
+</li>
+<li>For nginx, setup as a reverse proxy to the kestral application
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
