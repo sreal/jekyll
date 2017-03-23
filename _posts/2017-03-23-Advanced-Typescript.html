@@ -1,0 +1,797 @@
+---
+layout: default
+title: Advanced Typescript
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Advanced Typescript</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">Links</h3>
+<div class="outline-text-3" id="text-1-1">
+<ul class="org-ul">
+<li><a href="http://www.typescriptlang.org/docs/handbook/mixins.html">http://www.typescriptlang.org/docs/handbook/mixins.html</a>
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">Overview</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li>Intersection and Union Types
+</li>
+<li>Type Guards, Polymorphic Distypes
+</li>
+<li>Decorators
+</li>
+<li>Async Patterns
+</li>
+<li>Linting
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3">Advanced Basic Types</h3>
+<div class="outline-text-3" id="text-1-3">
+</div><div id="outline-container-sec-1-3-1" class="outline-4">
+<h4 id="sec-1-3-1">Destructing arrays and object</h4>
+<div class="outline-text-4" id="text-1-3-1">
+<dl class="org-dl">
+<dt> Destructuring </dt><dd>The process of assigning the elemenst of an arrrat or the props of and object to individual variables
+</dd>
+<dt> Rest Parameter </dt><dd>Access the rest of an array in function params
+</dd>
+</dl>
+
+<div class="org-src-container">
+
+<pre class="src src-typescript">let medals: string[] = ['gold', 'silver', 'bronze'];
+let [first, second, third] = medals;
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-typescript">function Log2Foo([foo1, foo2, ...rest]: Foo[]) {
+  console.log(foo1);
+  console.log(foo2);
+  console.log(rest);
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-typescript">function Log2Foo([foo1: one, foo2: two, ...rest]: Foo[]) {
+  console.log(one);
+  console.log(two);
+  console.log(rest);
+}
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-typescript">let person = { name: 'fred', adddress: '1 main st', phone: 555-1234 };
+let { name, address, phone } = person;
+console.log(name, address, phone);
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-typescript">let person = { name: 'fred', adddress: '1 main st', phone: 555-1234 };
+let { name: personName, address: personAddress, phone: personPhone } = person;
+console.log(personName, personAddress, personPhone);
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-3-2" class="outline-4">
+<h4 id="sec-1-3-2">Spead operator</h4>
+<div class="outline-text-4" id="text-1-3-2">
+<dl class="org-dl">
+<dt> Spead </dt><dd>apply element into new elements in an array or function parameters
+</dd>
+</dl>
+
+<div class="org-src-container">
+
+<pre class="src src-typescript">let items: number[] = [1, 2];
+let extraitems: number[] = [10, 20];
+items.push(...extraItems);
+console.log(items);  // [1, 2, 10, 20]
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-typescript">let items: number[] = [1, 2];
+let extraitems: number[] = [10, 20, ..items];
+items.push(...extraItems);
+console.log(items);  // [10, 20, 1, 2]
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-3-3" class="outline-4">
+<h4 id="sec-1-3-3">Tuple Types</h4>
+<div class="outline-text-4" id="text-1-3-3">
+<dl class="org-dl">
+<dt> Tuple Type </dt><dd>combinces a set of numerically named properties with the members of an array type
+<ul class="org-ul">
+<li>Extension to arrays
+</li>
+<li>Inital Types defined and must match
+</li>
+<li>Additional element can be any defined type
+</li>
+</ul>
+</dd>
+</dl>
+
+<p>
+#+NAME Creating and modifying Tuples
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">// 1.
+let idValue: [number, string] = [10, 'stringValue'];
+// 2.
+idValue[0] = 1; // OK
+idValue[0] = 'stringValue'; // Error
+idValue[1] = 'stringValue'; // OK
+idValue[1] = 1; // Error
+// 3.
+idValue[2] = 'stringValue'; // OK
+idValue[2] = 1; // OK
+</pre>
+</div>
+
+
+<p>
+#+NAME KeyValuePair tuple type
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">interface KeyValuePair&lt;KeyType, ValueType&gt; extends Array&lt;KeyType | ValueType&gt; {
+  0: KeyType;
+  1: ValueType;
+}
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-3-4" class="outline-4">
+<h4 id="sec-1-3-4">Union Types</h4>
+<div class="outline-text-4" id="text-1-3-4">
+<dl class="org-dl">
+<dt> Union Types </dt><dd>Specifies several types for a value with <code>|</code>
+</dd>
+</dl>
+
+<p>
+#+NAME Union Type in function parameter
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">function LogId(id: string | number) {
+  console.log(id + " is either a string or number");
+}
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-3-5" class="outline-4">
+<h4 id="sec-1-3-5">Intersection Type</h4>
+<div class="outline-text-4" id="text-1-3-5">
+<dl class="org-dl">
+<dt> Intersection Types </dt><dd>Specify a value that will contain all members of several types with <code>&amp;</code>
+</dd>
+</dl>
+
+<p>
+#+NAME Intersection Types as a return value
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">function FutureIsNow() : Clock &amp; Radio {
+  return new ClockRadio();
+}
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-3-6" class="outline-4">
+<h4 id="sec-1-3-6">Mixins</h4>
+<div class="outline-text-4" id="text-1-3-6">
+<dl class="org-dl">
+<dt> Mixin </dt><dd>Classes whose functionality is added to another class
+</dd>
+</dl>
+
+<p>
+#+NAME Mixin
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">class Clock { void NovTwelve1955() {/*dostuff*/} }
+class Radio { void kbillysSuperSoundsOfTheSeventies() {/*dostuff*/} }
+class FutureDevice implements Clock, Radio {
+  void NovTwelve1955() {/*empty*/}
+  void kbillysSuperSoundsOfTheSeventies() {/*empty*/}
+}
+applyMixins(FutureDevice, [Clock, Radio]);
+
+function applyMixins(derivedCtor: any, baseCtors: any[]) {
+  // function pulled straight from docs http://www.typescriptlang.org/docs/handbook/mixins.html
+  baseCtors.forEach(baseCtor =&gt; {
+    Object.getOwnPropertyNames(baseCtor.prototype).forEach(name =&gt; {
+      derivedCtor.prototype[name] = baseCtor.prototype[name];
+    });
+  });
+}
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-3-7" class="outline-4">
+<h4 id="sec-1-3-7">String Literal Type</h4>
+<div class="outline-text-4" id="text-1-3-7">
+<dl class="org-dl">
+<dt> String Literal Type </dt><dd>String literal treated as a distinct type
+</dd>
+</dl>
+
+<p>
+#+NAME String Literal Type
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">let strLitType: 'Foo';
+strLitType = 'Foo'; // OK
+strLitType = 'Baz'; // Error
+</pre>
+</div>
+
+<p>
+#+NAME String Literal Type as Enum
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">let strLitType: 'Foo' | 'Bar';
+strLitType = 'Foo'; // OK
+strLitType = 'Bar'; // OK
+strLitType = 'Baz'; // Error
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-3-8" class="outline-4">
+<h4 id="sec-1-3-8">Type Alias</h4>
+<div class="outline-text-4" id="text-1-3-8">
+<dl class="org-dl">
+<dt> Type Alias </dt><dd>refer to a type by a different name
+</dd>
+</dl>
+
+<p>
+#+NAME Type Alias for a String Literal Type
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">type FooBar =  'Foo' | 'Bar';
+let foo: ForBar = 'Foo'; // OK
+let bar: ForBar = 'Bar'; // OK
+let baz: ForBar = 'Baz'; // Error
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4">Advanced Types</h3>
+<div class="outline-text-3" id="text-1-4">
+</div><div id="outline-container-sec-1-4-1" class="outline-4">
+<h4 id="sec-1-4-1">Polymorphic this types</h4>
+<div class="outline-text-4" id="text-1-4-1">
+<dl class="org-dl">
+<dt> Polymorphic this types </dt><dd>A polymorphic this types represents a type that is the subtype of the containing class of interface
+<ul class="org-ul">
+<li>used heavily in Fluent builders
+</li>
+</ul>
+</dd>
+</dl>
+
+<p>
+#+NAME Polymorphic this type when class is extended
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">class Vehicle { Drive() =&gt; this; }
+class Truck extends Vehicle{};
+class Car extends Vehicle{};
+// different types returned
+Truck.Drive(); // returns typeof(Truck)
+Car.Drive(); // returns typeof(Car)
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-4-2" class="outline-4">
+<h4 id="sec-1-4-2">Declaration Merging</h4>
+<div class="outline-text-4" id="text-1-4-2">
+<dl class="org-dl">
+<dt> Declaration Merging </dt><dd>The complier merges two separate declarations decllared with the same name into a single definition
+<dl class="org-dl">
+<dt> allowed </dt><dd>interfaces, enums, namspaces, namespaces with classes, namespaces with functions, namespaces with enums
+</dd>
+<dt> dissallowed </dt><dd>classes with classes
+</dd>
+</dl>
+</dd>
+</dl>
+
+<p>
+#+NAME Model Merge by declaration merging
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">interface Power { powerSource: string; }
+interface Power { owner: string: }
+let foo: Power;
+foo.powerSource = 'shazam';
+foo.owner = 'billy';
+</pre>
+</div>
+
+<p>
+#+NAME Module Augentation by declaration merging
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">// classes.cs
+inteface IFoo {
+  bar();
+}
+export class Foo extends IFoo
+{
+   bar() {}
+}
+// FooExtension.cs
+import { Foo } from './classes';
+declare module './classes' {
+  interface IFoo {
+    baz(): void;
+  }
+}
+Foo.prototype.baz = function() {
+  // new  method added to Foo;
+}
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-4-3" class="outline-4">
+<h4 id="sec-1-4-3">Type Guards</h4>
+<div class="outline-text-4" id="text-1-4-3">
+<dl class="org-dl">
+<dt> typeof </dt><dd>Check string | number | boolean | symbol
+</dd>
+</dl>
+
+<p>
+#+NAME typeof Type Guard
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">let x: string | number = 11;
+if (typeof x === 'string') {
+  // string type enforced
+}
+</pre>
+</div>
+
+<dl class="org-dl">
+<dt> instanceof </dt><dd>check union types
+</dd>
+</dl>
+
+<p>
+#+NAME instance of Type Guard
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">let device: Clock | Radio;
+if (device instanceof Clock) {
+  // Clock type enforced
+}
+</pre>
+</div>
+
+<dl class="org-dl">
+<dt> type predicate </dt><dd>check interfaces
+</dd>
+</dl>
+
+<p>
+#+NAME type predicate Type Guard
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">interface Foo { bar: string }
+function isFoo(x: any): x is Foo {
+  return (&lt;Foo&gt;x).bar !== undefined;
+}
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-4-4" class="outline-4">
+<h4 id="sec-1-4-4">Symbols</h4>
+<div class="outline-text-4" id="text-1-4-4">
+<ul class="org-ul">
+<li>Requires <code>tsconfig.js::{compilerOptions{target: 'es2015'}}</code>
+</li>
+<li>Characteristics
+<ul class="org-ul">
+<li>Primitive Data Type
+</li>
+<li>Unique
+</li>
+<li>Immutable
+</li>
+</ul>
+</li>
+<li>Use Cases
+<ul class="org-ul">
+<li>Unique Constraints
+</li>
+<li>Computed Property Declarations
+</li>
+<li>Customize Internal Language Behaviour, there are a few well know symbols (hasInstance&#x2026;)
+</li>
+</ul>
+</li>
+</ul>
+
+
+<p>
+#+NAME Symbol Initalization
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">let foo = Symbol('description');
+let bar = Symbol('description');
+console.log(foo === bar);  // false
+console.log(typeof foo);  // 'symbol'
+</pre>
+</div>
+
+
+<p>
+#+NAME Symbol as property key
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">let fooSymbol = Symbol('description');
+let bazObject = {
+  [foo]: 'value for my symbol key'
+}
+console.log(bazObject[fooSymbol]);  // Value for my symbol key
+</pre>
+</div>
+
+<p>
+#+NAME Symbol for a Computed Property Key
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">// classes.ts
+let FOO_SYMBOL = Symbol();
+export class BazClass {
+  [FOO_SYMBOL]() {
+    console.log('Some Message');
+  }
+}
+// usage.cs
+import {FOO_SYMBOL, BazClass} from './classes.ts';
+let baz = new BazClass();
+baz[FOO_SYMBOL]();  // 'Some message'
+</pre>
+</div>
+
+<p>
+#+NAME Symbol to modify internal manguage behaviours by overriding Symbol.hasInstance
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">// classes.tse
+export class BazClass {
+  static [Symbol.hasInstance](obj: Object) {
+    // do different check
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5">Decorators</h3>
+<div class="outline-text-3" id="text-1-5">
+</div><div id="outline-container-sec-1-5-1" class="outline-4">
+<h4 id="sec-1-5-1">Class Decorators</h4>
+<div class="outline-text-4" id="text-1-5-1">
+<p>
+#+NAME Class Decorator
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">function classDecorator(classCtor: Function) {
+  /*do stuff*/
+}
+@classDecorator
+class FooClass {
+  barMethod(){}
+}
+</pre>
+</div>
+
+<p>
+#+NAME Replace a constructor with a Class Decorator
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">function classDecorator&lt;TFunction extends Function&gt;(classCtor: TFunction): TFunction  {
+  let newCtor: Function = function() {
+    console.log('Live from new ctor...');
+  }
+  newCtor.prototype = Object.create(classCtor.prototype);
+  newCtor.prototype.constructor = classCtor;
+  return &lt;TFunction&gt;newCtor;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5-2" class="outline-4">
+<h4 id="sec-1-5-2">Decorator Factory</h4>
+<div class="outline-text-4" id="text-1-5-2">
+<dl class="org-dl">
+<dt> Decorator Factories </dt><dd>Allow specifying additonal parameters
+</dd>
+</dl>
+
+<p>
+#+NAME Class Decorator Factory
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">function classDecoratorFactory(element:string) {
+  return function(classCtor: Function): void  {
+    console.log(element);
+  }
+}
+@classDecoratorFactory('elementValue')
+class FooClass {}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5-3" class="outline-4">
+<h4 id="sec-1-5-3">Property Decorators</h4>
+<div class="outline-text-4" id="text-1-5-3">
+<p>
+#+NAME Property Decorator
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">function propertyDecorator(classCtorOrPrototype: Function, propertyKey: string)  {
+    /*do stuff*/
+}
+class FooClass {
+  @propertyDecorator
+  barProperty: string;
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5-4" class="outline-4">
+<h4 id="sec-1-5-4">Parameter Decorators</h4>
+<div class="outline-text-4" id="text-1-5-4">
+<p>
+#+NAME Parameter Decorator
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">function propertyDecorator(classCtorOrPrototype: Function, propertyKey: string, parameterIndex: number)  {
+    /*do stuff*/
+}
+class FooClass {
+  function barMethod(@parameterDecorator baz:string){}
+}
+</pre>
+</div>
+
+
+<p>
+Metho
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-5-5" class="outline-4">
+<h4 id="sec-1-5-5">Method and Accessor Decorators</h4>
+<div class="outline-text-4" id="text-1-5-5">
+<p>
+#+NAME Method Decorator
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">function methodDecorator(staticMethodOrPrototypeMethod: any, nameOfDecoratedMember: string, description: ProperyDescriptor) {
+  /*do stuff*/
+}
+class FooClass {
+  @methodDecorator
+  barMethod(){}
+}
+</pre>
+</div>
+
+<dl class="org-dl">
+<dt> Property Descriptors </dt><dd>Object that describes a property and how it can be manipulated
+</dd>
+</dl>
+
+<p>
+#+NAME PropertyDescriptor interface
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">interface PropertyDescriptor {
+  configurable?: boolean;
+  enumerable?: boolean;
+  value?: any;  // the value assigned (eg, the function for class methods)
+  writable?: boolean;  // is it readonly?
+  get? (): any;
+  set?(v: any);
+}
+</pre>
+</div>
+
+
+<p>
+#+NAME creating a readonly Method with Method Decorator and PropertyDescriptor
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">function readonly(target: any, propertyKey: string, descriptor: ProperyDescriptor) {
+  console.log(`Setting ${propertyKey} to readonly.`);
+  descriptor.writable = false;
+}
+class FooClass {
+  @readonly
+  barMethod(){}
+}
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6">Asyncronous Methods</h3>
+<div class="outline-text-3" id="text-1-6">
+</div><div id="outline-container-sec-1-6-1" class="outline-4">
+<h4 id="sec-1-6-1">Callbacks</h4>
+<div class="outline-text-4" id="text-1-6-1">
+<p>
+#+NAME Callback Flow
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">interface FooCallback (err: Error, data: string[]): void;
+function FooMakesCallback(callback: FooCallback) {
+let data = fetchData();
+  if (data.length &gt; 0) {
+    callback(null, data);
+  } else {
+    callback(()=&gt;{console.log('there was an error')}, null);
+  }
+}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6-2" class="outline-4">
+<h4 id="sec-1-6-2">Promises</h4>
+<div class="outline-text-4" id="text-1-6-2">
+<p>
+#+NAME Promises flow
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">let p: Promise&lt;TypeOfSuccess&gt; = new Promise((resolve, reject) =&gt; {
+  // ...perform async work
+  if (success) {
+    resolve(data);
+  } else{
+    reject(reason);
+  }
+});
+p.then(successResult =&gt; console.log('success' + successResult);
+p.catch(reason =&gt; console.log('rejected' + reason);
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6-3" class="outline-4">
+<h4 id="sec-1-6-3">Async / Await</h4>
+<div class="outline-text-4" id="text-1-6-3">
+<p>
+#+NAME Async/Await Flow
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">async function doAsyncWork() {
+  let result = await SlowFunction();
+  console.log(result);
+}
+</pre>
+</div>
+
+<p>
+#+NAME Async/Await Error handling using the promise returned
+</p>
+<div class="org-src-container">
+
+<pre class="src src-typescript">async function doAsyncWork() {
+  let result = await SlowFunction();
+  console.log(result);
+}
+doAsyncWork.catch(reason =&gt; console.log(reason));
+</pre>
+</div>
+</div>
+</div>
+</div>
+</div>
