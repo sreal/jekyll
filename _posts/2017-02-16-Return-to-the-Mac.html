@@ -53,7 +53,6 @@ alias ll='ls -la'
 <div class="outline-text-4" id="text-1-2-1">
 <p>
 Install via homebrew with links
-#+END<sub>SRC</sub>
 </p>
 </div>
 </div>
@@ -83,6 +82,21 @@ mono --runtime=v4.0 /projects/third-party/bin/nuget.exe $*
 <div class="org-src-container">
 
 <pre class="src src-bash">echo "Hello World!" | pbcopy
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6">Kill finder</h3>
+<div class="outline-text-3" id="text-1-6">
+<p>
+Add a Quit to the finder menu items
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bash">defaults write com.apple.finder QuitMenuItem -bool YES
 </pre>
 </div>
 </div>

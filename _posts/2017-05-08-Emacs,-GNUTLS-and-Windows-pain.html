@@ -1,0 +1,42 @@
+---
+layout: default
+title: Emacs, GNUTLS and Windows pain
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Emacs, GNUTLS and Windows pain</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Sometime Emacs won't connect on windows machines to https site.
+</p>
+
+<p>
+This means you can't update packages from <a href="https://melpa.org/">melpa</a> or <a href="https://marmalade-repo.org/">marmalade</a>.
+</p>
+
+<p>
+In <a href="https://www.reddit.com/r/emacs/comments/2k2url/marmalade_gets_ssl_finally/">this reddit thread</a> the issue is describe with useful tips.
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-elisp">(url-retrieve
+ "https://www.google.com"
+ (lambda (status &amp;rest args)
+   (pop-to-buffer (current-buffer))))
+</pre>
+</div>
+
+
+<p>
+The thread is expanded into instruction on marmalade: <a href="https://marmalade-repo.org/#windowsinstructions">https://marmalade-repo.org/#windowsinstructions</a>
+For me, the dlls in the latest of the sourceforge project failed. I used an altyernative source for the dlls files.
+</p>
+
+<blockquote>
+<p>
+<b>Copy all dlls from <a href="ftp://ftp.gnutls.org/gcrypt/gnutls/w32/">ftp://ftp.gnutls.org/gcrypt/gnutls/w32/</a> File: gnutls-3.5.8-w64.zip into a Emacs-25.1 `/bin` directory</b>
+</p>
+</blockquote>
+</div>
+</div>
