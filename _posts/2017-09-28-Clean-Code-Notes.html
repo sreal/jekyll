@@ -1,0 +1,675 @@
+---
+layout: default
+title: Clean Code Notes
+---
+
+<p>
+Notes from Bob Martin's Clean code book. Basically it's the index page.
+</p>
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Clean Code</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">There will be code: Code always exitst</h3>
+</div>
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">Bad Code has effects</h3>
+<div class="outline-text-3" id="text-1-2">
+</div><div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1">Wade through bad code</h4>
+</div>
+<div id="outline-container-sec-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2">Le Blancs Law :: Later equals never</h4>
+</div>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3">Cost of bad code</h3>
+<div class="outline-text-3" id="text-1-3">
+</div><div id="outline-container-sec-1-3-1" class="outline-4">
+<h4 id="sec-1-3-1">Grand redesigns</h4>
+</div>
+<div id="outline-container-sec-1-3-2" class="outline-4">
+<h4 id="sec-1-3-2">Attitude of devs for clean code matter</h4>
+</div>
+<div id="outline-container-sec-1-3-3" class="outline-4">
+<h4 id="sec-1-3-3">The art is nknowing clean code and being able to make it.</h4>
+</div>
+<div id="outline-container-sec-1-3-4" class="outline-4">
+<h4 id="sec-1-3-4">Clean code is elegant, simple, direct, readable, enhancable, does what is expected</h4>
+</div>
+</div>
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4">There are many schools of though regarding clean code.</h3>
+</div>
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5">Authors of code are responsible and must promote readaiblity</h3>
+</div>
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6">The Boy Scout Rule</h3>
+</div>
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7">Prequel and Principles</h3>
+<div class="outline-text-3" id="text-1-7">
+</div><div id="outline-container-sec-1-7-1" class="outline-4">
+<h4 id="sec-1-7-1">Book:: Agile Software Development: Principles, Patterns and Practices</h4>
+</div>
+<div id="outline-container-sec-1-7-2" class="outline-4">
+<h4 id="sec-1-7-2">Principles of Design</h4>
+<div class="outline-text-4" id="text-1-7-2">
+</div><div id="outline-container-sec-1-7-2-1" class="outline-5">
+<h5 id="sec-1-7-2-1">Single Responsibility Priciple</h5>
+</div>
+<div id="outline-container-sec-1-7-2-2" class="outline-5">
+<h5 id="sec-1-7-2-2">Open/Closed Principle</h5>
+</div>
+<div id="outline-container-sec-1-7-2-3" class="outline-5">
+<h5 id="sec-1-7-2-3">Dependancy Inversion Principle</h5>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-2" class="outline-2">
+<h2 id="sec-2">Meaningful names</h2>
+<div class="outline-text-2" id="text-2">
+</div><div id="outline-container-sec-2-1" class="outline-3">
+<h3 id="sec-2-1">Intention Revealing Names</h3>
+</div>
+<div id="outline-container-sec-2-2" class="outline-3">
+<h3 id="sec-2-2">Avoid Disinformation</h3>
+</div>
+<div id="outline-container-sec-2-3" class="outline-3">
+<h3 id="sec-2-3">Make meaningful distunctions</h3>
+</div>
+<div id="outline-container-sec-2-4" class="outline-3">
+<h3 id="sec-2-4">Use pronouncable names</h3>
+</div>
+<div id="outline-container-sec-2-5" class="outline-3">
+<h3 id="sec-2-5">Use searchable names</h3>
+</div>
+<div id="outline-container-sec-2-6" class="outline-3">
+<h3 id="sec-2-6">Avoid encodings</h3>
+<div class="outline-text-3" id="text-2-6">
+</div><div id="outline-container-sec-2-6-1" class="outline-4">
+<h4 id="sec-2-6-1">Hungarian Notations (type)</h4>
+</div>
+<div id="outline-container-sec-2-6-2" class="outline-4">
+<h4 id="sec-2-6-2">Member prefixes (m<sub>xxx</sub>)</h4>
+</div>
+<div id="outline-container-sec-2-6-3" class="outline-4">
+<h4 id="sec-2-6-3">Interface and Implementations (Iinterface)</h4>
+</div>
+</div>
+<div id="outline-container-sec-2-7" class="outline-3">
+<h3 id="sec-2-7">Class names should be Nouns &amp; Noun phrases</h3>
+</div>
+<div id="outline-container-sec-2-8" class="outline-3">
+<h3 id="sec-2-8">Method Names should be Verb and Verb phrases</h3>
+</div>
+<div id="outline-container-sec-2-9" class="outline-3">
+<h3 id="sec-2-9">Don't be cute</h3>
+</div>
+<div id="outline-container-sec-2-10" class="outline-3">
+<h3 id="sec-2-10">One word per concept</h3>
+</div>
+<div id="outline-container-sec-2-11" class="outline-3">
+<h3 id="sec-2-11">Don't pun</h3>
+</div>
+<div id="outline-container-sec-2-12" class="outline-3">
+<h3 id="sec-2-12">Use Solution Domain Names</h3>
+</div>
+<div id="outline-container-sec-2-13" class="outline-3">
+<h3 id="sec-2-13">Use Problem Domain Names</h3>
+</div>
+<div id="outline-container-sec-2-14" class="outline-3">
+<h3 id="sec-2-14">Add meaningful context</h3>
+</div>
+<div id="outline-container-sec-2-15" class="outline-3">
+<h3 id="sec-2-15">Don't add gratuitous context</h3>
+</div>
+<div id="outline-container-sec-2-16" class="outline-3">
+<h3 id="sec-2-16">Rename as needed</h3>
+</div>
+</div>
+
+<div id="outline-container-sec-3" class="outline-2">
+<h2 id="sec-3">Functions</h2>
+<div class="outline-text-2" id="text-3">
+</div><div id="outline-container-sec-3-1" class="outline-3">
+<h3 id="sec-3-1">Keep functions small (limit indenting)</h3>
+</div>
+<div id="outline-container-sec-3-2" class="outline-3">
+<h3 id="sec-3-2">Do one thing onlyt (section using functions)</h3>
+</div>
+<div id="outline-container-sec-3-3" class="outline-3">
+<h3 id="sec-3-3">Use one level of abstraction per functions</h3>
+<div class="outline-text-3" id="text-3-3">
+</div><div id="outline-container-sec-3-3-1" class="outline-4">
+<h4 id="sec-3-3-1">Use The Stepdown Rule to manage layers (TO&#x2026; == a level of abstractions)</h4>
+</div>
+</div>
+<div id="outline-container-sec-3-4" class="outline-3">
+<h3 id="sec-3-4">for `switch` statements, Avoid or, abstract into an AbstractFactory</h3>
+</div>
+<div id="outline-container-sec-3-5" class="outline-3">
+<h3 id="sec-3-5">Use descriptive names</h3>
+</div>
+<div id="outline-container-sec-3-6" class="outline-3">
+<h3 id="sec-3-6">Function Arguments</h3>
+<div class="outline-text-3" id="text-3-6">
+</div><div id="outline-container-sec-3-6-1" class="outline-4">
+<h4 id="sec-3-6-1">Use common Monadic Forms</h4>
+</div>
+<div id="outline-container-sec-3-6-2" class="outline-4">
+<h4 id="sec-3-6-2">Dydadic FUnctions</h4>
+</div>
+<div id="outline-container-sec-3-6-3" class="outline-4">
+<h4 id="sec-3-6-3">Triads should be avoided if possible</h4>
+</div>
+<div id="outline-container-sec-3-6-4" class="outline-4">
+<h4 id="sec-3-6-4">Use Options Arguments</h4>
+</div>
+<div id="outline-container-sec-3-6-5" class="outline-4">
+<h4 id="sec-3-6-5">Arguments list are an option</h4>
+</div>
+<div id="outline-container-sec-3-6-6" class="outline-4">
+<h4 id="sec-3-6-6">Verbs and Keywords can be used in method name</h4>
+</div>
+</div>
+<div id="outline-container-sec-3-7" class="outline-3">
+<h3 id="sec-3-7">Have no side effets</h3>
+<div class="outline-text-3" id="text-3-7">
+</div><div id="outline-container-sec-3-7-1" class="outline-4">
+<h4 id="sec-3-7-1">Avoid `out`, `this` is intended as an output argument</h4>
+</div>
+</div>
+<div id="outline-container-sec-3-8" class="outline-3">
+<h3 id="sec-3-8">Use Command Query Separation</h3>
+</div>
+<div id="outline-container-sec-3-9" class="outline-3">
+<h3 id="sec-3-9">Prefer Exceptions to returning Error Codes</h3>
+<div class="outline-text-3" id="text-3-9">
+</div><div id="outline-container-sec-3-9-1" class="outline-4">
+<h4 id="sec-3-9-1">Extract try-catches</h4>
+</div>
+<div id="outline-container-sec-3-9-2" class="outline-4">
+<h4 id="sec-3-9-2">Error handling is one thing</h4>
+</div>
+<div id="outline-container-sec-3-9-3" class="outline-4">
+<h4 id="sec-3-9-3">An Error code class becomes a dependancy magnet through the project</h4>
+</div>
+</div>
+<div id="outline-container-sec-3-10" class="outline-3">
+<h3 id="sec-3-10">DRY</h3>
+</div>
+<div id="outline-container-sec-3-11" class="outline-3">
+<h3 id="sec-3-11">Structured programming is an option</h3>
+<div class="outline-text-3" id="text-3-11">
+</div><div id="outline-container-sec-3-11-1" class="outline-4">
+<h4 id="sec-3-11-1">1 enter and 1 exit for each block and function.</h4>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-4" class="outline-2">
+<h2 id="sec-4">Comments</h2>
+<div class="outline-text-2" id="text-4">
+</div><div id="outline-container-sec-4-1" class="outline-3">
+<h3 id="sec-4-1">Comments do not makeu-p for Bad Code</h3>
+</div>
+<div id="outline-container-sec-4-2" class="outline-3">
+<h3 id="sec-4-2">Explain yourself in code</h3>
+</div>
+<div id="outline-container-sec-4-3" class="outline-3">
+<h3 id="sec-4-3">Good Comments</h3>
+<div class="outline-text-3" id="text-4-3">
+</div><div id="outline-container-sec-4-3-1" class="outline-4">
+<h4 id="sec-4-3-1">Legal Comments</h4>
+</div>
+<div id="outline-container-sec-4-3-2" class="outline-4">
+<h4 id="sec-4-3-2">Informative Comments</h4>
+</div>
+<div id="outline-container-sec-4-3-3" class="outline-4">
+<h4 id="sec-4-3-3">Explanation of Intent</h4>
+</div>
+<div id="outline-container-sec-4-3-4" class="outline-4">
+<h4 id="sec-4-3-4">Clarification</h4>
+</div>
+<div id="outline-container-sec-4-3-5" class="outline-4">
+<h4 id="sec-4-3-5">Warning of Consequences</h4>
+</div>
+<div id="outline-container-sec-4-3-6" class="outline-4">
+<h4 id="sec-4-3-6"><span class="todo TODO">TODO</span> Comments</h4>
+</div>
+<div id="outline-container-sec-4-3-7" class="outline-4">
+<h4 id="sec-4-3-7">Amplification Comments</h4>
+</div>
+<div id="outline-container-sec-4-3-8" class="outline-4">
+<h4 id="sec-4-3-8">Doc generation comments</h4>
+</div>
+</div>
+<div id="outline-container-sec-4-4" class="outline-3">
+<h3 id="sec-4-4">Bad Comments</h3>
+<div class="outline-text-3" id="text-4-4">
+</div><div id="outline-container-sec-4-4-1" class="outline-4">
+<h4 id="sec-4-4-1">Mumbling Comments</h4>
+</div>
+<div id="outline-container-sec-4-4-2" class="outline-4">
+<h4 id="sec-4-4-2">Redundancy Comments</h4>
+</div>
+<div id="outline-container-sec-4-4-3" class="outline-4">
+<h4 id="sec-4-4-3">Misleading Comments</h4>
+</div>
+<div id="outline-container-sec-4-4-4" class="outline-4">
+<h4 id="sec-4-4-4">Mandated Comments</h4>
+</div>
+<div id="outline-container-sec-4-4-5" class="outline-4">
+<h4 id="sec-4-4-5">Journal Comments</h4>
+</div>
+<div id="outline-container-sec-4-4-6" class="outline-4">
+<h4 id="sec-4-4-6">Noise &amp; Scary noise</h4>
+</div>
+<div id="outline-container-sec-4-4-7" class="outline-4">
+<h4 id="sec-4-4-7">Don't use comments when symbol names will work</h4>
+</div>
+<div id="outline-container-sec-4-4-8" class="outline-4">
+<h4 id="sec-4-4-8">Position Markers</h4>
+</div>
+<div id="outline-container-sec-4-4-9" class="outline-4">
+<h4 id="sec-4-4-9">Closing Braces Comments</h4>
+</div>
+<div id="outline-container-sec-4-4-10" class="outline-4">
+<h4 id="sec-4-4-10">Attribution and Bylines</h4>
+</div>
+<div id="outline-container-sec-4-4-11" class="outline-4">
+<h4 id="sec-4-4-11">Commented out code</h4>
+</div>
+<div id="outline-container-sec-4-4-12" class="outline-4">
+<h4 id="sec-4-4-12">Non-local comments</h4>
+</div>
+<div id="outline-container-sec-4-4-13" class="outline-4">
+<h4 id="sec-4-4-13">Too much information</h4>
+</div>
+<div id="outline-container-sec-4-4-14" class="outline-4">
+<h4 id="sec-4-4-14">Inobvious Connections</h4>
+</div>
+<div id="outline-container-sec-4-4-15" class="outline-4">
+<h4 id="sec-4-4-15">Function Headers</h4>
+</div>
+<div id="outline-container-sec-4-4-16" class="outline-4">
+<h4 id="sec-4-4-16">Doc generations in non-public code</h4>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-5" class="outline-2">
+<h2 id="sec-5">Formatting</h2>
+<div class="outline-text-2" id="text-5">
+</div><div id="outline-container-sec-5-1" class="outline-3">
+<h3 id="sec-5-1">Vertical Formatting</h3>
+<div class="outline-text-3" id="text-5-1">
+</div><div id="outline-container-sec-5-1-1" class="outline-4">
+<h4 id="sec-5-1-1">Newspaper Metaphor</h4>
+</div>
+<div id="outline-container-sec-5-1-2" class="outline-4">
+<h4 id="sec-5-1-2">Vertical Openness between concepts</h4>
+</div>
+<div id="outline-container-sec-5-1-3" class="outline-4">
+<h4 id="sec-5-1-3">Vertical density</h4>
+</div>
+<div id="outline-container-sec-5-1-4" class="outline-4">
+<h4 id="sec-5-1-4">Vertical Distance</h4>
+</div>
+<div id="outline-container-sec-5-1-5" class="outline-4">
+<h4 id="sec-5-1-5">Vertical Distance</h4>
+</div>
+<div id="outline-container-sec-5-1-6" class="outline-4">
+<h4 id="sec-5-1-6">Vertical Ordering</h4>
+</div>
+</div>
+<div id="outline-container-sec-5-2" class="outline-3">
+<h3 id="sec-5-2">Horizontal Formatting</h3>
+<div class="outline-text-3" id="text-5-2">
+</div><div id="outline-container-sec-5-2-1" class="outline-4">
+<h4 id="sec-5-2-1">Horizontal Openness and Density</h4>
+</div>
+<div id="outline-container-sec-5-2-2" class="outline-4">
+<h4 id="sec-5-2-2">Horizontal Alignment</h4>
+</div>
+<div id="outline-container-sec-5-2-3" class="outline-4">
+<h4 id="sec-5-2-3">Indentation</h4>
+</div>
+<div id="outline-container-sec-5-2-4" class="outline-4">
+<h4 id="sec-5-2-4">Dummy Scopes</h4>
+</div>
+</div>
+<div id="outline-container-sec-5-3" class="outline-3">
+<h3 id="sec-5-3">Team Rules</h3>
+</div>
+</div>
+
+<div id="outline-container-sec-6" class="outline-2">
+<h2 id="sec-6">Objects and Data Structures</h2>
+<div class="outline-text-2" id="text-6">
+</div><div id="outline-container-sec-6-1" class="outline-3">
+<h3 id="sec-6-1">Data Abstraction</h3>
+</div>
+<div id="outline-container-sec-6-2" class="outline-3">
+<h3 id="sec-6-2">Data/Object Anti-symmetry</h3>
+<div class="outline-text-3" id="text-6-2">
+</div><div id="outline-container-sec-6-2-1" class="outline-4">
+<h4 id="sec-6-2-1">Data has fields, Object has methods</h4>
+</div>
+</div>
+<div id="outline-container-sec-6-3" class="outline-3">
+<h3 id="sec-6-3">Laws of Delimiter</h3>
+<div class="outline-text-3" id="text-6-3">
+</div><div id="outline-container-sec-6-3-1" class="outline-4">
+<h4 id="sec-6-3-1">Train Wrecks</h4>
+</div>
+<div id="outline-container-sec-6-3-2" class="outline-4">
+<h4 id="sec-6-3-2">Hybrids</h4>
+</div>
+<div id="outline-container-sec-6-3-3" class="outline-4">
+<h4 id="sec-6-3-3">Hiding Structure</h4>
+</div>
+</div>
+<div id="outline-container-sec-6-4" class="outline-3">
+<h3 id="sec-6-4">Data Transfer Objects</h3>
+<div class="outline-text-3" id="text-6-4">
+</div><div id="outline-container-sec-6-4-1" class="outline-4">
+<h4 id="sec-6-4-1">Active Records are best as a Data Object</h4>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-7" class="outline-2">
+<h2 id="sec-7">Error Handling</h2>
+<div class="outline-text-2" id="text-7">
+</div><div id="outline-container-sec-7-1" class="outline-3">
+<h3 id="sec-7-1">Use Exceptions over return codes</h3>
+</div>
+<div id="outline-container-sec-7-2" class="outline-3">
+<h3 id="sec-7-2">Write trry-catch-finally first</h3>
+</div>
+<div id="outline-container-sec-7-3" class="outline-3">
+<h3 id="sec-7-3">Use Unchecked exzceptions (don't define throws)</h3>
+</div>
+<div id="outline-container-sec-7-4" class="outline-3">
+<h3 id="sec-7-4">Provide context with exceptions</h3>
+</div>
+<div id="outline-container-sec-7-5" class="outline-3">
+<h3 id="sec-7-5">Define exceptions class in terms of caller's needs</h3>
+</div>
+<div id="outline-container-sec-7-6" class="outline-3">
+<h3 id="sec-7-6">Defined the normal form</h3>
+</div>
+<div id="outline-container-sec-7-7" class="outline-3">
+<h3 id="sec-7-7">Don't return null</h3>
+</div>
+<div id="outline-container-sec-7-8" class="outline-3">
+<h3 id="sec-7-8">Don't pass null</h3>
+</div>
+</div>
+
+<div id="outline-container-sec-8" class="outline-2">
+<h2 id="sec-8">Boundaries</h2>
+<div class="outline-text-2" id="text-8">
+</div><div id="outline-container-sec-8-1" class="outline-3">
+<h3 id="sec-8-1">Using 3rd party code</h3>
+</div>
+<div id="outline-container-sec-8-2" class="outline-3">
+<h3 id="sec-8-2">Explaining and learnings from 3rd party boundaries should be clear</h3>
+</div>
+<div id="outline-container-sec-8-3" class="outline-3">
+<h3 id="sec-8-3">Test to learn the boundaries are better that free</h3>
+</div>
+<div id="outline-container-sec-8-4" class="outline-3">
+<h3 id="sec-8-4">Use code that doesn't exist yet with wish interface now, and an adapter later</h3>
+</div>
+<div id="outline-container-sec-8-5" class="outline-3">
+<h3 id="sec-8-5">Keep clean boundaries</h3>
+</div>
+</div>
+
+<div id="outline-container-sec-9" class="outline-2">
+<h2 id="sec-9">Unit Tests</h2>
+<div class="outline-text-2" id="text-9">
+</div><div id="outline-container-sec-9-1" class="outline-3">
+<h3 id="sec-9-1">Laws of TDD</h3>
+<div class="outline-text-3" id="text-9-1">
+</div><div id="outline-container-sec-9-1-1" class="outline-4">
+<h4 id="sec-9-1-1">Must have failihng test</h4>
+</div>
+<div id="outline-container-sec-9-1-2" class="outline-4">
+<h4 id="sec-9-1-2">Test must small and possible</h4>
+</div>
+<div id="outline-container-sec-9-1-3" class="outline-4">
+<h4 id="sec-9-1-3">Code must pass the ptest only</h4>
+</div>
+</div>
+<div id="outline-container-sec-9-2" class="outline-3">
+<h3 id="sec-9-2">Keep test clean for: flexibility, maintainability, reusability</h3>
+</div>
+<div id="outline-container-sec-9-3" class="outline-3">
+<h3 id="sec-9-3">Clean Tests</h3>
+<div class="outline-text-3" id="text-9-3">
+</div><div id="outline-container-sec-9-3-1" class="outline-4">
+<h4 id="sec-9-3-1">build-operate-check</h4>
+</div>
+<div id="outline-container-sec-9-3-2" class="outline-4">
+<h4 id="sec-9-3-2">Use domain specific testing language</h4>
+</div>
+<div id="outline-container-sec-9-3-3" class="outline-4">
+<h4 id="sec-9-3-3">There is a dual standard for test code ve production code</h4>
+</div>
+</div>
+<div id="outline-container-sec-9-4" class="outline-3">
+<h3 id="sec-9-4">Single concept per test/ One assert per test</h3>
+</div>
+<div id="outline-container-sec-9-5" class="outline-3">
+<h3 id="sec-9-5">Test should be F.I.R.S.T</h3>
+<div class="outline-text-3" id="text-9-5">
+</div><div id="outline-container-sec-9-5-1" class="outline-4">
+<h4 id="sec-9-5-1">fast, independant, repeatable, self-validating, timely</h4>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-10" class="outline-2">
+<h2 id="sec-10">Classes</h2>
+<div class="outline-text-2" id="text-10">
+</div><div id="outline-container-sec-10-1" class="outline-3">
+<h3 id="sec-10-1">Class Organization</h3>
+<div class="outline-text-3" id="text-10-1">
+</div><div id="outline-container-sec-10-1-1" class="outline-4">
+<h4 id="sec-10-1-1">Exnasulate but not at the cost of the tests</h4>
+</div>
+</div>
+<div id="outline-container-sec-10-2" class="outline-3">
+<h3 id="sec-10-2">Classes should be small</h3>
+<div class="outline-text-3" id="text-10-2">
+</div><div id="outline-container-sec-10-2-1" class="outline-4">
+<h4 id="sec-10-2-1">Single Responsibility Priciple</h4>
+</div>
+<div id="outline-container-sec-10-2-2" class="outline-4">
+<h4 id="sec-10-2-2">Cohesion</h4>
+</div>
+<div id="outline-container-sec-10-2-3" class="outline-4">
+<h4 id="sec-10-2-3">Maintaining cohesion results in many small classes</h4>
+</div>
+</div>
+<div id="outline-container-sec-10-3" class="outline-3">
+<h3 id="sec-10-3">Organizating of change</h3>
+<div class="outline-text-3" id="text-10-3">
+</div><div id="outline-container-sec-10-3-1" class="outline-4">
+<h4 id="sec-10-3-1">Isolate for change</h4>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-11" class="outline-2">
+<h2 id="sec-11">Systems</h2>
+<div class="outline-text-2" id="text-11">
+</div><div id="outline-container-sec-11-1" class="outline-3">
+<h3 id="sec-11-1">Separate construction of a system from using it</h3>
+<div class="outline-text-3" id="text-11-1">
+</div><div id="outline-container-sec-11-1-1" class="outline-4">
+<h4 id="sec-11-1-1">Separate from `main`</h4>
+</div>
+<div id="outline-container-sec-11-1-2" class="outline-4">
+<h4 id="sec-11-1-2">Factories</h4>
+</div>
+<div id="outline-container-sec-11-1-3" class="outline-4">
+<h4 id="sec-11-1-3">Dependancy Injection</h4>
+</div>
+</div>
+<div id="outline-container-sec-11-2" class="outline-3">
+<h3 id="sec-11-2">Scaling Up</h3>
+<div class="outline-text-3" id="text-11-2">
+</div><div id="outline-container-sec-11-2-1" class="outline-4">
+<h4 id="sec-11-2-1">Cross cutting concerns</h4>
+</div>
+</div>
+<div id="outline-container-sec-11-3" class="outline-3">
+<h3 id="sec-11-3">Use a proxy object to test functionality</h3>
+</div>
+<div id="outline-container-sec-11-4" class="outline-3">
+<h3 id="sec-11-4">AOP to test a system</h3>
+</div>
+<div id="outline-container-sec-11-5" class="outline-3">
+<h3 id="sec-11-5">Test drive the System Architecture</h3>
+</div>
+<div id="outline-container-sec-11-6" class="outline-3">
+<h3 id="sec-11-6">Optimize desision making, pospone them</h3>
+</div>
+<div id="outline-container-sec-11-7" class="outline-3">
+<h3 id="sec-11-7">Use standards wisely, when they would add demonstratable value</h3>
+</div>
+<div id="outline-container-sec-11-8" class="outline-3">
+<h3 id="sec-11-8">System need domains specific language</h3>
+</div>
+</div>
+
+<div id="outline-container-sec-12" class="outline-2">
+<h2 id="sec-12">Emergence</h2>
+<div class="outline-text-2" id="text-12">
+</div><div id="outline-container-sec-12-1" class="outline-3">
+<h3 id="sec-12-1">Getting clean by emergence with 4 rules</h3>
+<div class="outline-text-3" id="text-12-1">
+<ol class="org-ol">
+<li>Runs all the tests
+</li>
+<li>No Duplication
+</li>
+<li>Expressiveness
+</li>
+<li>Minimal Classes and Methods
+</li>
+</ol>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-13" class="outline-2">
+<h2 id="sec-13">Concurrency</h2>
+<div class="outline-text-2" id="text-13">
+</div><div id="outline-container-sec-13-1" class="outline-3">
+<h3 id="sec-13-1">Why concurrency?</h3>
+<div class="outline-text-3" id="text-13-1">
+</div><div id="outline-container-sec-13-1-1" class="outline-4">
+<h4 id="sec-13-1-1">Myths and Misconceptions</h4>
+<div class="outline-text-4" id="text-13-1-1">
+</div><div id="outline-container-sec-13-1-1-1" class="outline-5">
+<h5 id="sec-13-1-1-1">Concurrency always improves perfrormance</h5>
+</div>
+<div id="outline-container-sec-13-1-1-2" class="outline-5">
+<h5 id="sec-13-1-1-2">Design doesn't change when writing concurrent programs</h5>
+</div>
+<div id="outline-container-sec-13-1-1-3" class="outline-5">
+<h5 id="sec-13-1-1-3">Understanding concurrency issues is not iomportant when working with containers</h5>
+</div>
+<div id="outline-container-sec-13-1-1-4" class="outline-5">
+<h5 id="sec-13-1-1-4">Concurrency incuyrs some overhead</h5>
+</div>
+<div id="outline-container-sec-13-1-1-5" class="outline-5">
+<h5 id="sec-13-1-1-5">Correct concurrency is complex</h5>
+</div>
+<div id="outline-container-sec-13-1-1-6" class="outline-5">
+<h5 id="sec-13-1-1-6">Concurrency bugs aren't ussually repeatable</h5>
+</div>
+<div id="outline-container-sec-13-1-1-7" class="outline-5">
+<h5 id="sec-13-1-1-7">Concurrency often requires a fundamental change in design strategy</h5>
+</div>
+</div>
+</div>
+<div id="outline-container-sec-13-2" class="outline-3">
+<h3 id="sec-13-2">Some thread paths create challenges, some don't</h3>
+</div>
+<div id="outline-container-sec-13-3" class="outline-3">
+<h3 id="sec-13-3">Concurrency Defense Principles</h3>
+<div class="outline-text-3" id="text-13-3">
+<ol class="org-ol">
+<li>Single Responsibility Priciple
+</li>
+<li>Limit the scope of data
+</li>
+<li>Use copies of data
+</li>
+<li>Threads should be as inmdependant as possible
+</li>
+</ol>
+</div>
+</div>
+<div id="outline-container-sec-13-4" class="outline-3">
+<h3 id="sec-13-4">Know your libraries</h3>
+</div>
+<div id="outline-container-sec-13-5" class="outline-3">
+<h3 id="sec-13-5">Know your execution models</h3>
+<div class="outline-text-3" id="text-13-5">
+</div><div id="outline-container-sec-13-5-1" class="outline-4">
+<h4 id="sec-13-5-1">Producer-Consumer</h4>
+</div>
+<div id="outline-container-sec-13-5-2" class="outline-4">
+<h4 id="sec-13-5-2">Reader-Writer</h4>
+</div>
+<div id="outline-container-sec-13-5-3" class="outline-4">
+<h4 id="sec-13-5-3">Dining Philosophers</h4>
+</div>
+</div>
+<div id="outline-container-sec-13-6" class="outline-3">
+<h3 id="sec-13-6">Bewsare dependancies between synchronised methods</h3>
+</div>
+<div id="outline-container-sec-13-7" class="outline-3">
+<h3 id="sec-13-7">Keep synchronised sections small</h3>
+</div>
+<div id="outline-container-sec-13-8" class="outline-3">
+<h3 id="sec-13-8">Writing correct shutdown code hard</h3>
+</div>
+<div id="outline-container-sec-13-9" class="outline-3">
+<h3 id="sec-13-9">Testing Threaded Code</h3>
+<div class="outline-text-3" id="text-13-9">
+</div><div id="outline-container-sec-13-9-1" class="outline-4">
+<h4 id="sec-13-9-1">Treat spurious failures as candidate threading issues</h4>
+</div>
+<div id="outline-container-sec-13-9-2" class="outline-4">
+<h4 id="sec-13-9-2">Get non-treaded code working first</h4>
+</div>
+<div id="outline-container-sec-13-9-3" class="outline-4">
+<h4 id="sec-13-9-3">Make threaded code pluggable</h4>
+</div>
+<div id="outline-container-sec-13-9-4" class="outline-4">
+<h4 id="sec-13-9-4">Make threaded code tunable</h4>
+</div>
+<div id="outline-container-sec-13-9-5" class="outline-4">
+<h4 id="sec-13-9-5">Run with more threads than processes</h4>
+</div>
+<div id="outline-container-sec-13-9-6" class="outline-4">
+<h4 id="sec-13-9-6">Run on different processors</h4>
+</div>
+<div id="outline-container-sec-13-9-7" class="outline-4">
+<h4 id="sec-13-9-7">Instrument code and force failures using Hard-coded or automated instrumentation.</h4>
+</div>
+</div>
+</div>
