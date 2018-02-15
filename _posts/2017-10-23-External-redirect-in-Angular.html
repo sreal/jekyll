@@ -1,0 +1,121 @@
+---
+layout: default
+title: External redirect in Angular
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">External redirect in Angular</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+How to testably redirect to an external url in Angular.
+</p>
+</div>
+
+
+<div id="outline-container-sec-1-0-1" class="outline-4">
+<h4 id="sec-1-0-1">Working in versions</h4>
+<div class="outline-text-4" id="text-1-0-1">
+<ul class="org-ul">
+<li>@angular/*:  ^4.2.4
+</li>
+</ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">Do this.</h3>
+<div class="outline-text-3" id="text-1-1">
+</div><div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1">Inject the global `document`</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<p>
+import { Inject } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+export class FooService () {
+    constructor(@Inject(DOCUMENT) private doc: any) {}
+    redirect () =&gt; this.doc.location.assign("//google.com");
+}
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2">Then provide a spyObject in the tests.</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<p>
+document = {
+  location: jasmine.createSpyObj('document', ['assign'])
+};
+TestBed.configureTestingModule({
+providers: [
+    { provide: DOCUMENT, useValue: document }
+//&#x2026;
+expect(document.location.assign).toHaveBeenCalledWith('http://external-url.com');
+</p>
+</div>
+</div>
+</div>
+
+
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">You can try these</h3>
+<div class="outline-text-3" id="text-1-2">
+</div><div id="outline-container-sec-1-2-1" class="outline-4">
+<h4 id="sec-1-2-1">Out of the box Angular's Location, LocationPath Services</h4>
+<div class="outline-text-4" id="text-1-2-1">
+<p>
+`import { Location, PathLocationStrategy } from '@angular/common';`
+</p>
+</div>
+
+
+<div id="outline-container-sec-1-2-1-1" class="outline-5">
+<h5 id="sec-1-2-1-1">`location.go` since the default locations strategies (hash, location) available are made for modifying paths.</h5>
+<div class="outline-text-5" id="text-1-2-1-1">
+<p>
+`redirect () =&gt; this.location.go("//google.com");`
+</p>
+
+
+<p>
+`location.go` expects a path.
+</p>
+
+
+<p>
+'http:/external-url.com' will set the url to `<a href="http://my-angular-app.com/http://external-url.com">http://my-angular-app.com/http://external-url.com</a>`.
+Even `//external-url.com` doesn't work, Angular's call to `history.pushState` won't allow the domain mismatch.
+</p>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-2-2" class="outline-4">
+<h4 id="sec-1-2-2">Change the global `window` or `document</h4>
+<div class="outline-text-4" id="text-1-2-2">
+<p>
+`window.location.href = 'http://external-url.com`
+`document.location.href = 'http://external-url.com`
+</p>
+</div>
+
+
+<div id="outline-container-sec-1-2-2-1" class="outline-5">
+<h5 id="sec-1-2-2-1">Without injecting the window/document or using a facade, this will hijack your tests and send jasmine to `<a href="http://external-url.com">http://external-url.com</a>`</h5>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-2-3" class="outline-4">
+<h4 id="sec-1-2-3">Write your own LocationStrategy.</h4>
+<div class="outline-text-4" id="text-1-2-3">
+<p>
+Don't forget the tests when you do this.
+</p>
+</div>
+</div>
+</div>
+</div>
