@@ -1,0 +1,96 @@
+---
+layout: default
+title: Cisco's AnyConnect VPN and docker-compose
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Cisco's AnyConnect VPN and docker-compose</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Started using docker at work again.
+</p>
+
+<p>
+All the previous work is almost outdated and the old scripts are broken.
+Been getting issues all over the places.
+</p>
+
+<p>
+Normally, I connect remotely over VPN using Cisco's AnyConnect Client.
+</p>
+
+
+<p>
+Big one is not being able to connect to the docker-machine (on windows) while connected work's corporate network.
+`docker-compose` cannot connect to the docker containers.
+Error message is similar to:
+</p>
+
+<p>
+This machine has been allocated an IP address, but Docker Machine could not reach it successfully.
+SSH for the machine should still work, but connecting to exposed ports, such as  the Docker daemon port (usually &lt;ip&gt;:2376), may not work properly.
+You may need to add the route manually, or use another related workaround.
+This could be due to a VPN, proxy, or host file configuration issue.
+</p>
+
+
+<p>
+Only solution I found that works is to port-forward then explicily set the DOCKER<sub>HOST</sub>.
+This causes cert issues that can be overcome with env vars.
+</p>
+
+<p>
+Using `docker-compose` to manage the containers, I couldn't get `&#x2013;tls-verify` to do anything.
+</p>
+
+
+<p>
+VBoxManage modifyvm "default" &#x2013;natpf1 "docker,tcp,,2376,,2376"
+</p>
+
+<p>
+$env:DOCKER<sub>HOST</sub>="tcp://127.0.0.1:2376"
+</p>
+
+<p>
+$env:DOCKER<sub>TLS</sub><sub>VERIFY</sub>='';
+</p>
+
+<p>
+docker-compose up
+</p>
+</div>
+
+<div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">You could try</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Giving the docker-machine vm have it's own subnet didn't work for me.
+I guess without split mode enabled/setup the vpn takes all connections.
+</p>
+
+<p>
+docker-machine create &#x2013;driver virtualbox &#x2013;virtualbox-hostonly-cidr "25.0.1.100/24" dev
+</p>
+
+
+<p>
+Also getting the devops guys to open the 2376 port locally should work.
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">sources</h3>
+<div class="outline-text-3" id="text-1-2">
+<ul class="org-ul">
+<li><a href="https://www.iancollington.com/docker-and-cisco-anyconnect-vpn/">https://www.iancollington.com/docker-and-cisco-anyconnect-vpn/</a>  &lt;&#x2013; this is the pure `docker` version
+</li>
+<li><a href="https://docs.docker.com/compose/reference/envvars/#compose_api_version">https://docs.docker.com/compose/reference/envvars/#compose_api_version</a>
+</li>
+<li><a href="https://stackoverflow.com/questions/33992729/cannot-get-docker-machine-to-work-with-virtualbox-when-using-cisco-vpn-anyconnec#34026467">https://stackoverflow.com/questions/33992729/cannot-get-docker-machine-to-work-with-virtualbox-when-using-cisco-vpn-anyconnec#34026467</a>
+</li>
+</ul>
+</div>
+</div>
+</div>
