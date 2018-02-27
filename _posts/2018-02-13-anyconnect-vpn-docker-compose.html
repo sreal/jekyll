@@ -35,7 +35,7 @@ This could be due to a VPN, proxy, or host file configuration issue.
 
 
 <p>
-Only solution I found that works is to port-forward then explicily set the DOCKER<sub>HOST</sub>.
+Only solution I found that works is to port-forward then explicily set the DOCKER_HOST.
 This causes cert issues that can be overcome with env vars.
 </p>
 
@@ -49,11 +49,11 @@ VBoxManage modifyvm "default" &#x2013;natpf1 "docker,tcp,,2376,,2376"
 </p>
 
 <p>
-$env:DOCKER<sub>HOST</sub>="tcp://127.0.0.1:2376"
+$env:DOCKER_HOST="tcp://127.0.0.1:2376"
 </p>
 
 <p>
-$env:DOCKER<sub>TLS</sub><sub>VERIFY</sub>='';
+$env:DOCKER_TLS_VERIFY='';
 </p>
 
 <p>
