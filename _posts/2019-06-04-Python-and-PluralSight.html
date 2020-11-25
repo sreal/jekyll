@@ -1,0 +1,576 @@
+---
+layout: default
+title: Python and PluralSight
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Python and PluralSight</h2>
+<div class="outline-text-2" id="text-1">
+</div><div id="outline-container-sec-1-1" class="outline-3">
+<h3 id="sec-1-1">The Python Developers Toolkit.</h3>
+<div class="outline-text-3" id="text-1-1">
+</div><div id="outline-container-sec-1-1-1" class="outline-4">
+<h4 id="sec-1-1-1">Why have a Python Toolkit</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<ul class="org-ul">
+<li>Python has defacto standatds
+</li>
+<li>Python is an eco systeem and not just a language
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2" class="outline-4">
+<h4 id="sec-1-1-2">Dependancy Management - [PIP]</h4>
+<div class="outline-text-4" id="text-1-1-2">
+</div><div id="outline-container-sec-1-1-2-1" class="outline-5">
+<h5 id="sec-1-1-2-1">How to import a package for use</h5>
+<div class="outline-text-5" id="text-1-1-2-1">
+<p>
+<code>import PACKAGE</code>
+</p>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2-2" class="outline-5">
+<h5 id="sec-1-1-2-2">Package Locations</h5>
+<div class="outline-text-5" id="text-1-1-2-2">
+<div class="org-src-container">
+
+<pre class="src src-python">import sys
+sys.path
+</pre>
+</div>
+
+<ul class="org-ul">
+<li>Lists the locations and order searched for packages
+</li>
+<li>First item is <code>./</code>
+</li>
+<li><code>site-packages</code> location is 3rd party and system wide package location
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2-3" class="outline-5">
+<h5 id="sec-1-1-2-3">Python Packaging Authority</h5>
+<div class="outline-text-5" id="text-1-1-2-3">
+<ul class="org-ul">
+<li>PPA advises best current method for package management because the ecosystem is a disaster.
+</li>
+<li id="For Creation and Distribution">Use <code>setuptools</code>
+</li>
+<li id="For Installing and Usage">Use <code>PIP</code>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2-4" class="outline-5">
+<h5 id="sec-1-1-2-4">Getting PIP</h5>
+<div class="outline-text-5" id="text-1-1-2-4">
+<dl class="org-dl">
+<dt> &gt;= Python 3.4 </dt><dd>Includes PIP with the standard install
+</dd>
+<dt> &lt; Python 3.4 </dt><dd><a href="https://www.pip-installer.org">https://www.pip-installer.org</a>
+</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-2-5" class="outline-5">
+<h5 id="sec-1-1-2-5">Using PIP</h5>
+<div class="outline-text-5" id="text-1-1-2-5">
+<div class="org-src-container">
+
+<pre class="src src-Installing">pip install &lt;PACKAGE&gt;
+pip install &lt;PACKAGE&gt;==1.0
+pip install '&lt;PACKAGE&gt;&gt;=1.0'
+</pre>
+</div>
+
+
+<div class="org-src-container">
+
+<pre class="src src-Interogate">pip list
+pip show &lt;PACKAGE&gt;
+</pre>
+</div>
+
+
+<div class="org-src-container">
+
+<pre class="src src-Search"># Requests are sent to the 'Cheese Shop' https://pypi.python.org/
+pip search &lt;QUERY&gt;
+</pre>
+</div>
+
+
+<div class="org-src-container">
+
+<pre class="src src-Manage">pip freeze
+pip freeze &gt; requirements.txt
+pip install -r requirements.txt
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-3" class="outline-4">
+<h4 id="sec-1-1-3">Environmnet Isolation - [virtualenv]</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<ul class="org-ul">
+<li>Don't install global packages.
+</li>
+<li>Isolate project package dependancies
+</li>
+<li>Keep environments together and separate from projects.
+</li>
+<li>Common location is a <code>.virtualenv/</code> directory
+</li>
+</ul>
+
+<div class="org-src-container">
+
+<pre class="src src-Install">pip install virtualenv
+</pre>
+</div>
+
+
+<div class="org-src-container">
+
+<pre class="src src-Create">.virtualenv/&gt; virtualenv &lt;PROJECT_NAME&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-Activate">.virtualenv/PROJECT_NAME/bin/activate
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-Deactivate"># Command injected into path
+deactive
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-3-1" class="outline-5">
+<h5 id="sec-1-1-3-1">Helper virtualenvwrapper</h5>
+<div class="outline-text-5" id="text-1-1-3-1">
+<div class="org-src-container">
+
+<pre class="src src-Install">pip install virtualenvwrapper
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-Install">pip install virtualenvwrapper-win
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-Start">workon
+workon &lt;PROJECT_NAME&gt;
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-Manage"># Create new project
+mkproject &lt;PROJECT_NAME&gt; # Fails in windows.
+# Env for current location
+mkvirtualenv
+# Assign environmnet for linux/mac
+setvirtualenv &lt;PROJECT_NAME&gt;
+# Assign environmnet for win
+setprojectdir &lt;PROJECT_NAME&gt;
+# Create tmp environment (somewhere to test pip installs)
+mktmpenv
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-4" class="outline-4">
+<h4 id="sec-1-1-4">Code Quality - [pylint]</h4>
+<div class="outline-text-4" id="text-1-1-4">
+<dl class="org-dl">
+<dt> PEP </dt><dd>Python Enhancement Proposal
+</dd>
+<dt> PEP8 </dt><dd>Style Guide
+<ul class="org-ul">
+<li>Includes Layout, whitespace, comments, naming&#x2026;
+</li>
+<li>There is a full PEP for docstring contents.
+</li>
+</ul>
+</dd>
+</dl>
+
+<p>
+Pylint :
+</p>
+<ul class="org-ul">
+<li>is a static code checker.
+</li>
+<li>in pep8 compliant
+</li>
+<li>includes error detection
+</li>
+<li>is configurable
+</li>
+<li>intergrates with ides.
+</li>
+</ul>
+</div>
+
+<div id="outline-container-sec-1-1-4-1" class="outline-5">
+<h5 id="sec-1-1-4-1">Running</h5>
+<div class="outline-text-5" id="text-1-1-4-1">
+<ul class="org-ul">
+<li>GUI (<code>py</code>) doesn't work in windows.
+</li>
+<li id="<span class="underline"><span class="underline">init.py</span></span>">Indicates a python folder
+</li>
+<li>Pylint only searches python folder for called modules/packages
+</li>
+</ul>
+
+
+<div class="org-src-container">
+
+<pre class="src src-Running">pylint &lt;PACKAGE/MODULE&gt;
+</pre>
+</div>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-1-4-2" class="outline-5">
+<h5 id="sec-1-1-4-2">Configuration</h5>
+<div class="outline-text-5" id="text-1-1-4-2">
+<div class="org-src-container">
+
+<pre class="src src-Generate">pylint --generate-rcfile &gt; pylintrc
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-4-3" class="outline-5">
+<h5 id="sec-1-1-4-3">Disable Syntax</h5>
+<div class="outline-text-5" id="text-1-1-4-3">
+<div class="org-src-container">
+
+<pre class="src src-python"># pylint: disable=unused-arguments
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-5" class="outline-4">
+<h4 id="sec-1-1-5">Debugging - [Python Debugger]</h4>
+<div class="outline-text-4" id="text-1-1-5">
+<dl class="org-dl">
+<dt> PDB </dt><dd>The python debugger.
+</dd>
+</dl>
+
+<div class="org-src-container">
+
+<pre class="src src-python">import pdb
+pdb.set_trace()
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-Running">l - location
+n - next, step over
+s - step into
+w - where in stacktrace
+c - continue
+b[(file:lineno|function)] - break, add breakpoint
+h (x) - help on (x)
+r - return out of this level
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-6" class="outline-4">
+<h4 id="sec-1-1-6">Code Documentation - [Sphinx]</h4>
+<div class="outline-text-4" id="text-1-1-6">
+</div><div id="outline-container-sec-1-1-6-1" class="outline-5">
+<h5 id="sec-1-1-6-1">PEP 257 :: Docstring semantics and conventions.</h5>
+<div class="outline-text-5" id="text-1-1-6-1">
+<dl class="org-dl">
+<dt> dostring </dt><dd><ul class="org-ul">
+<li>first statement of a module, class, function
+</li>
+<li>maps to the ~__doc__` variable
+</li>
+<li>start/end with ~'''~
+</li>
+<li>They are full punctuated senteces.
+</li>
+<li>include return type, since only the variable name is returned automatically
+</li>
+</ul>
+</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-6-2" class="outline-5">
+<h5 id="sec-1-1-6-2">Sphinx :: The Python documentation Generator</h5>
+<div class="outline-text-5" id="text-1-1-6-2">
+<ul class="org-ul">
+<li>is the defacto standard
+</li>
+<li>used by the core python team
+</li>
+<li>input is reStructured text
+</li>
+<li>allows output to multiple formats; pdf, html&#x2026;
+</li>
+</ul>
+</div>
+
+<ul class="org-ul"><li><a id="sec-1-1-6-2-1" name="sec-1-1-6-2-1"></a>Usage<br  /><div class="outline-text-6" id="text-1-1-6-2-1">
+<div class="org-src-container">
+
+<pre class="src src-Install">pip install sphinx
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-Run">/docs/&gt; sphinx-quickstart
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-Configure">/docs/&gt; edit ./conf.py
+# theme :: haiku
+# autodoc :: True
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-Build">/docs/&gt; make html
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="sec-1-1-6-2-2" name="sec-1-1-6-2-2"></a>reStructureText<br  /><div class="outline-text-6" id="text-1-1-6-2-2">
+<dl class="org-dl">
+<dt> reStructuredText </dt><dd>just a text format
+</dd>
+<dt> *.rst </dt><dd>file extenstion
+</dd>
+<dt> Sphinx flavor docs </dt><dd><a href="https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html">https://www.sphinx-doc.org/en/master/usage/restructuredtext/index.html</a>
+</dd>
+</dl>
+</div>
+</li>
+
+<li><a id="sec-1-1-6-2-3" name="sec-1-1-6-2-3"></a>autodoc<br  /><div class="outline-text-6" id="text-1-1-6-2-3">
+<ul class="org-ul">
+<li>Allows mapping to docstrings in code
+</li>
+<li><a href="https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#module-sphinx.ext.autodoc">https://www.sphinx-doc.org/en/master/usage/extensions/autodoc.html#module-sphinx.ext.autodoc</a>
+</li>
+</ul>
+</div>
+</li></ul>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-1-7" class="outline-4">
+<h4 id="sec-1-1-7">Packaging and Distribution</h4>
+<div class="outline-text-4" id="text-1-1-7">
+<p>
+setuptools ::  <code>./setup.py</code>
+</p>
+<div class="org-src-container">
+
+<pre class="src src-python">from setuptools import setup
+setup ( ... )
+__author__ = 'sre'
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-7-1" class="outline-5">
+<h5 id="sec-1-1-7-1">Setup function</h5>
+<div class="outline-text-5" id="text-1-1-7-1">
+<dl class="org-dl">
+<dt> <span class="underline"><span class="underline">doc</span></span> </dt><dd>this modules docstring
+</dd>
+<dt> include_package_data=True </dt><dd>Uses MANIFEST.in for assets
+</dd>
+<dt> install_requries </dt><dd>required packages for execution
+</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-7-2" class="outline-5">
+<h5 id="sec-1-1-7-2">Building Package</h5>
+<div class="outline-text-5" id="text-1-1-7-2">
+<div class="org-src-container">
+
+<pre class="src src-Building">python setup.py sdist
+</pre>
+</div>
+
+<dl class="org-dl">
+<dt> sdist </dt><dd>source distribution, basically a zip
+</dd>
+<dt> bdist_wheel </dt><dd>Binary wheel distrubution, (to include c)
+<dl class="org-dl">
+<dt> wheel </dt><dd>python packaging standard
+</dd>
+<dt> requirement </dt><dd><code>pip install wheel</code>
+</dd>
+<dt> (no term) </dt><dd>becoming defacto standard
+</dd>
+</dl>
+</dd>
+</dl>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-7-3" class="outline-5">
+<h5 id="sec-1-1-7-3">Deploying Package Locally</h5>
+<div class="outline-text-5" id="text-1-1-7-3">
+<div class="org-src-container">
+
+<pre class="src src-Install">pip install &lt;FILE_PATH&gt;
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-7-4" class="outline-5">
+<h5 id="sec-1-1-7-4">Deploying Package Publically</h5>
+<div class="outline-text-5" id="text-1-1-7-4">
+<div class="org-src-container">
+
+<pre class="src src-Sign">python setup.py register
+</pre>
+</div>
+
+<div class="org-src-container">
+
+<pre class="src src-Push">python setup.py sdist upload
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-7-5" class="outline-5">
+<h5 id="sec-1-1-7-5">Example Project</h5>
+<div class="outline-text-5" id="text-1-1-7-5">
+<ul class="org-ul">
+<li><a href="https://github.com/pypa/sampleproject">https://github.com/pypa/sampleproject</a>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-sec-1-1-7-6" class="outline-5">
+<h5 id="sec-1-1-7-6">Distribution of executables.</h5>
+<div class="outline-text-5" id="text-1-1-7-6">
+</div><ul class="org-ul"><li><a id="sec-1-1-7-6-1" name="sec-1-1-7-6-1"></a>Use <code>setup(entry_points...)</code><br  /><div class="outline-text-6" id="text-1-1-7-6-1">
+<div class="org-src-container">
+
+<pre class="src src-python">setup(
+    # ...
+    entrypoints={
+	'console_scripts':[
+	    'CREATED_FILENAME':'MODULE.CLASS.MAIN'
+	]
+    }
+    # ...
+)
+</pre>
+</div>
+</div>
+</li>
+
+<li><a id="sec-1-1-7-6-2" name="sec-1-1-7-6-2"></a>Use Tools<br  /><div class="outline-text-6" id="text-1-1-7-6-2">
+<ol class="org-ol">
+<li>Py2exe :: Windows
+</li>
+<li>py2app :: mac
+</li>
+<li>PyInstaller :: generic
+</li>
+</ol>
+</div>
+</li></ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-2" class="outline-3">
+<h3 id="sec-1-2">Python - Beyond the Basics.</h3>
+</div>
+<div id="outline-container-sec-1-3" class="outline-3">
+<h3 id="sec-1-3">Core Python: Organizing Larger Programs.</h3>
+</div>
+<div id="outline-container-sec-1-4" class="outline-3">
+<h3 id="sec-1-4">Unit Testing with Python.</h3>
+</div>
+<div id="outline-container-sec-1-5" class="outline-3">
+<h3 id="sec-1-5">Advanced Python.</h3>
+</div>
+<div id="outline-container-sec-1-6" class="outline-3">
+<h3 id="sec-1-6">Python Best Practices for Code Quality</h3>
+</div>
+
+
+<div id="outline-container-sec-1-7" class="outline-3">
+<h3 id="sec-1-7">Play By Play With Zed Shaw (break)</h3>
+</div>
+<div id="outline-container-sec-1-8" class="outline-3">
+<h3 id="sec-1-8">Introduction to the Flask Microframework</h3>
+</div>
+<div id="outline-container-sec-1-9" class="outline-3">
+<h3 id="sec-1-9">Functional Programming in Python</h3>
+</div>
+<div id="outline-container-sec-1-10" class="outline-3">
+<h3 id="sec-1-10">Full Stack Web Development with Python.</h3>
+</div>
+<div id="outline-container-sec-1-11" class="outline-3">
+<h3 id="sec-1-11">What's new in Python 3.7</h3>
+</div>
+<div id="outline-container-sec-1-12" class="outline-3">
+<h3 id="sec-1-12">Getting Started with the python standard library</h3>
+</div>
+<div id="outline-container-sec-1-13" class="outline-3">
+<h3 id="sec-1-13">WQirking With Data and Time in Python.</h3>
+</div>
+<div id="outline-container-sec-1-14" class="outline-3">
+<h3 id="sec-1-14">Building a REST API Using Python and Flask</h3>
+</div>
+<div id="outline-container-sec-1-15" class="outline-3">
+<h3 id="sec-1-15">Getting started in Python and SQL Server</h3>
+</div>
+</div>

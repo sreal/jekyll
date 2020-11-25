@@ -14,13 +14,18 @@ Need to rsync in windows?
 <li>Get `cwRsync` <a href="https://www.itefix.net/content/cwrsync-free-edition">https://www.itefix.net/content/cwrsync-free-edition</a>
 </li>
 
-<li>c:/applications/cwRsync/bin/&gt; ./rsync.exe -e './ssh' -Pazhrvv &lt;REMOTE<sub>USER</sub>&gt;@172.20.11.50:/internet/web/ ./&lt;LOCAL<sub>FOLDER</sub>&gt;/
-</li>
-
-<li>Using the included ssh.exe (`-e ;./ssh`) avoid problems from not having the exact cgwin ssh version it expect installed.
-</li>
-<li>Cert may fail, &lt;remote<sub>user</sub>&gt; will prompt for pass (if setup)/
+<li>c:/applications/cwRsync/bin/&gt; ./rsync.exe -e './ssh' -Pazhrvv &lt;REMOTE_USER&gt;@&lt;REMOTE_HOST&gt;:/internet/web/ ./&lt;LOCAL_FOLDER&gt;/
 </li>
 </ol>
+
+<p>
+172.20.11.50
+</p>
+<ul class="org-ul">
+<li>Using the included ssh.exe (`-e ;./ssh`) avoid problems from not having the exact cgwin ssh version it expect installed.
+</li>
+<li>Cert may fail, &lt;remote_user&gt; will prompt for pass (if setup)/
+</li>
+</ul>
 </div>
 </div>
