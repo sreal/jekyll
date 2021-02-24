@@ -1,0 +1,80 @@
+---
+layout: default
+title: Updating Jekyll
+---
+
+<div id="outline-container-sec-1" class="outline-2">
+<h2 id="sec-1">Updating Jekyll</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Pipeline still seems ok but updating Jekyll for because it's way out of date. 
+This journal needs updating for the new year.
+</p>
+</div>
+
+<div id="outline-container-sec-1-0-1" class="outline-4">
+<h4 id="sec-1-0-1">Jekyll install is broken underneath.</h4>
+<div class="outline-text-4" id="text-1-0-1">
+<p>
+It's pointing to a Ruby version 2.0. Only 2.3 is installed. 
+Since we need to upgrade it pas 2.4 for the latest Ruby, doing that now.
+</p>
+</div>
+</div>
+
+
+<div id="outline-container-sec-1-0-2" class="outline-4">
+<h4 id="sec-1-0-2">RVM</h4>
+<div class="outline-text-4" id="text-1-0-2">
+<p>
+RVM is the ruby version manager. Use it to have different installs. 
+</p>
+
+
+<p>
+Install it with script from <a href="https://rvm.io/">https://rvm.io/</a>
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bash">curl -sSL https://get.rvm.io | bash -s stable
+</pre>
+</div>
+
+
+<p>
+Install latest ruby versions 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bash">rvm install ruby-head
+</pre>
+</div>
+</div>
+
+<div id="outline-container-sec-1-0-2-1" class="outline-5">
+<h5 id="sec-1-0-2-1">Error: Failed to update brew</h5>
+<div class="outline-text-5" id="text-1-0-2-1">
+<p>
+Cascade failure to brew.  Need to follow the instructions to get brew updated.
+</p>
+
+<p>
+This is why I dislike working with my mac. Whenever one thing needs changing it all needs changing. 
+</p>
+
+<div class="org-src-container">
+
+<pre class="src src-bash">git -C /usr/local/Homebrew/Library/Taps/homebrew/homebrew-core fetch --unshallow;
+brew update;
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-sec-1-0-3" class="outline-4">
+<h4 id="sec-1-0-3"><span class="todo TODO">TODO</span> Finally upgrade Jekyll</h4>
+</div>
+</div>
