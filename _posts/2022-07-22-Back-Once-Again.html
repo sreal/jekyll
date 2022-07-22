@@ -7,18 +7,103 @@ title: Back once again
 <h2 id="sec-1">Back once again</h2>
 <div class="outline-text-2" id="text-1">
 <p>
-Little bit older.
+Little bit older. 
 Little bit wiser. 
 </p>
 
+<p>
+Continuing the jekyll upgrade from last post. 
+</p>
 
 <p>
-This setup sucks. 
+Publish script seems to be in order. Posts are generated. 
 </p>
 
 
 <p>
-But looks to still be working after 6+ years which is nice..
+<code>jekyll -v</code> return 3.0.4. Which is strange since 3+ needs ruby &gt;2.5 and there is only ruby 2.3 installed.
+</p>
+
+<p>
+Must be the version of ruby from base osx install.
+</p>
+
+
+
+<div class="org-src-container">
+
+<pre class="src src-bash">brew list
+</pre>
+</div>
+<p>
+Doesn't look like <code>brew</code> was used to install <code>ruby</code>. 
+Upgrading <code>ruby</code> using the <code>RVM</code>.
+</p>
+
+<p>
+RVM is install. From last post I think. 
+There are no rubies installed with it though. 
+</p>
+
+
+<p>
+Updating either should work. 
+</p>
+
+
+<div class="org-src-container">
+
+<pre class="src src-bash">rvm install ruby --latest
+</pre>
+</div>
+
+
+<p>
+RVM fails with requirement installation failes with brew errors.
+</p>
+
+<blockquote>
+<p>
+Installing requirements for osx.
+Updating system&#x2026;&#x2026;&#x2026;&#x2026;&#x2026;&#x2026;&#x2026;&#x2026;&#x2026;&#x2026;&#x2026;&#x2026;&#x2026;&#x2026;..
+Installing required packages: automake, gcc@6, libyaml, libksba&#x2026;&#x2026;&#x2026;.There were package installation errors, make sure to read the log.
+</p>
+
+<p>
+Try `brew tap &#x2013;repair` and make sure `brew doctor` looks reasonable.
+</p>
+
+<p>
+Check Homebrew requirements <a href="https://docs.brew.sh/Installation">https://docs.brew.sh/Installation</a>
+&#x2026;
+Error running 'requirements_osx_brew_libs_install automake gcc@6 libyaml libksba',
+please read <i>Users/sre</i>.rvm/log/1658451776_ruby-3.0.0/package_install_automake_gcc@6_libyaml_libksba.log
+Requirements installation failed with status: 1.
+</p>
+</blockquote>
+
+
+<p>
+Installing ruby through brew takes out the middle man. 
+</p>
+<div class="org-src-container">
+
+<pre class="src src-bash">brew install ruby
+</pre>
+</div>
+<p>
+This should be enough to bring ruby version up
+</p>
+
+
+<p>
+<code>bundler</code> looks to be installed. so <code>bundler update jekyll</code> is the suggestion. 
+If it's not if should be a gem update <code>gem update jekyll</code>
+</p>
+
+
+<p>
+Back to updating Jekyll and merge dependabot checks. Might be why it's not pushing the changes to gh-pages
 </p>
 </div>
 </div>
