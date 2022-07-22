@@ -89,21 +89,20 @@ Installing ruby through brew takes out the middle man.
 <div class="org-src-container">
 
 <pre class="src src-bash">brew install ruby
+## and added it to the path with...
+echo 'export PATH="/usr/local/opt/ruby/bin:$PATH"' &gt;&gt; /Users/sre/.bash_profile
 </pre>
 </div>
+
+
 <p>
-This should be enough to bring ruby version up
+Of course that version of ruby won't use the same gems. 
+So It's effectivley a reinstall of jekyll. Classic. 
 </p>
 
 
 <p>
-<code>bundler</code> looks to be installed. so <code>bundler update jekyll</code> is the suggestion. 
-If it's not if should be a gem update <code>gem update jekyll</code>
-</p>
-
-
-<p>
-Back to updating Jekyll and merge dependabot checks. Might be why it's not pushing the changes to gh-pages
+So <code>bundler update jekyll</code> is the go. 
 </p>
 </div>
 </div>
